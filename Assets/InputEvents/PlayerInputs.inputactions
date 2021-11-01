@@ -1,0 +1,73 @@
+{
+    "name": "PlayerInputs",
+    "maps": [
+        {
+            "name": "Base",
+            "id": "005cd5a8-08b6-4467-aea8-e3ef6ec5c8be",
+            "actions": [],
+            "bindings": []
+        },
+        {
+            "name": "Expedition",
+            "id": "81e51138-ac36-477f-9af1-b4cc078dd521",
+            "actions": [
+                {
+                    "name": "Drum",
+                    "type": "Button",
+                    "id": "707a2e4d-3ad9-4eb5-b415-eabc9581539b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2fa3a113-4de2-4e40-b12e-e06804e0ed67",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "Scale",
+                    "groups": "",
+                    "action": "Drum",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a8b2beb1-5f8f-476f-a24d-0f4551107322",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "Scale(factor=2)",
+                    "groups": "",
+                    "action": "Drum",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b95dd495-846d-4a6c-94ac-d3b8a9200735",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "Scale(factor=3)",
+                    "groups": "",
+                    "action": "Drum",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ecb1d4d-2eb4-4480-bae9-ae4e18f6c0d6",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "Scale(factor=4)",
+                    "groups": "",
+                    "action": "Drum",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
