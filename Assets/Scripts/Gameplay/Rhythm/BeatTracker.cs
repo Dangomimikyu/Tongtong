@@ -63,26 +63,21 @@ public class BeatTracker : MonoBehaviour
 	#endregion
 
 	#region Monobehaviour functions
-	void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-
 	private void OnEnable()
 	{
-
+		EventManager.instance.StartListening(GameEvents.Input_Drum, InputBeat);
 	}
-	#endregion
 
-	#region Input functions
-	private void InputBeat(cmdInput input = cmdInput.None)
+    private void OnDisable()
+    {
+        
+    }
+    #endregion
+
+    #region Input functions
+    private void InputBeat(EventArgumentData ead)
 	{
-		//currentBeat = (short)((currentBeat + 1) % 4);
+		var input = (cmdInput)ead.eventParams[0];
 
 		// determine the potency of this action based on the timing; no action needed for green zone or if there was no input
 		if (input != cmdInput.None)

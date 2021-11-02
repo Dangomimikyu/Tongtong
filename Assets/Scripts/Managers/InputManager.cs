@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using System;
+using DangoMimikyu.EventManagement;
 using UnityEngine.InputSystem;
+
+// macros
+using cmdCommand = CommandAtrributes.Commands;
+using cmdInput = CommandAtrributes.Inputs;
+using cmdPotency = CommandAtrributes.Potency;
 
 public class InputManager : MonoBehaviour
 {
@@ -66,11 +71,22 @@ public class InputManager : MonoBehaviour
 
 	private void ParseInput(InputAction.CallbackContext ctx)
 	{
-		var input = (CommandAtrributes.Inputs)ctx.ReadValue<float>();
+		cmdInput input = (cmdInput)ctx.ReadValue<float>();
 
 		switch (input)
 		{
+			case cmdInput.None:
+			case cmdInput.Walk:
+			case cmdInput.Attack:
+			case cmdInput.Defend:
+			case cmdInput.Magic:
+				EventManager.instance.DispatchEvent(GameEvents.Input_Drum, input); // call the drum input event and let the beat tracker decide what to do
+				break;
+			default:
+				Debug.LogError("Unexpected player input");
+				break;
 		}
+
 
 		//if (input == 1.0f)
 		//{

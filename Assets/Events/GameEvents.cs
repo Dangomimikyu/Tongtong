@@ -19,9 +19,9 @@ namespace DangoMimikyu.EventManagement
 		Gameplay_WeaponDiscarded,		// discarded a weapon
 		Gameplay_ArmourCrafted,			// crafted an armour
 		Gameplay_ArmourDiscarded,		// discarded an armour
-
+		
 		// input events
-		Input_Drum,                     // any drum input
+		Input_Drum,					// any drum input 
 		Input_CommandComplete,			// command is complete (haven't validate)
 		Input_CommandSuccess,			// command successful
 		Input_CommandFail,				// command failed
