@@ -10,19 +10,14 @@ using cmdPotency = CommandAtrributes.Potency;
 
 public class BeatTracker : MonoBehaviour
 {
-	#region External script references
-	[Header("Script references")]
-	[SerializeField]
-	private BeatUIHandler m_beatUIHandler;
-	#endregion
-
 	#region Tempo variables
-	[Header("Tempo Settings")]
+	[Header("Settings")]
 	[Range(60, 240)]
 	[SerializeField]
 	private float m_beatsPerMinute = 120.0f;
-	[SerializeField]
 	private float m_beatDuration; // duration of each beat in seconds
+	[SerializeField]
+	private float m_maxTime = 300.0f;
 	#endregion
 
 	#region Rhythm bias variables
@@ -45,125 +40,78 @@ public class BeatTracker : MonoBehaviour
 	#endregion
 
 	#region Tracking coroutine variables
-	private Coroutine c_track = null;
-	private bool m_inputThisBeat = false; // true if the player has cast an input during this beat
 	private bool m_outlineThisBeat = false;
 	[Range(0f, 1f)]
 	[SerializeField]
 	private float m_timeElapsed = 0.0f;
-	private short currentBeat = 0;
-	private short totalBeats = 0; // set a fail condition if this goes above 9999
-	#endregion
-
-	#region CommandAttributes variables
-	private Dictionary<cmdInput[], cmdCommand> m_commandDictionary = new Dictionary<cmdInput[], cmdCommand>(new CommandDictionary());
-	private List<cmdCommand> m_cmdBacklog = new List<cmdCommand>();
-	private cmdInput[] m_inputs = new cmdInput[4];
-	private cmdPotency m_potency;
+	private short m_totalBeats = 0;
 	#endregion
 
 	#region Monobehaviour functions
-	private void OnEnable()
+	private void OnValidate()
 	{
-		EventManager.instance.StartListening(GameEvents.Input_Drum, InputBeat);
+		m_beatDuration = 60.0f / m_beatsPerMinute;
 	}
+	#endregion
 
-    private void OnDisable()
-    {
-        
-    }
-    #endregion
-
-    #region Input functions
-    private void InputBeat(EventArgumentData ead)
+	#region Init functions
+	private void InitTimingZones()
 	{
-		var input = (cmdInput)ead.eventParams[0];
-
-		// determine the potency of this action based on the timing; no action needed for green zone or if there was no input
-		if (input != cmdInput.None)
+		// the purpose of this function is just the validate that the timing zones add up to 1 in total
+		// if the number is not exactly 1, it will send a console error
+		float totalTime = m_greenZone + (m_yellowZone * 2.0f) + (m_redZone * 2.0f);
+		if (totalTime == 1.0f)
 		{
-			ProcessPotency();
+			m_greenDuration = m_beatDuration * m_greenZone;
+			m_yellowDuration = m_beatDuration * m_yellowZone;
+			m_redDuration = m_beatDuration * m_redZone;
+			return;
 		}
-
-		// process the input or command
-		switch (input)
+		else
 		{
-			case cmdInput.None:
-				if (!m_inputThisBeat)
-				{
-					// only reset the command array if the player missed this beat
-					ResetInputs();
-				}
-				else if (currentBeat == 4)
-				{
-					// send the completed command to be processed
-					//ProcessCommand(m_inputs);
-					EventManager.instance.DispatchEvent(GameEvents.Input_CommandComplete, m_inputs, m_potency);
-				}
-				break;
-			case cmdInput.Walk:
-			case cmdInput.Attack:
-			case cmdInput.Defend:
-			case cmdInput.Magic:
-				if (m_inputThisBeat) // check for double input on this beat
-				{
-					ResetInputs();
-					return;
-				}
-
-				for (int i = 0; i < m_inputs.Length; ++i)
-				{
-					if (m_inputs[i] == cmdInput.None && !m_inputThisBeat)
-					{
-						m_inputs[i] = input;
-						m_inputThisBeat = true;
-					}
-				}
-				++currentBeat;
-
-				string outputstring = "";
-				for (int i = 0; i < 4; ++i)
-				{
-					outputstring += " " + m_inputs[i];
-				}
-				Debug.Log("input array:" + outputstring + " currentBeat: " + currentBeat);
-				break;
-			case cmdInput.test:
-				Debug.Log("bruhrba");
-				break;
-			default:
-				Debug.LogError("Unexpected player input");
-				break;
+			Debug.LogError("timing zones do not add up to 1 " + totalTime);
 		}
 	}
+	#endregion
 
-	private void ResetInputs()
+	#region Coroutines
+	private IEnumerator TrackBeats()
 	{
-		Debug.Log("resetting inputs");
-		for (int i = 0; i < 4; ++i)
+		while (Time.time < m_maxTime)
 		{
-			m_inputs.SetValue(cmdInput.None, i);
-		}
-		currentBeat = 0;
-		m_potency = cmdPotency.High;
+			m_timeElapsed = Time.time - (m_totalBeats * m_beatDuration);
 
-		// play the wump wump sound
+			if (m_timeElapsed >= (m_beatDuration * 0.5f) && !m_outlineThisBeat)
+			{
+				m_outlineThisBeat = true;
+				EventManager.instance.DispatchEvent(GameEvents.Gameplay_MetronomeBeat);
+			}
+			else if (m_timeElapsed >= m_beatDuration)
+			{
+				EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
+				++m_totalBeats;
+			}
+
+			yield return null; // wait for next frame
+		}
+		EventManager.instance.DispatchEvent(GameEvents.Gameplay_QuestEnd, false);
+		yield break;
 	}
 	#endregion
 
 	#region Potency functions
-	private void ProcessPotency()
+	public void ProcessPotency(ref cmdPotency potency)
 	{
 		Debug.Log("potency time elapsed: " + m_timeElapsed);
 		if (m_timeElapsed < m_redDuration || m_timeElapsed > (m_beatDuration - m_redDuration)) // red zone
 		{
 			Debug.Log("low potency");
-			m_potency = cmdPotency.Low;
+			potency = cmdPotency.Low;
 		}
 		else if (m_timeElapsed < m_yellowDuration || m_timeElapsed > (m_beatDuration - m_redDuration - m_yellowDuration)) // yellow zone
 		{
 			Debug.Log("mid potency");
-			m_potency = m_potency == cmdPotency.High ? m_potency : cmdPotency.Medium;
+			potency = potency == cmdPotency.High ? potency : cmdPotency.Medium;
 		}
 		else if (m_timeElapsed <= (m_redDuration + m_yellowDuration + m_greenDuration)) // green zone
 		{
@@ -172,15 +120,6 @@ public class BeatTracker : MonoBehaviour
 		else
 		{
 			Debug.Log("unexpected potency timing");
-		}
-
-		if (m_timeElapsed > (m_greenDuration + m_yellowDuration)) // red zone
-		{
-			m_potency = cmdPotency.Low;
-		}
-		else if (m_timeElapsed > m_greenDuration) // yellow zone
-		{
-			m_potency = m_potency == cmdPotency.High ? m_potency : cmdPotency.Medium;
 		}
 	}
 	#endregion

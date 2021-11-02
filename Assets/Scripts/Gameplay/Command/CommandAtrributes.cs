@@ -12,7 +12,6 @@ public class CommandAtrributes
 		Attack,
 		Defend,
 		Magic,
-		test
 	}
 
 	// commands are the combination of inputs in a specific order and on-beat

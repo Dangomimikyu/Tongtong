@@ -39,7 +39,7 @@ namespace DangoMimikyu.EventManagement
 			wrapper.eventAction += action;
 		}
 
-		public void StopListener(GameEvents eventName, Action<EventArgumentData> action)
+		public void StopListening(GameEvents eventName, Action<EventArgumentData> action)
 		{
 			EventWrapper wrapper;
 			if (m_EventnameToEvent.TryGetValue(eventName, out wrapper))

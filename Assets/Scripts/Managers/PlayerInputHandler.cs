@@ -10,7 +10,7 @@ using cmdCommand = CommandAtrributes.Commands;
 using cmdInput = CommandAtrributes.Inputs;
 using cmdPotency = CommandAtrributes.Potency;
 
-public class InputManager : MonoBehaviour
+public class PlayerInputHandler : MonoBehaviour
 {
 	[SerializeField]
 	private PlayerInputs m_playerInputAction;
@@ -23,7 +23,7 @@ public class InputManager : MonoBehaviour
 
 	private void Start()
 	{
-		m_playerInputAction.Expedition.Drum.performed += ParseInput;
+		m_playerInputAction.Expedition.Drum.performed += ParseCommandInput;
 	}
 	private void OnEnable()
 	{
@@ -41,35 +41,7 @@ public class InputManager : MonoBehaviour
 	}
 	#endregion
 
-	private void test(InputAction.CallbackContext c)
-	{
-		Debug.Log("BURUH");
-		var f = c.ReadValue<float>();
-		Debug.Log("f: " + f);
-		//if (f == 1.0f)
-		//{
-		//	Debug.Log("1");
-		//}
-		//else if (f == 2.0f)
-		//{
-		//	Debug.Log("2");
-		//}
-		//else if (f == 3.0f)
-		//{
-		//	Debug.Log("3");
-		//}
-		//else if (f == 4.0f)
-		//{
-		//	Debug.Log("4");
-		//}
-		//else
-		//{
-		//	Debug.Log("unexpected input from context");
-		//}
-		Debug.Log("test called");
-	}
-
-	private void ParseInput(InputAction.CallbackContext ctx)
+	private void ParseCommandInput(InputAction.CallbackContext ctx)
 	{
 		cmdInput input = (cmdInput)ctx.ReadValue<float>();
 
@@ -86,27 +58,10 @@ public class InputManager : MonoBehaviour
 				Debug.LogError("Unexpected player input");
 				break;
 		}
+	}
 
+	private void ParseMenuInput(InputAction.CallbackContext ctx)
+	{
 
-		//if (input == 1.0f)
-		//{
-		//	Debug.Log("left drum");
-		//}
-		//else if (input == 2.0f)
-		//{
-		//	Debug.Log("right drum");
-		//}
-		//else if (input == 3.0f)
-		//{
-		//	Debug.Log("up drum");
-		//}
-		//else if (input == 4.0f)
-		//{
-		//	Debug.Log("down drum");
-		//}
-		//else
-		//{
-		//	Debug.Log("unexpected input inputrom context");
-		//}
 	}
 }
