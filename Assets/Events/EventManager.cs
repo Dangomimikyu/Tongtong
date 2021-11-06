@@ -16,6 +16,7 @@ namespace DangoMimikyu.EventManagement
 		{
 			if (!instance)
 			{
+				Debug.Log("created this instance of EventManager");
 				instance = this;
 			}
 			else
@@ -52,7 +53,6 @@ namespace DangoMimikyu.EventManagement
 		#region Event handling functions
 		public void DispatchEvent(GameEvents eventName, params object[] arguments)
 		{
-			Debug.Log("dispatching event");
 			EventWrapper wrapper;
 			if (m_EventnameToEvent.TryGetValue(eventName, out wrapper))
 			{
@@ -64,7 +64,7 @@ namespace DangoMimikyu.EventManagement
 			}
 			else
 			{
-				Debug.LogWarning("trying to dispatch an event that doesn't exist");
+				Debug.LogWarning("trying to dispatch an event that nobody is listening to yet");
 			}
 		}
 		#endregion

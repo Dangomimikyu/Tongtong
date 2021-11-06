@@ -1,13 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using DangoMimikyu.EventManagement;
 
 public class BeatUIHandler : MonoBehaviour
 {
     [Header("Overlay references")]
     public Sprite regularBeatOverlay;
     public Sprite feverBeatOverlay;
-    private Sprite m_currentBeatOverlay;
     public Image overlayRenderer;
 
     [Header("Overlay settings")]
@@ -22,10 +22,13 @@ public class BeatUIHandler : MonoBehaviour
     #region Monobehaviour functions
     private void Start()
     {
-        m_currentBeatOverlay = regularBeatOverlay;
-        overlayRenderer.sprite = m_currentBeatOverlay;
+        overlayRenderer.sprite = regularBeatOverlay;
         Color currentColour = overlayRenderer.color;
         overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 0.0f);
+
+        EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, RenderOutline);
+        EventManager.instance.StartListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
+        EventManager.instance.StartListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
     }
     #endregion
 
@@ -43,11 +46,25 @@ public class BeatUIHandler : MonoBehaviour
     #endregion
 
     #region Beat outline UI functions
-    public void RenderOutline()
+    public void RenderOutline(EventArgumentData ead)
     {
         Color currentColour = overlayRenderer.color;
         overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 1.0f);
         StartCoroutine(Fade());
     }
+
+    private void ChangeOverlay(EventArgumentData ead)
+	{
+        bool fever = ead.eventName == GameEvents.Gameplay_ComboFever ? true : false;
+
+        if (fever)
+		{
+            overlayRenderer.sprite = feverBeatOverlay;
+		}
+		else
+		{
+            overlayRenderer.sprite = regularBeatOverlay;
+		}
+	}
     #endregion
 }

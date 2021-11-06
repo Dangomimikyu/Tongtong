@@ -17,7 +17,6 @@ public class CmdInputHandler : MonoBehaviour
 	#endregion
 
 	#region CommandAttributes variables
-	private Dictionary<cmdInput[], cmdCommand> m_commandDictionary = new Dictionary<cmdInput[], cmdCommand>(new CommandDictionary());
 	private cmdInput[] m_inputs = new cmdInput[4];
 	private cmdPotency m_potency; // keeps track of current potency
 	#endregion
@@ -31,32 +30,16 @@ public class CmdInputHandler : MonoBehaviour
 	#region Monobehaviour functions
 	private void Start()
 	{
-		InitDictionary();
+		EventManager.instance.StartListening(GameEvents.Input_Drum, InputBeat);
 	}
 	private void OnEnable()
 	{
-		EventManager.instance.StartListening(GameEvents.Input_Drum, InputBeat);
+		//EventManager.instance.StartListening(GameEvents.Input_Drum, InputBeat);
 	}
 
 	private void OnDisable()
 	{
 		EventManager.instance.StopListening(GameEvents.Input_Drum, InputBeat);
-	}
-	#endregion
-
-	#region Init functions
-	private void InitDictionary()
-	{
-		cmdInput walk = cmdInput.Walk; cmdInput atk = cmdInput.Attack;
-		cmdInput def = cmdInput.Defend; cmdInput mag = cmdInput.Magic;
-
-		m_commandDictionary.Add(new cmdInput[] { walk, walk, walk, atk }, cmdCommand.Forward);                  // forward
-		m_commandDictionary.Add(new cmdInput[] { walk, walk, walk, def }, cmdCommand.Retreat);                  // retreat
-		m_commandDictionary.Add(new cmdInput[] { atk, atk, walk, atk }, cmdCommand.Attack);                     // attack
-		m_commandDictionary.Add(new cmdInput[] { def, atk, def, atk }, cmdCommand.DefendPhysical);              // defend against physical
-		m_commandDictionary.Add(new cmdInput[] { def, mag, mag, def }, cmdCommand.DefendMagical);               // defend against magic
-		m_commandDictionary.Add(new cmdInput[] { def, def, mag, atk }, cmdCommand.Focus);                       // focus to make next attack stronger
-		m_commandDictionary.Add(new cmdInput[] { mag, mag, mag, def, mag, def, atk, mag }, cmdCommand.Pray);    // pray for miracle
 	}
 	#endregion
 
@@ -79,12 +62,16 @@ public class CmdInputHandler : MonoBehaviour
 				{
 					// only reset the command array if the player missed this beat
 					ResetInputs();
+					EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
 				}
 				else if (m_currentBeat == 4)
 				{
 					// send the completed command to be processed
+					Debug.Log("command complete");
 					EventManager.instance.DispatchEvent(GameEvents.Input_CommandComplete, m_inputs, m_potency);
+					ResetInputs();
 				}
+				m_inputThisBeat = false;
 				break;
 			case cmdInput.Walk:
 			case cmdInput.Attack:
@@ -92,7 +79,9 @@ public class CmdInputHandler : MonoBehaviour
 			case cmdInput.Magic:
 				if (m_inputThisBeat) // check for double input on this beat
 				{
+					Debug.Log("double input");
 					ResetInputs();
+					EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
 					return;
 				}
 
@@ -128,8 +117,6 @@ public class CmdInputHandler : MonoBehaviour
 		}
 		m_currentBeat = 0;
 		m_potency = cmdPotency.High;
-
-		// play the wump wump sound only if there is a combo
 	}
 	#endregion
 }

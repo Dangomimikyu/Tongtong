@@ -2,14 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DangoMimikyu.EventManagement;
+using TMPro;
 
 // macros
-using cmdCommand = CommandAtrributes.Commands;
 using cmdInput = CommandAtrributes.Inputs;
 using cmdPotency = CommandAtrributes.Potency;
 
 public class BeatTracker : MonoBehaviour
 {
+	#region	Testing variables
+	[Header("testing")]
+	public TMP_Text bpm;
+	public TMP_Text greentext;
+	public TMP_Text yellowtext;
+	public TMP_Text redtext;
+	#endregion
+
 	#region Tempo variables
 	[Header("Settings")]
 	[Range(60, 240)]
@@ -35,7 +43,7 @@ public class BeatTracker : MonoBehaviour
 	[Range(0.0f, 1.0f)]
 	[Tooltip("percentage of the beat that can be counted as 'bad' and will break combo")]
 	[SerializeField]
-	private float m_redZone = 0.2f;
+	private float m_redZone = 0.1f;
 	private float m_redDuration;
 	#endregion
 
@@ -52,6 +60,13 @@ public class BeatTracker : MonoBehaviour
 	{
 		m_beatDuration = 60.0f / m_beatsPerMinute;
 	}
+
+	private void Start()
+	{
+		InitTimingZones();
+
+		StartCoroutine(TrackBeats());
+	}
 	#endregion
 
 	#region Init functions
@@ -60,16 +75,22 @@ public class BeatTracker : MonoBehaviour
 		// the purpose of this function is just the validate that the timing zones add up to 1 in total
 		// if the number is not exactly 1, it will send a console error
 		float totalTime = m_greenZone + (m_yellowZone * 2.0f) + (m_redZone * 2.0f);
+		m_beatDuration = 60.0f / m_beatsPerMinute;
 		if (totalTime == 1.0f)
 		{
 			m_greenDuration = m_beatDuration * m_greenZone;
 			m_yellowDuration = m_beatDuration * m_yellowZone;
 			m_redDuration = m_beatDuration * m_redZone;
+
+			bpm.text = m_beatsPerMinute.ToString();
+			greentext.text = m_greenDuration.ToString();
+			yellowtext.text = m_yellowDuration.ToString();
+			redtext.text = m_redDuration.ToString();
 			return;
 		}
 		else
 		{
-			Debug.LogError("timing zones do not add up to 1 " + totalTime);
+			Debug.LogError("timing zones do not add up to 1. totaltime: " + totalTime);
 		}
 	}
 	#endregion
@@ -88,6 +109,7 @@ public class BeatTracker : MonoBehaviour
 			}
 			else if (m_timeElapsed >= m_beatDuration)
 			{
+				m_outlineThisBeat = false;
 				EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
 				++m_totalBeats;
 			}
@@ -102,24 +124,24 @@ public class BeatTracker : MonoBehaviour
 	#region Potency functions
 	public void ProcessPotency(ref cmdPotency potency)
 	{
-		Debug.Log("potency time elapsed: " + m_timeElapsed);
+		//Debug.Log("potency time elapsed: " + m_timeElapsed);
 		if (m_timeElapsed < m_redDuration || m_timeElapsed > (m_beatDuration - m_redDuration)) // red zone
 		{
-			Debug.Log("low potency");
+			Debug.Log("potency: low");
 			potency = cmdPotency.Low;
 		}
 		else if (m_timeElapsed < m_yellowDuration || m_timeElapsed > (m_beatDuration - m_redDuration - m_yellowDuration)) // yellow zone
 		{
-			Debug.Log("mid potency");
+			Debug.Log("potency: mid");
 			potency = potency == cmdPotency.High ? potency : cmdPotency.Medium;
 		}
 		else if (m_timeElapsed <= (m_redDuration + m_yellowDuration + m_greenDuration)) // green zone
 		{
-			Debug.Log("high potency");
+			Debug.Log("potency: high");
 		}
 		else
 		{
-			Debug.Log("unexpected potency timing");
+			Debug.LogWarning("unexpected potency timing");
 		}
 	}
 	#endregion

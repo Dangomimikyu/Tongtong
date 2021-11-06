@@ -24,6 +24,7 @@ namespace DangoMimikyu.EventManagement
 		/// Expedition events
 		Gameplay_MetronomeBeat,			// metronome is supposed to beat
 		Gameplay_BreakCombo,			// combo broken
+		Gameplay_ComboFever,			// combo fever
 
 		// input events
 		Input_Drum,						// any drum input

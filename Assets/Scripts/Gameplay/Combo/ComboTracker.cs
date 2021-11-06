@@ -5,7 +5,6 @@ using DangoMimikyu.EventManagement;
 
 // macros
 using cmdCommand = CommandAtrributes.Commands;
-using cmdInput = CommandAtrributes.Inputs;
 using cmdPotency = CommandAtrributes.Potency;
 
 public class ComboTracker : MonoBehaviour
@@ -20,40 +19,51 @@ public class ComboTracker : MonoBehaviour
 	private List<CommandData> m_cmdHistory = new List<CommandData>();
 	private short m_comboCount = 0;
 	private short m_highestCombo = 0;
+	private bool m_feverStatus = false;
 
 	#region Monobehaviour functions
-	private void OnEnable()
+	private void Start()
 	{
-		EventManager.instance.StartListening(GameEvents.Input_CommandComplete, ModifyCombo);
+		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, ModifyCombo);
+		EventManager.instance.StartListening(GameEvents.Input_CommandFail, ModifyCombo);
 	}
 
 	private void OnDisable()
 	{
-		EventManager.instance.StopListening(GameEvents.Input_CommandComplete, ModifyCombo);
+		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, ModifyCombo);
+		EventManager.instance.StopListening(GameEvents.Input_CommandFail, ModifyCombo);
 	}
 	#endregion
 
 	#region Combo handling functions
 	private void ModifyCombo(EventArgumentData ead)
 	{
-		// param order: bool success, cmdCommand command, cmdPotency potency
-		bool success = (bool)ead.eventParams[0];
+		// param order: cmdCommand command, cmdPotency potency
+		bool success = ead.eventName == GameEvents.Input_CommandSuccess ? true : false;
 		if (success)
 		{
 			CommandData newInput = new CommandData();
-			newInput.command = (cmdCommand)ead.eventParams[1];
-			newInput.potency = (cmdPotency)ead.eventParams[2];
+			newInput.command = (cmdCommand)ead.eventParams[0];
+			newInput.potency = (cmdPotency)ead.eventParams[1];
 			m_cmdHistory.Add(newInput);
-			EventManager.instance.DispatchEvent(GameEvents.Input_CommandSuccess, ead.eventParams[1], ead.eventParams[2]);
+			m_comboCount++;
+			Debug.Log("combo count: " + m_comboCount);
+			if (m_comboCount >= minFeverCombo && m_feverStatus == false)
+			{
+				m_feverStatus = true;
+				EventManager.instance.DispatchEvent(GameEvents.Gameplay_ComboFever);
+			}
 		}
 		else
 		{
 			m_highestCombo = m_comboCount > m_highestCombo ? m_comboCount : m_highestCombo;
-			bool playsound = m_comboCount > minFeverCombo ? true : false;
+			bool brokeFever = m_feverStatus;
 			m_comboCount = 0;
-			EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail, ead.eventParams[1], ead.eventParams[2]);
-			if (playsound)
+			if (brokeFever)
+			{
 				EventManager.instance.DispatchEvent(GameEvents.Gameplay_BreakCombo);
+				m_feverStatus = false;
+			}
 		}
 	}
 	#endregion
