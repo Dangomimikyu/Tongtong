@@ -22,6 +22,7 @@ namespace DangoMimikyu.EventManagement
 		Gameplay_ArmourDiscarded,		// discarded an armour
 
 		/// Expedition events
+		Gameplay_UnitSpawned,			// spawned a unit into the field
 		Gameplay_MetronomeBeat,			// metronome is supposed to beat
 		Gameplay_BreakCombo,			// combo broken
 		Gameplay_ComboFever,			// combo fever
@@ -33,5 +34,9 @@ namespace DangoMimikyu.EventManagement
 		Input_CommandFail,				// command failed
 		Input_MenuNavigation,			// any menu navigation function
 		Input_MenuButton,				// any menu button selection
+
+		// unit events
+		Unit_Spawn,						// when unit spawns
+		Unit_Shoot,						// when unit shoots
 	}
 }

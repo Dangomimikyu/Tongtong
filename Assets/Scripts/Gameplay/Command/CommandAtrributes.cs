@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class CommandAtrributes
 {
 	// inputs are the primitive actions done by the player
@@ -19,9 +15,9 @@ public class CommandAtrributes
 	{
 		Forward,            // W-W-W-A
 		Retreat,            // W-W-W-D
-		Attack,				// A-A-W-A
-		DefendPhysical,     // D-A-D-A
-		DefendMagical,		// D-M-M-D
+		AttackStraight,		// A-A-W-A
+		AttackUpward,		// A-W-A-A
+		Defend,				// D-A-D-A
 		Focus,				// D-D-M-A
 		Pray,				// M-M-M-D, M-D-A-M (takes 2 turns for miracle to work)
 		Total
@@ -33,12 +29,5 @@ public class CommandAtrributes
 		Low,
 		Medium,
 		High
-	}
-
-	public enum ElementalMagicType
-	{
-		Earth,
-		Ice,
-		Fire,
 	}
 }

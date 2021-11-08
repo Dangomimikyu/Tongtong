@@ -14,14 +14,9 @@ public class CmdCommandHandler : MonoBehaviour
 
 	#region Monobehaviour functions
 	void Start()
-    {
+	{
 		InitDictionary();
 		EventManager.instance.StartListening(GameEvents.Input_CommandComplete, ProcessCommand);
-	}
-
-	private void OnEnable()
-	{
-		//EventManager.instance.StartListening(GameEvents.Input_CommandComplete, ProcessCommand);
 	}
 
 	private void OnDisable()
@@ -38,9 +33,9 @@ public class CmdCommandHandler : MonoBehaviour
 
 		m_commandDictionary.Add(new cmdInput[] { walk, walk, walk, atk }, cmdCommand.Forward);                  // forward
 		m_commandDictionary.Add(new cmdInput[] { walk, walk, walk, def }, cmdCommand.Retreat);                  // retreat
-		m_commandDictionary.Add(new cmdInput[] { atk, atk, walk, atk }, cmdCommand.Attack);                     // attack
-		m_commandDictionary.Add(new cmdInput[] { def, atk, def, atk }, cmdCommand.DefendPhysical);              // defend against physical
-		m_commandDictionary.Add(new cmdInput[] { def, mag, mag, def }, cmdCommand.DefendMagical);               // defend against magic
+		m_commandDictionary.Add(new cmdInput[] { atk, atk, walk, atk }, cmdCommand.AttackStraight);             // attack straight
+		m_commandDictionary.Add(new cmdInput[] { atk, walk, atk, atk }, cmdCommand.AttackUpward);				// attack upward
+		m_commandDictionary.Add(new cmdInput[] { def, atk, def, atk }, cmdCommand.Defend);						// defend against physical
 		m_commandDictionary.Add(new cmdInput[] { def, def, mag, atk }, cmdCommand.Focus);                       // focus to make next attack stronger
 		m_commandDictionary.Add(new cmdInput[] { mag, mag, mag, def, mag, def, atk, mag }, cmdCommand.Pray);    // pray for miracle
 	}
@@ -62,32 +57,6 @@ public class CmdCommandHandler : MonoBehaviour
 		{
 			Debug.Log("command no");
 			EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail, command, potency);
-		}
-	}
-	#endregion
-
-	#region Command execution functions
-	private void ExecuteCommand(cmdCommand cmd)
-	{
-		switch (cmd)
-		{
-			case cmdCommand.Forward:
-				break;
-			case cmdCommand.Retreat:
-				break;
-			case cmdCommand.Attack:
-				break;
-			case cmdCommand.DefendPhysical:
-				break;
-			case cmdCommand.DefendMagical:
-				break;
-			case cmdCommand.Focus:
-				break;
-			case cmdCommand.Pray:
-				break;
-			default:
-				Debug.LogError("Unexpected army command");
-				break;
 		}
 	}
 	#endregion
