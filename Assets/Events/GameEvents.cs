@@ -22,7 +22,6 @@ namespace DangoMimikyu.EventManagement
 		Gameplay_ArmourDiscarded,		// discarded an armour
 
 		/// Expedition events
-		Gameplay_UnitSpawned,			// spawned a unit into the field
 		Gameplay_MetronomeBeat,			// metronome is supposed to beat
 		Gameplay_BreakCombo,			// combo broken
 		Gameplay_ComboFever,			// combo fever
