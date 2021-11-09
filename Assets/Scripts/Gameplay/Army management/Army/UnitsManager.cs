@@ -14,7 +14,7 @@ public class UnitsManager : MonoBehaviour
 	private List<UnitBehaviour> m_playerUnits;
 
 	#region Monobehaviour functions
-	void Start()
+	void Awake()
     {
 		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, ExecuteCommand);
 		EventManager.instance.StartListening(GameEvents.Unit_Spawn, UnitSpawned);
