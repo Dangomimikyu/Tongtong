@@ -24,10 +24,32 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputs"",
     ""maps"": [
         {
-            ""name"": ""Base"",
+            ""name"": ""Menus"",
             ""id"": ""005cd5a8-08b6-4467-aea8-e3ef6ec5c8be"",
-            ""actions"": [],
-            ""bindings"": []
+            ""actions"": [
+                {
+                    ""name"": ""change scene (test)"",
+                    ""type"": ""Button"",
+                    ""id"": ""21e77ca8-2204-44e0-89cc-5ebea20be003"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a5085996-13f1-427e-82e5-c59cd7703fab"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""change scene (test)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         },
         {
             ""name"": ""Expedition"",
@@ -93,8 +115,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Base
-        m_Base = asset.FindActionMap("Base", throwIfNotFound: true);
+        // Menus
+        m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
+        m_Menus_changescenetest = m_Menus.FindAction("change scene (test)", throwIfNotFound: true);
         // Expedition
         m_Expedition = asset.FindActionMap("Expedition", throwIfNotFound: true);
         m_Expedition_Drum = m_Expedition.FindAction("Drum", throwIfNotFound: true);
@@ -154,30 +177,38 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Base
-    private readonly InputActionMap m_Base;
-    private IBaseActions m_BaseActionsCallbackInterface;
-    public struct BaseActions
+    // Menus
+    private readonly InputActionMap m_Menus;
+    private IMenusActions m_MenusActionsCallbackInterface;
+    private readonly InputAction m_Menus_changescenetest;
+    public struct MenusActions
     {
         private @PlayerInputs m_Wrapper;
-        public BaseActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
-        public InputActionMap Get() { return m_Wrapper.m_Base; }
+        public MenusActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @changescenetest => m_Wrapper.m_Menus_changescenetest;
+        public InputActionMap Get() { return m_Wrapper.m_Menus; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(BaseActions set) { return set.Get(); }
-        public void SetCallbacks(IBaseActions instance)
+        public static implicit operator InputActionMap(MenusActions set) { return set.Get(); }
+        public void SetCallbacks(IMenusActions instance)
         {
-            if (m_Wrapper.m_BaseActionsCallbackInterface != null)
+            if (m_Wrapper.m_MenusActionsCallbackInterface != null)
             {
+                @changescenetest.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenetest;
+                @changescenetest.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenetest;
+                @changescenetest.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenetest;
             }
-            m_Wrapper.m_BaseActionsCallbackInterface = instance;
+            m_Wrapper.m_MenusActionsCallbackInterface = instance;
             if (instance != null)
             {
+                @changescenetest.started += instance.OnChangescenetest;
+                @changescenetest.performed += instance.OnChangescenetest;
+                @changescenetest.canceled += instance.OnChangescenetest;
             }
         }
     }
-    public BaseActions @Base => new BaseActions(this);
+    public MenusActions @Menus => new MenusActions(this);
 
     // Expedition
     private readonly InputActionMap m_Expedition;
@@ -211,8 +242,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         }
     }
     public ExpeditionActions @Expedition => new ExpeditionActions(this);
-    public interface IBaseActions
+    public interface IMenusActions
     {
+        void OnChangescenetest(InputAction.CallbackContext context);
     }
     public interface IExpeditionActions
     {

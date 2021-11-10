@@ -25,12 +25,13 @@ public class UnitBehaviour : MonoBehaviour
     [SerializeField]
     private BoxCollider2D m_aggroCollider;
     // private Enemy m_targettedEnemy
+    private bool m_spawned = false;
 
 	#region Monobehaviour functions
 	void Start()
     {
         // tell the unit manager that this has been spawned
-        EventManager.instance.DispatchEvent(GameEvents.Unit_Spawn, GetComponent<UnitBehaviour>());
+        //EventManager.instance.DispatchEvent(GameEvents.Unit_Spawn, GetComponent<UnitBehaviour>());
         // init the attack range based on the currently held weapon
 
     }
@@ -39,6 +40,17 @@ public class UnitBehaviour : MonoBehaviour
     {
 
     }
+    #endregion
+
+    #region Spawning functions
+    public void Spawn()
+	{
+        if (!m_spawned)
+		{
+
+            m_spawned = true;
+		}
+	}
     #endregion
 
     #region Movement functions

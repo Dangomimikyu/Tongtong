@@ -4,7 +4,7 @@ using UnityEngine;
 
 public struct QuestRewards
 {
-	uint money;
+	public uint money;
 	//CraftingMaterial[] materials;
 
 }
@@ -15,8 +15,23 @@ public class Quest : MonoBehaviour
 	public string questName { private set; get; }
 	public QuestRewards questRewards;
 
+	#region Constructor
+	Quest()
+	{
+		questName = "defaultQuestName";
+		questRewards.money = 1;
+	}
+	#endregion
+
 	#region Monobehaviour functions
 	private void Start()
+	{
+
+	}
+	#endregion
+
+	#region Completion rewards
+	public void CompleteQuest()
 	{
 
 	}

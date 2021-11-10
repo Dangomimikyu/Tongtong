@@ -2,10 +2,32 @@
     "name": "PlayerInputs",
     "maps": [
         {
-            "name": "Base",
+            "name": "Menus",
             "id": "005cd5a8-08b6-4467-aea8-e3ef6ec5c8be",
-            "actions": [],
-            "bindings": []
+            "actions": [
+                {
+                    "name": "change scene (test)",
+                    "type": "Button",
+                    "id": "21e77ca8-2204-44e0-89cc-5ebea20be003",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a5085996-13f1-427e-82e5-c59cd7703fab",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "change scene (test)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         },
         {
             "name": "Expedition",

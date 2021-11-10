@@ -8,7 +8,7 @@ using cmdCommand = CommandAtrributes.Commands;
 using cmdInput = CommandAtrributes.Inputs;
 using cmdPotency = CommandAtrributes.Potency;
 
-public class UnitsManager : MonoBehaviour
+public class UnitsCommandExecutor : MonoBehaviour
 {
 	[SerializeField]
 	private List<UnitBehaviour> m_playerUnits;
