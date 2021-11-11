@@ -1,34 +1,88 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using DangoMimikyu.EventManagement;
 
 public class SceneController : MonoBehaviour
 {
-    #region Monobehaviour functions
-    void Start()
-    {
-        //Listen for menu navigation
+	private PlayerInputs m_playerInputAction;
 
-        // load the splash screen scene
-    }
+	#region Monobehaviour functions
+	private void Awake()
+	{
+		m_playerInputAction = new PlayerInputs();
+		m_playerInputAction.Menus.changescenetest.performed += ChangeScene;
+		m_playerInputAction.Menus.changescenenext.performed += LoadSceneNext;
+	}
 
-    void Update()
-    {
-        
-    }
-    #endregion
+	private void Start()
+	{
+		UnloadAllScenes();
+		LoadSceneString("LoginScene");
+	}
 
-    #region Scene loading functions
-    private void LoadSplashScene()
-    {
-        SceneManager.LoadScene("ExpeditionScene", LoadSceneMode.Additive);
-    }
+	private void OnEnable()
+	{
+		m_playerInputAction.Enable();
+	}
 
-    private void LoadLoginScene(EventArgumentData ead)
-    {
+	private void OnDisable()
+	{
+		m_playerInputAction.Disable();
+	}
 
-    }
-    #endregion
+	void Update()
+	{
+
+	}
+	#endregion
+
+	#region Scene loading functions
+	private void UnloadAllScenes()
+	{
+		string currentSceneName = SceneManager.GetActiveScene().name;
+		int numScenes = SceneManager.sceneCount;
+		for (int i = 0; i < numScenes; ++i)
+		{
+			Scene scene = SceneManager.GetSceneAt(i);
+			Debug.Log("Scene name: " + scene.name);
+			if (scene.name != currentSceneName)
+			{
+				SceneManager.UnloadSceneAsync(scene);
+			}
+		}
+	}
+
+	private void LoadSplashScene()
+	{
+		SceneManager.LoadScene("ExpeditionScene", LoadSceneMode.Additive);
+	}
+
+	private void LoadLoginScene(EventArgumentData ead)
+	{
+
+	}
+
+	private void LoadSceneString(string name)
+	{
+		// load scene by name
+		UnloadAllScenes();
+		SceneManager.LoadScene(name);
+	}
+
+	private void LoadSceneNext(InputAction.CallbackContext ctx)
+	{
+		// load next scene according to build settings
+		UnloadAllScenes();
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+	}
+
+	private void ChangeScene(InputAction.CallbackContext ctx)
+	{
+		float value = ctx.ReadValue<float>();
+		Debug.Log("test: " + value);
+	}
+	#endregion
 }

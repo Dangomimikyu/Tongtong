@@ -35,6 +35,7 @@ namespace DangoMimikyu.EventManagement
 		Input_MenuButton,				// any menu button selection
 
 		// unit events
+		Unit_EquipItem,					// when unit equips/unequips something
 		Unit_Spawn,						// when unit spawns
 		Unit_Shoot,						// when unit shoots
 	}

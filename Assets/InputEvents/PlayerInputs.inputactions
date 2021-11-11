@@ -7,12 +7,21 @@
             "actions": [
                 {
                     "name": "change scene (test)",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "21e77ca8-2204-44e0-89cc-5ebea20be003",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "change scene next",
+                    "type": "Value",
+                    "id": "2691bd55-6e43-403b-bc81-a0cc92ffc9ab",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -24,6 +33,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "change scene (test)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64cf8cd1-3ef6-4dbe-a0f1-b4615a064bc3",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "change scene next",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

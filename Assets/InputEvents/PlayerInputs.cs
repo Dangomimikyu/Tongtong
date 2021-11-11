@@ -29,12 +29,21 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""change scene (test)"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""21e77ca8-2204-44e0-89cc-5ebea20be003"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""change scene next"",
+                    ""type"": ""Value"",
+                    ""id"": ""2691bd55-6e43-403b-bc81-a0cc92ffc9ab"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -46,6 +55,17 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""change scene (test)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64cf8cd1-3ef6-4dbe-a0f1-b4615a064bc3"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""change scene next"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -118,6 +138,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         // Menus
         m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
         m_Menus_changescenetest = m_Menus.FindAction("change scene (test)", throwIfNotFound: true);
+        m_Menus_changescenenext = m_Menus.FindAction("change scene next", throwIfNotFound: true);
         // Expedition
         m_Expedition = asset.FindActionMap("Expedition", throwIfNotFound: true);
         m_Expedition_Drum = m_Expedition.FindAction("Drum", throwIfNotFound: true);
@@ -181,11 +202,13 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Menus;
     private IMenusActions m_MenusActionsCallbackInterface;
     private readonly InputAction m_Menus_changescenetest;
+    private readonly InputAction m_Menus_changescenenext;
     public struct MenusActions
     {
         private @PlayerInputs m_Wrapper;
         public MenusActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @changescenetest => m_Wrapper.m_Menus_changescenetest;
+        public InputAction @changescenenext => m_Wrapper.m_Menus_changescenenext;
         public InputActionMap Get() { return m_Wrapper.m_Menus; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -198,6 +221,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @changescenetest.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenetest;
                 @changescenetest.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenetest;
                 @changescenetest.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenetest;
+                @changescenenext.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenenext;
+                @changescenenext.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenenext;
+                @changescenenext.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenenext;
             }
             m_Wrapper.m_MenusActionsCallbackInterface = instance;
             if (instance != null)
@@ -205,6 +231,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @changescenetest.started += instance.OnChangescenetest;
                 @changescenetest.performed += instance.OnChangescenetest;
                 @changescenetest.canceled += instance.OnChangescenetest;
+                @changescenenext.started += instance.OnChangescenenext;
+                @changescenenext.performed += instance.OnChangescenenext;
+                @changescenenext.canceled += instance.OnChangescenenext;
             }
         }
     }
@@ -245,6 +274,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     public interface IMenusActions
     {
         void OnChangescenetest(InputAction.CallbackContext context);
+        void OnChangescenenext(InputAction.CallbackContext context);
     }
     public interface IExpeditionActions
     {
