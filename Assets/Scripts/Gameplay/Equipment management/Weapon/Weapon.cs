@@ -10,7 +10,7 @@ public class Weapon
 	Weapon()
 	{
 		weaponType = WeaponType.None;
-		damage = 1.0f;
+		damage = 0.0f;
 	}
 
 	public void Shoot()

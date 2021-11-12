@@ -19,7 +19,7 @@ public class SceneController : MonoBehaviour
 
 	private void Start()
 	{
-		UnloadAllScenes();
+		//UnloadAllScenes();
 		LoadSceneString("LoginScene");
 	}
 
@@ -42,13 +42,12 @@ public class SceneController : MonoBehaviour
 	#region Scene loading functions
 	private void UnloadAllScenes()
 	{
-		string currentSceneName = SceneManager.GetActiveScene().name;
 		int numScenes = SceneManager.sceneCount;
 		for (int i = 0; i < numScenes; ++i)
 		{
 			Scene scene = SceneManager.GetSceneAt(i);
 			Debug.Log("Scene name: " + scene.name);
-			if (scene.name != currentSceneName)
+			if (scene.name != "PersistentManagers") // don't unload the PersistentManagers scene
 			{
 				SceneManager.UnloadSceneAsync(scene);
 			}
@@ -75,8 +74,10 @@ public class SceneController : MonoBehaviour
 	private void LoadSceneNext(InputAction.CallbackContext ctx)
 	{
 		// load next scene according to build settings
-		UnloadAllScenes();
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+		//UnloadAllScenes();
+		int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+		SceneManager.LoadScene(nextSceneIndex);
+		EventManager.instance.DispatchEvent(GameEvents.Misc_SceneChange, SceneManager.GetSceneByBuildIndex(nextSceneIndex).name);
 	}
 
 	private void ChangeScene(InputAction.CallbackContext ctx)

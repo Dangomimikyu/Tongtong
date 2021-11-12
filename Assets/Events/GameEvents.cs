@@ -5,6 +5,9 @@ namespace DangoMimikyu.EventManagement
 	public enum GameEvents
 	{
 		None,
+		// misc
+		Misc_SceneChange,				// changed scene
+
 		// networking
 		Networking_ClientConnect,		// client connected
 		Networking_ClientDisconnect,	// client disconnected
@@ -20,6 +23,7 @@ namespace DangoMimikyu.EventManagement
 		Gameplay_WeaponDiscarded,		// discarded a weapon
 		Gameplay_ArmourCrafted,			// crafted an armour
 		Gameplay_ArmourDiscarded,		// discarded an armour
+		Gameplay_UpdateUnits,			// something happened with units
 
 		/// Expedition events
 		Gameplay_MetronomeBeat,			// metronome is supposed to beat

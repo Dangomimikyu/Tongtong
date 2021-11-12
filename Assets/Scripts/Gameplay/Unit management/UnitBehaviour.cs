@@ -14,12 +14,14 @@ using wpnType = WeaponAttributes.WeaponType;
 public class UnitBehaviour : MonoBehaviour
 {
     [Header("Unit stats")]
+    //[SerializeField]
+    //private float m_health = 10;
+    //[SerializeField]
+    //private Weapon m_leftHandWeapon;        // defensive item
+    //[SerializeField]
+    //private Weapon m_rightHandWeapon;       // offensive item
     [SerializeField]
-    private float m_health = 10;
-    [SerializeField]
-    private Weapon m_leftHandWeapon;        // defensive item
-    [SerializeField]
-    private Weapon m_rightHandWeapon;       // offensive item
+    private UnitData m_unitData = new UnitData();
     [SerializeField]
     private BoxCollider2D m_selfCollider;
     [SerializeField]
@@ -32,8 +34,6 @@ public class UnitBehaviour : MonoBehaviour
     {
         // tell the unit manager that this has been spawned
         //EventManager.instance.DispatchEvent(GameEvents.Unit_Spawn, GetComponent<UnitBehaviour>());
-        // init the attack range based on the currently held weapon
-
     }
 
     void Update()
@@ -50,6 +50,11 @@ public class UnitBehaviour : MonoBehaviour
 
             m_spawned = true;
 		}
+	}
+
+    public void test()
+	{
+        Debug.Log("bruhmoment");
 	}
     #endregion
 

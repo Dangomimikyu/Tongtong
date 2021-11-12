@@ -307,7 +307,7 @@ Transform:
   - {fileID: 1714676492}
   - {fileID: 589724963}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &158211553
 GameObject:
@@ -579,7 +579,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &475959131
 GameObject:
@@ -1525,111 +1525,6 @@ MonoBehaviour:
   overlayRenderer: {fileID: 539918266}
   fadeSpeed: 0.7
   m_comboCount: 0
---- !u!1 &1051278668
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1051278669}
-  - component: {fileID: 1051278672}
-  - component: {fileID: 1051278671}
-  - component: {fileID: 1051278670}
-  m_Layer: 0
-  m_Name: Network manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1051278669
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051278668}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1051278670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051278668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Port: 7777
-  DualMode: 1
-  NoDelay: 1
-  Interval: 10
-  Timeout: 10000
-  FastResend: 2
-  CongestionWindow: 0
-  SendWindowSize: 4096
-  ReceiveWindowSize: 4096
-  NonAlloc: 1
-  debugLog: 0
-  statisticsGUI: 0
-  statisticsLog: 0
---- !u!114 &1051278671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051278668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59275e1aff5a66c42a3bb2da330d6760, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
-  PersistNetworkManagerToOfflineScene: 0
-  runInBackground: 1
-  autoStartServerBuild: 1
-  serverTickRate: 30
-  offlineScene: Assets/Scenes/ExpeditionScene.unity
-  onlineScene: Assets/Scenes/ExpeditionScene.unity
-  transport: {fileID: 1051278670}
-  networkAddress: localhost
-  maxConnections: 100
-  authenticator: {fileID: 0}
-  playerPrefab: {fileID: 5459583725571867507, guid: 779ee7d10f007be48974e4d9badb9665, type: 3}
-  autoCreatePlayer: 1
-  playerSpawnMethod: 0
-  spawnPrefabs: []
-  m_startingPosition: {fileID: 0}
---- !u!114 &1051278672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051278668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ada511fb05d52f04a832f22c7004ac5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Text_Color: {r: 0, g: 0, b: 0, a: 1}
-  TextStyle: 0
-  Background_Color: {r: 0.900987, g: 0.56737274, b: 0.9622642, a: 1}
-  Custom_Inactive_Colors: 1
-  Text_Color_Inactive: {r: 0, g: 0, b: 0, a: 1}
-  TextStyle_Inactive: 0
-  Background_Color_Inactive: {r: 0.6371176, g: 0.41331434, b: 0.6792453, a: 1}
 --- !u!1 &1118779035
 GameObject:
   m_ObjectHideFlags: 0
