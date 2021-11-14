@@ -7,6 +7,7 @@ TagManager:
   - EndGoal
   - PlayerUnit
   - UnitManager
+  - WeaponFirePoint
   layers:
   - Default
   - TransparentFX
@@ -55,6 +56,9 @@ TagManager:
     locked: 0
   - name: PlayerUnits
     uniqueID: 3334013303
+    locked: 0
+  - name: UnitWeapon
+    uniqueID: 420650769
     locked: 0
   - name: SuperForeground
     uniqueID: 4269427165

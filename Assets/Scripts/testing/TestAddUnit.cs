@@ -11,6 +11,12 @@ public class TestAddUnit : MonoBehaviour
 		for (int i = 0; i < 3; ++i)
 		{
 			UnitBehaviour tempub = new UnitBehaviour();
+			Weapon wLeft = new Weapon();
+			wLeft.weaponType = WeaponAttributes.WeaponType.Pistol;
+			Weapon wRight = new Weapon();
+			wRight.weaponType = WeaponAttributes.WeaponType.Pistol;
+			tempub.unitData.leftWeapon = wLeft;
+			tempub.unitData.rightWeapon = wRight;
 			ublist.Add(tempub);
 		}
 		EventManager.instance.DispatchEvent(GameEvents.Gameplay_UpdateUnits, ublist);

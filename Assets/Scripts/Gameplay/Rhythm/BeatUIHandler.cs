@@ -48,6 +48,12 @@ public class BeatUIHandler : MonoBehaviour
     #region Beat outline UI functions
     public void RenderOutline(EventArgumentData ead)
     {
+        if (overlayRenderer == null)
+        {
+            Debug.Log("overlay is null");
+            return;
+        }
+
         Color currentColour = overlayRenderer.color;
         overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 1.0f);
         StartCoroutine(Fade());

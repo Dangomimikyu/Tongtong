@@ -54,15 +54,15 @@ public class UnitSpawner : MonoBehaviour
 			// spawn at home base locations
 			for (int i = 0; i < m_unitDataManager.activeUnits.Count; ++i)
 			{
-				//GameObject unit = Instantiate(m_unitPrefab, transform);
-				GameObject unit = Instantiate(m_unitPrefab, new Vector3(m_baseSpawnLocations[i].x, m_baseSpawnLocations[i].y, m_baseSpawnLocations[i].z), Quaternion.identity);
-				//unit.transform.position		= m_baseSpawnLocations[i];
-				//unit.transform.rotation		= Quaternion.identity;
+				GameObject unit = Instantiate(m_unitPrefab, transform);
+				//GameObject unit = Instantiate(m_unitPrefab, m_baseSpawnLocations[i], Quaternion.identity);
+				unit.transform.position		= m_baseSpawnLocations[i];
+				unit.transform.rotation		= Quaternion.identity;
 				unit.transform.localScale	= m_baseScaleSize;
 
 				UnitData ud = unit.GetComponent<UnitBehaviour>().unitData;
-				SpawnWeapon(unit, ud.leftWeapon, ud.rightWeapon);
-				Debug.Log("spawned at: " + unit.transform.position);
+                SpawnWeapon(unit, ud.leftWeapon, ud.rightWeapon);
+                Debug.Log("spawned at: " + unit.transform.position);
 			}
 		}
 		else if (currentSceneName == "ExpeditionScene")
@@ -73,8 +73,30 @@ public class UnitSpawner : MonoBehaviour
 
 	private void SpawnWeapon(GameObject parent, Weapon left, Weapon right)
 	{
-		GameObject leftWeapon = m_weaponAttributes.GetWeaponPrefab(left);
+		if (left != null)
+		{
+			GameObject leftWeaponPrefab = m_weaponAttributes.GetWeaponPrefab(left);
+			GameObject leftWeapon = Instantiate(leftWeaponPrefab, parent.transform.position + m_leftWeaponPos, Quaternion.identity, parent.transform);
+			leftWeapon.transform.localScale = Vector3.one;
+			
+			if (left.twoHanded)
+				return; // if the left hand one is two handed, no need to do anything for the right hand
+		}
+        else
+        {
+			Debug.Log("left hand weapon was null");
+        }
 
+		if (right != null)
+		{
+			GameObject rightWeaponPrefab = m_weaponAttributes.GetWeaponPrefab(right);
+			GameObject rightWeapon = Instantiate(rightWeaponPrefab, parent.transform.position + m_rightWeaponPos, Quaternion.identity, parent.transform);
+			rightWeapon.transform.localScale = Vector3.one;
+		}
+		else
+        {
+			Debug.Log("right hand weapon was null");
+        }
 	}
 	#endregion
 }
