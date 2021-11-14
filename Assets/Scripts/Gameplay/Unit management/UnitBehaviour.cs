@@ -14,14 +14,8 @@ using wpnType = WeaponAttributes.WeaponType;
 public class UnitBehaviour : MonoBehaviour
 {
     [Header("Unit stats")]
-    //[SerializeField]
-    //private float m_health = 10;
-    //[SerializeField]
-    //private Weapon m_leftHandWeapon;        // defensive item
-    //[SerializeField]
-    //private Weapon m_rightHandWeapon;       // offensive item
     [SerializeField]
-    private UnitData m_unitData = new UnitData();
+    public UnitData unitData = new UnitData();
     [SerializeField]
     private BoxCollider2D m_selfCollider;
     [SerializeField]

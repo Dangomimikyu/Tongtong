@@ -29,4 +29,52 @@ public class WeaponAttributes : MonoBehaviour
 	public GameObject bullet_SniperPrefab;
 	public GameObject bullet_RocketPrefab;
 	public GameObject bullet_LazerPrefab;
+
+	#region Retrieval functions
+	public GameObject GetWeaponPrefab(Weapon weapon)
+	{
+		switch (weapon.weaponType)
+		{
+			default:
+			case WeaponType.None:
+				Debug.LogWarning("unable to get a weapon prefab because this weapontype is none");
+				return null;
+			case WeaponType.Radio:
+				return gun_radioPrefab;
+			case WeaponType.Pistol:
+				return gun_pistolPrefab;
+			case WeaponType.Rifle:
+				return gun_RiflePrefab;
+			case WeaponType.Sniper:
+				return gun_SniperPrefab;
+			case WeaponType.Rocket:
+				return gun_RocketPrefab;
+			case WeaponType.Lazer:
+				return gun_LazerPrefab;
+		}
+	}
+
+	public GameObject GetBulletPrefab(Weapon weapon)
+	{
+		switch (weapon.weaponType)
+		{
+			default:
+			case WeaponType.None:
+				Debug.LogWarning("unable to get a bullet prefab because this weapontype is none");
+				return null;
+			case WeaponType.Radio:
+				return bullet_radioPrefab;
+			case WeaponType.Pistol:
+				return bullet_pistolPrefab;
+			case WeaponType.Rifle:
+				return bullet_RiflePrefab;
+			case WeaponType.Sniper:
+				return bullet_SniperPrefab;
+			case WeaponType.Rocket:
+				return bullet_RocketPrefab;
+			case WeaponType.Lazer:
+				return bullet_LazerPrefab;
+		}
+	}
+	#endregion
 }

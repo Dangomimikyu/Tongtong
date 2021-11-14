@@ -110,7 +110,7 @@ public class CmdInputHandler : MonoBehaviour
 
 	private void ResetInputs()
 	{
-		Debug.Log("resetting inputs");
+		//Debug.Log("resetting inputs");
 		for (int i = 0; i < 4; ++i)
 		{
 			m_inputs.SetValue(cmdInput.None, i);

@@ -31,6 +31,7 @@ public class UnitsCommandExecutor : MonoBehaviour
 	#region Command execution functions
 	private void ExecuteCommand(EventArgumentData ead)
 	{
+		Debug.Log("executing command");
 		cmdCommand cmd = (cmdCommand)ead.eventParams[0];
 		cmdPotency potency = (cmdPotency)ead.eventParams[1];
 		foreach (UnitBehaviour u in m_playerUnits)

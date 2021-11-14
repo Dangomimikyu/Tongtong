@@ -7,16 +7,9 @@ using DangoMimikyu.EventManagement;
 public class UnitData
 {
 	public uint id;
-	public float health;
-	public Weapon leftWeapon;
-	public Weapon rightWeapon;
-
-	public UnitData()
-	{
-		health = 10.0f;
-		leftWeapon = null;
-		rightWeapon = null;
-	}
+	public float health = 10.0f;
+	public Weapon leftWeapon = null;
+	public Weapon rightWeapon = null;
 }
 
 public class UnitDataManager : MonoBehaviour
@@ -51,7 +44,7 @@ public class UnitDataManager : MonoBehaviour
 	}
 	#endregion
 
-	#region Modify active units
+	#region Modify active units list
 	private void SceneChangeHandler(EventArgumentData ead)
 	{
 		string currentSceneName = SceneManager.GetActiveScene().name;
@@ -70,6 +63,10 @@ public class UnitDataManager : MonoBehaviour
 			List<UnitBehaviour> ub = (List<UnitBehaviour>)ead.eventParams[0];
 			for (int i = 0; i < ub.Count; ++i)
 			{
+				// equip a weapon for testing
+				Weapon wpn = new Weapon();
+				wpn.weaponType = WeaponAttributes.WeaponType.Pistol;
+				ModifyWeapons(ub[i], wpn, true);
 				activeUnits.Add(ub[i]);
 			}
 		}
@@ -84,7 +81,28 @@ public class UnitDataManager : MonoBehaviour
 	}
 	#endregion
 
-	#region EventResponse functions
+	#region Equipment functions
+	private void ModifyWeapons(EventArgumentData ead)
+	{
 
+	}
+
+	private void ModifyWeapons(UnitBehaviour ub, Weapon w, bool left)
+	{
+		// todo: move the currently held weapon (if any) into the inventory
+		if (left)
+		{
+			ub.unitData.leftWeapon = w;
+		}
+		else
+		{
+			ub.unitData.rightWeapon = w;
+		}
+	}
+
+	private void ModifyArmour(EventArgumentData ead)
+	{
+
+	}
 	#endregion
 }

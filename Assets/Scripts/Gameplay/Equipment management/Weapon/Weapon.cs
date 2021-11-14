@@ -7,7 +7,7 @@ public class Weapon
 	public float damage;
 	public bool twoHanded;
 
-	Weapon()
+	public Weapon()
 	{
 		weaponType = WeaponType.None;
 		damage = 0.0f;

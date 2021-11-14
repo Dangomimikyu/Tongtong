@@ -6,59 +6,75 @@ using UnityEngine.SceneManagement;
 
 public class UnitSpawner : MonoBehaviour
 {
-    [Header("object references")]
-    [SerializeField]
-    private GameObject m_unitPrefab;
+	[Header("External script references")]
+	[SerializeField]
+	private WeaponAttributes m_weaponAttributes;
+	private UnitDataManager m_unitDataManager;
 
-    [Header("Spawning specifications")]
-    [SerializeField]
-    private List<Vector3> m_baseSpawnLocations;
-    [SerializeField]
-    private Vector3 m_baseScaleSize;
-    [SerializeField]
-    private List<Vector3> m_fieldSpawnLocations;
-    [SerializeField]
-    private Vector3 m_fieldScaleSize;
+	[Header("unit specifications")]
+	[SerializeField]
+	private GameObject m_unitPrefab;
+	[SerializeField]
+	private Vector3 m_leftWeaponPos;
+	[SerializeField]
+	private Vector3 m_rightWeaponPos;
 
-    private UnitDataManager m_unitDataManager;
+	[Header("Spawning specifications")]
+	[SerializeField]
+	private List<Vector3> m_baseSpawnLocations;
+	[SerializeField]
+	private Vector3 m_baseScaleSize;
+	[SerializeField]
+	private List<Vector3> m_fieldSpawnLocations;
+	[SerializeField]
+	private Vector3 m_fieldScaleSize;
 
-    #region Monobehaviour functions
-    void Start()
-    {
-        EventManager.instance.StartListening(GameEvents.Misc_SceneChange, SpawnUnits);
-        m_unitDataManager = GetComponent<UnitDataManager>();
+	#region Monobehaviour functions
+	void Start()
+	{
+		EventManager.instance.StartListening(GameEvents.Misc_SceneChange, SpawnUnits);
+		m_unitDataManager = GetComponent<UnitDataManager>();
 	}
 
-    void Update()
-    {
-
-    }
-    #endregion
-
-    #region Spawning functions
-    private void SpawnUnits(EventArgumentData ead)
+	void Update()
 	{
-        // check the currently active scene
-        string currentSceneName = (string)ead.eventParams[0];
 
-        // don't need to spawn anything if it's the other scenes
-        if (currentSceneName == "HomeBaseScene")
+	}
+	#endregion
+
+	#region Spawning functions
+	private void SpawnUnits(EventArgumentData ead)
+	{
+		// check the currently active scene
+		string currentSceneName = (string)ead.eventParams[0];
+
+		// don't need to spawn anything if it's the other scenes
+		if (currentSceneName == "HomeBaseScene")
 		{
-            // spawn at home base locations
-            for (int i = 0; i < m_unitDataManager.activeUnits.Count; ++i)
+			// spawn at home base locations
+			for (int i = 0; i < m_unitDataManager.activeUnits.Count; ++i)
 			{
-                Transform tempTransform = transform;
-				tempTransform.localPosition = m_baseSpawnLocations[i];
-                tempTransform.rotation      = Quaternion.identity;
-                tempTransform.localScale    = m_baseScaleSize;
-                GameObject unit = Instantiate(m_unitPrefab, tempTransform);
-                Debug.Log("spawned at: " + tempTransform.position);
+				//GameObject unit = Instantiate(m_unitPrefab, transform);
+				GameObject unit = Instantiate(m_unitPrefab, new Vector3(m_baseSpawnLocations[i].x, m_baseSpawnLocations[i].y, m_baseSpawnLocations[i].z), Quaternion.identity);
+				//unit.transform.position		= m_baseSpawnLocations[i];
+				//unit.transform.rotation		= Quaternion.identity;
+				unit.transform.localScale	= m_baseScaleSize;
+
+				UnitData ud = unit.GetComponent<UnitBehaviour>().unitData;
+				SpawnWeapon(unit, ud.leftWeapon, ud.rightWeapon);
+				Debug.Log("spawned at: " + unit.transform.position);
 			}
 		}
-        else if (currentSceneName == "ExpeditionScene")
+		else if (currentSceneName == "ExpeditionScene")
 		{
-            // spawn at battle positions
+			// spawn at battle positions
 		}
 	}
-    #endregion
+
+	private void SpawnWeapon(GameObject parent, Weapon left, Weapon right)
+	{
+		GameObject leftWeapon = m_weaponAttributes.GetWeaponPrefab(left);
+
+	}
+	#endregion
 }

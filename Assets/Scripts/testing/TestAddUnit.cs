@@ -7,14 +7,14 @@ public class TestAddUnit : MonoBehaviour
 {
     void Start()
     {
-        List<UnitBehaviour> ublist = new List<UnitBehaviour>();
-        for (int i = 0; i < 3; ++i)
+		List<UnitBehaviour> ublist = new List<UnitBehaviour>();
+		for (int i = 0; i < 3; ++i)
 		{
-            UnitBehaviour tempub = new UnitBehaviour();
-            ublist.Add(tempub);
+			UnitBehaviour tempub = new UnitBehaviour();
+			ublist.Add(tempub);
 		}
-        EventManager.instance.DispatchEvent(GameEvents.Gameplay_UpdateUnits, ublist);
-    }
+		EventManager.instance.DispatchEvent(GameEvents.Gameplay_UpdateUnits, ublist);
+	}
 
     void Update()
     {
