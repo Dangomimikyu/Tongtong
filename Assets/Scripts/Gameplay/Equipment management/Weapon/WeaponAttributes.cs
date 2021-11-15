@@ -18,17 +18,17 @@ public class WeaponAttributes : MonoBehaviour
 
 	public GameObject gun_radioPrefab;
 	public GameObject gun_pistolPrefab;
-	public GameObject gun_RiflePrefab;
-	public GameObject gun_SniperPrefab;
-	public GameObject gun_RocketPrefab;
-	public GameObject gun_LazerPrefab;
+	public GameObject gun_riflePrefab;
+	public GameObject gun_sniperPrefab;
+	public GameObject gun_rocketPrefab;
+	public GameObject gun_laserPrefab;
 
 	public GameObject bullet_radioPrefab;
 	public GameObject bullet_pistolPrefab;
-	public GameObject bullet_RiflePrefab;
-	public GameObject bullet_SniperPrefab;
-	public GameObject bullet_RocketPrefab;
-	public GameObject bullet_LazerPrefab;
+	public GameObject bullet_riflePrefab;
+	public GameObject bullet_sniperPrefab;
+	public GameObject bullet_rocketPrefab;
+	public GameObject bullet_laserPrefab;
 
 	#region Retrieval functions
 	public GameObject GetWeaponPrefab(Weapon weapon)
@@ -44,13 +44,13 @@ public class WeaponAttributes : MonoBehaviour
 			case WeaponType.Pistol:
 				return gun_pistolPrefab;
 			case WeaponType.Rifle:
-				return gun_RiflePrefab;
+				return gun_riflePrefab;
 			case WeaponType.Sniper:
-				return gun_SniperPrefab;
+				return gun_sniperPrefab;
 			case WeaponType.Rocket:
-				return gun_RocketPrefab;
+				return gun_rocketPrefab;
 			case WeaponType.Lazer:
-				return gun_LazerPrefab;
+				return gun_laserPrefab;
 		}
 	}
 
@@ -67,13 +67,13 @@ public class WeaponAttributes : MonoBehaviour
 			case WeaponType.Pistol:
 				return bullet_pistolPrefab;
 			case WeaponType.Rifle:
-				return bullet_RiflePrefab;
+				return bullet_riflePrefab;
 			case WeaponType.Sniper:
-				return bullet_SniperPrefab;
+				return bullet_sniperPrefab;
 			case WeaponType.Rocket:
-				return bullet_RocketPrefab;
+				return bullet_rocketPrefab;
 			case WeaponType.Lazer:
-				return bullet_LazerPrefab;
+				return bullet_laserPrefab;
 		}
 	}
 	#endregion

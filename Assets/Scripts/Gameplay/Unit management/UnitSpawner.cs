@@ -9,6 +9,7 @@ public class UnitSpawner : MonoBehaviour
 	[Header("External script references")]
 	[SerializeField]
 	private WeaponAttributes m_weaponAttributes;
+	[SerializeField]
 	private UnitDataManager m_unitDataManager;
 
 	[Header("unit specifications")]
@@ -32,8 +33,8 @@ public class UnitSpawner : MonoBehaviour
 	#region Monobehaviour functions
 	void Start()
 	{
+		EventManager.instance.StartListening(GameEvents.Gameplay_UpdateUnits, SpawnUnits);
 		EventManager.instance.StartListening(GameEvents.Misc_SceneChange, SpawnUnits);
-		m_unitDataManager = GetComponent<UnitDataManager>();
 	}
 
 	void Update()
@@ -46,28 +47,50 @@ public class UnitSpawner : MonoBehaviour
 	private void SpawnUnits(EventArgumentData ead)
 	{
 		// check the currently active scene
-		string currentSceneName = (string)ead.eventParams[0];
+		string currentSceneName = SceneManager.GetActiveScene().name;
+		Debug.Log("current scene name: " + currentSceneName);
+
+		// destroy the current UnitBehaviour GameObjects
+		DestroyUnits();
 
 		// don't need to spawn anything if it's the other scenes
 		if (currentSceneName == "HomeBaseScene")
 		{
 			// spawn at home base locations
-			for (int i = 0; i < m_unitDataManager.activeUnits.Count; ++i)
-			{
-				GameObject unit = Instantiate(m_unitPrefab, transform);
-				//GameObject unit = Instantiate(m_unitPrefab, m_baseSpawnLocations[i], Quaternion.identity);
-				unit.transform.position		= m_baseSpawnLocations[i];
-				unit.transform.rotation		= Quaternion.identity;
-				unit.transform.localScale	= m_baseScaleSize;
+			Debug.Log("count: " + m_unitDataManager.activeUnitData.Count);
 
-				UnitData ud = unit.GetComponent<UnitBehaviour>().unitData;
-                SpawnWeapon(unit, ud.leftWeapon, ud.rightWeapon);
-                Debug.Log("spawned at: " + unit.transform.position);
+			for (int i = 0; i < m_unitDataManager.activeUnitData.Count; ++i)
+			{
+
+				GameObject unit = Instantiate(m_unitPrefab, transform);
+				unit.transform.position = m_baseSpawnLocations[i];
+				unit.transform.rotation = Quaternion.identity;
+				unit.transform.localScale = m_baseScaleSize;
+				unit.GetComponent<UnitBehaviour>().unitData = m_unitDataManager.activeUnitData[i];
+				UnitBehaviour newBehaviour = unit.GetComponent<UnitBehaviour>();
+				SpawnWeapon(unit, newBehaviour.unitData.leftWeapon, newBehaviour.unitData.rightWeapon);
+
+				m_unitDataManager.activeUnits.Add(newBehaviour);
+				Debug.Log("spawned at: " + unit.transform.position);
 			}
 		}
 		else if (currentSceneName == "ExpeditionScene")
 		{
 			// spawn at battle positions
+			for (int i = 0; i < m_unitDataManager.activeUnitData.Count; ++i)
+			{
+
+				GameObject unit = Instantiate(m_unitPrefab, transform);
+				unit.transform.position = m_fieldSpawnLocations[i];
+				unit.transform.rotation = Quaternion.identity;
+				unit.transform.localScale = m_baseScaleSize;
+				unit.GetComponent<UnitBehaviour>().unitData = m_unitDataManager.activeUnitData[i];
+				UnitBehaviour newBehaviour = unit.GetComponent<UnitBehaviour>();
+				SpawnWeapon(unit, newBehaviour.unitData.leftWeapon, newBehaviour.unitData.rightWeapon);
+
+				m_unitDataManager.activeUnits.Add(newBehaviour);
+				Debug.Log("spawned at: " + unit.transform.position);
+			}
 		}
 	}
 
@@ -76,11 +99,18 @@ public class UnitSpawner : MonoBehaviour
 		if (left != null)
 		{
 			GameObject leftWeaponPrefab = m_weaponAttributes.GetWeaponPrefab(left);
-			GameObject leftWeapon = Instantiate(leftWeaponPrefab, parent.transform.position + m_leftWeaponPos, Quaternion.identity, parent.transform);
+			//GameObject leftWeapon = Instantiate(leftWeaponPrefab, parent.transform.position + m_leftWeaponPos, Quaternion.identity, parent.transform);
+			GameObject leftWeapon = Instantiate(leftWeaponPrefab, parent.transform.position, Quaternion.identity, parent.transform);
 			leftWeapon.transform.localScale = Vector3.one;
-			
 			if (left.twoHanded)
+			{
+				leftWeapon.transform.localPosition = m_rightWeaponPos;
 				return; // if the left hand one is two handed, no need to do anything for the right hand
+			}
+			else
+			{
+				leftWeapon.transform.localPosition = m_leftWeaponPos;
+			}
 		}
         else
         {
@@ -91,12 +121,23 @@ public class UnitSpawner : MonoBehaviour
 		{
 			GameObject rightWeaponPrefab = m_weaponAttributes.GetWeaponPrefab(right);
 			GameObject rightWeapon = Instantiate(rightWeaponPrefab, parent.transform.position + m_rightWeaponPos, Quaternion.identity, parent.transform);
+			rightWeapon.transform.localPosition = m_rightWeaponPos;
 			rightWeapon.transform.localScale = Vector3.one;
 		}
 		else
         {
 			Debug.Log("right hand weapon was null");
         }
+	}
+	#endregion
+
+	#region Destroy functions
+	private void DestroyUnits()
+	{
+		foreach (UnitBehaviour ub in m_unitDataManager.activeUnits)
+		{
+			Destroy(ub.gameObject);
+		}
 	}
 	#endregion
 }

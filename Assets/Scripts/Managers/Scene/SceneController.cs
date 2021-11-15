@@ -39,6 +39,15 @@ public class SceneController : MonoBehaviour
 	}
 	#endregion
 
+	#region Coroutines
+	private IEnumerator LoadNewScene()
+	{
+		yield return null;
+		EventManager.instance.DispatchEvent(GameEvents.Misc_SceneChange, SceneManager.GetActiveScene().name);
+		yield break;
+	}
+	#endregion
+
 	#region Scene loading functions
 	private void UnloadAllScenes()
 	{
@@ -77,7 +86,8 @@ public class SceneController : MonoBehaviour
 		//UnloadAllScenes();
 		int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 		SceneManager.LoadScene(nextSceneIndex);
-		EventManager.instance.DispatchEvent(GameEvents.Misc_SceneChange, SceneManager.GetSceneByBuildIndex(nextSceneIndex).name);
+		StartCoroutine(LoadNewScene());
+		//EventManager.instance.DispatchEvent(GameEvents.Misc_SceneChange, SceneManager.GetSceneByBuildIndex(nextSceneIndex).name);
 	}
 
 	private void ChangeScene(InputAction.CallbackContext ctx)

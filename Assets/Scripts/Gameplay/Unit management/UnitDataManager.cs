@@ -15,7 +15,8 @@ public class UnitData
 public class UnitDataManager : MonoBehaviour
 {
 	[Header("Object references")]
-	public List<UnitBehaviour> activeUnits;      // list of active units
+	public List<UnitBehaviour> activeUnits = new List<UnitBehaviour>();		// list of active units
+	public List<UnitData> activeUnitData = new List<UnitData>();			// list of active units' data
 
 	[SerializeField]
 	private string m_homeBaseSceneName;
@@ -31,11 +32,11 @@ public class UnitDataManager : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Gameplay_UpdateUnits, SceneChangeHandler);
 
 		// init the active units to have 3 people to begin with
-		for (int i = 0; i < 3; ++i)
-		{
-			UnitBehaviour tempub = new UnitBehaviour();
-			activeUnits.Add(tempub);
-		}
+		//for (int i = 0; i < 3; ++i)
+		//{
+		//	UnitBehaviour tempub = new UnitBehaviour();
+		//	activeUnits.Add(tempub);
+		//}
 	}
 
 	void Update()
@@ -54,19 +55,37 @@ public class UnitDataManager : MonoBehaviour
 		{
 			// should spawn units by dispatching event
 			// at this point units should already be equipped with a weapon, if no weapon then they will be unable to attack and will just stand there
+
 		}
-		else if (currentSceneName == m_homeBaseSceneName)
+		else if (currentSceneName == "MainMenuScene")
 		{
 			// clear the current list
 			ClearActiveList();
 			// add the list of unit behaviour to currently active (this is done to update the list on what weapon each unit has and their position in line
-			List<UnitBehaviour> ub = (List<UnitBehaviour>)ead.eventParams[0];
-			for (int i = 0; i < ub.Count; ++i)
+			List<UnitData> ud = (List<UnitData>)ead.eventParams[0];
+			Debug.Log("called mainmenu, count: " + ud.Count);
+			for (int i = 0; i < ud.Count; ++i)
 			{
 				// equip a weapon for testing
 				Weapon wpn = new Weapon();
-				wpn.weaponType = WeaponAttributes.WeaponType.Pistol;
-				ModifyWeapons(ub[i], wpn, true);
+				wpn.weaponType = WeaponAttributes.WeaponType.Rifle;
+				ModifyWeapons(ud[i], wpn, true);
+				activeUnitData.Add(ud[i]);
+			}
+		}
+		else if (currentSceneName == m_homeBaseSceneName)
+		{
+			// clear the current list
+			// ClearActiveList();
+			// add the list of unit behaviour to currently active (this is done to update the list on what weapon each unit has and their position in line
+			List<UnitBehaviour> ub = (List<UnitBehaviour>)ead.eventParams[0];
+			Debug.Log("called home, count: " + ub.Count);
+			for (int i = 0; i < ub.Count; ++i)
+			{
+				// equip a weapon for testing
+				//Weapon wpn = new Weapon();
+				//wpn.weaponType = WeaponAttributes.WeaponType.Pistol;
+				//ModifyWeapons(ub[i], wpn, true);
 				activeUnits.Add(ub[i]);
 			}
 		}
@@ -87,16 +106,16 @@ public class UnitDataManager : MonoBehaviour
 
 	}
 
-	private void ModifyWeapons(UnitBehaviour ub, Weapon w, bool left)
+	private void ModifyWeapons(UnitData ud, Weapon w, bool left)
 	{
 		// todo: move the currently held weapon (if any) into the inventory
 		if (left)
 		{
-			ub.unitData.leftWeapon = w;
+			ud.leftWeapon = w;
 		}
 		else
 		{
-			ub.unitData.rightWeapon = w;
+			ud.rightWeapon = w;
 		}
 	}
 
