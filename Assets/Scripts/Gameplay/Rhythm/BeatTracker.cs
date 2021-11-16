@@ -105,7 +105,7 @@ public class BeatTracker : MonoBehaviour
 			if (m_timeElapsed >= (m_beatDuration * 0.5f) && !m_outlineThisBeat)
 			{
 				m_outlineThisBeat = true;
-				EventManager.instance.DispatchEvent(GameEvents.Gameplay_MetronomeBeat);
+				EventManager.instance.DispatchEvent(GameEvents.Gameplay_MetronomeBeat, m_beatDuration);
 			}
 			else if (m_timeElapsed >= m_beatDuration)
 			{

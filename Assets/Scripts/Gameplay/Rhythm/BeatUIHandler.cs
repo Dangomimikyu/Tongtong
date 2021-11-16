@@ -6,44 +6,50 @@ using DG.Tweening;
 
 public class BeatUIHandler : MonoBehaviour
 {
-    [Header("Overlay references")]
-    public Sprite regularBeatOverlay;
-    public Sprite feverBeatOverlay;
-    public Image overlayRenderer;
+	[Header("Object references")]
+	public Sprite regularBeatOverlay;
+	public Sprite feverBeatOverlay;
+	public Image overlayRenderer;
+	[SerializeField]
+	private Canvas m_beatUICanvas;
+	[SerializeField]
+	private GameObject m_beatTickPrefab;
 
-    [Header("Overlay settings")]
-    [Range(0.0f, 1.0f)]
-    [SerializeField]
-    private float fadeSpeed = 0.45f;
+	[Header("Overlay settings")]
+	[Range(0.0f, 1.0f)]
+	[SerializeField]
+	private float fadeSpeed = 0.45f;
 
-    [Header("Combo variables")]
-    [SerializeField]
-    private int m_comboCount;
+	[Header("Combo variables")]
+	[SerializeField]
+	private int m_comboCount;
 
-    #region Monobehaviour functions
-    private void Start()
-    {
-        overlayRenderer.sprite = regularBeatOverlay;
-        Color currentColour = overlayRenderer.color;
-        overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 0.0f);
+	#region Monobehaviour functions
+	private void Start()
+	{
+		overlayRenderer.sprite = regularBeatOverlay;
+		Color currentColour = overlayRenderer.color;
+		overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 0.0f);
 
-        //EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, RenderOutline);
-        //EventManager.instance.StartListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
-        //EventManager.instance.StartListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
-    }
+		EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, SpawnTick);
+
+		//EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, RenderOutline);
+		//EventManager.instance.StartListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
+		//EventManager.instance.StartListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
+	}
 
 	private void Update()
 	{
-		if (overlayRenderer == null)
+		if (m_beatUICanvas == null)
 		{
-            Debug.Log("overlay null");
+			Debug.Log("BREAKBREAKBREAK");
 		}
 	}
 	#endregion
 
 	#region Coroutines
 	private IEnumerator Fade()
-    {
+	{
 		while (overlayRenderer.color.a > 0)
 		{
 			Color currentColour = overlayRenderer.color;
@@ -52,42 +58,57 @@ public class BeatUIHandler : MonoBehaviour
 			yield return null;
 		}
 		yield break;
-    }
-    #endregion
+	}
+	#endregion
 
-    #region Beat outline UI functions
-    public void RenderOutline(EventArgumentData ead)
-    {
-        if (overlayRenderer == null)
-        {
-            Debug.Log("overlay is null 1");
-            return;
-        }
-
-        Color currentColour = overlayRenderer.color;
-        overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 1.0f);
-        //StartCoroutine(Fade());
-        FadeImage();
-    }
-
-    private void FadeImage()
+	#region Beat Tick functions
+	private void SpawnTick(EventArgumentData ead)
 	{
-        Color currentColour = overlayRenderer.color;
-        overlayRenderer.DOColor(new Color(currentColour.r, currentColour.g, currentColour.b, 0), 1);
-    }
-
-    private void ChangeOverlay(EventArgumentData ead)
-	{
-        bool fever = ead.eventName == GameEvents.Gameplay_ComboFever ? true : false;
-
-        if (fever)
+		float beatDuration = (float)ead.eventParams[0];
+		//GameObject tick = Instantiate(m_beatTickPrefab, m_beatUICanvas.transform);
+		if (m_beatUICanvas == null)
 		{
-            overlayRenderer.sprite = feverBeatOverlay;
+			Debug.Log("what the fuck");
+			return;
+		}
+		GameObject tick = Instantiate(m_beatTickPrefab, m_beatUICanvas.transform);
+		tick.GetComponent<BeatTickBehaviour>().Move(beatDuration * 3f);
+	}
+	#endregion
+
+	#region Beat outline UI functions
+	public void RenderOutline(EventArgumentData ead)
+	{
+		if (overlayRenderer == null)
+		{
+			Debug.Log("overlay is null 1");
+			return;
+		}
+
+		Color currentColour = overlayRenderer.color;
+		overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 1.0f);
+		//StartCoroutine(Fade());
+		FadeImage();
+	}
+
+	private void FadeImage()
+	{
+		Color currentColour = overlayRenderer.color;
+		overlayRenderer.DOColor(new Color(currentColour.r, currentColour.g, currentColour.b, 0), 1);
+	}
+
+	private void ChangeOverlay(EventArgumentData ead)
+	{
+		bool fever = ead.eventName == GameEvents.Gameplay_ComboFever ? true : false;
+
+		if (fever)
+		{
+			overlayRenderer.sprite = feverBeatOverlay;
 		}
 		else
 		{
-            //overlayRenderer.sprite = regularBeatOverlay;
+			//overlayRenderer.sprite = regularBeatOverlay;
 		}
 	}
-    #endregion
+	#endregion
 }
