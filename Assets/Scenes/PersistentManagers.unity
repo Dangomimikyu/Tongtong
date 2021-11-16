@@ -210,7 +210,7 @@ MonoBehaviour:
   - {x: 0, y: 1, z: 0}
   - {x: 1.25, y: 1, z: 0}
   - {x: 2.5, y: 1, z: 0}
-  m_baseScaleSize: {x: 3, y: 3, z: 3}
+  m_baseScaleSize: {x: 5, y: 5, z: 5}
   m_fieldSpawnLocations:
   - {x: 0, y: 3, z: 0}
   - {x: 1.25, y: 3, z: 0}

@@ -44,6 +44,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""NavigateButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""b5d5103c-c0e4-40d6-b1ac-851710fc24f0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -66,6 +75,50 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""change scene next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05292ea8-ce03-4697-958a-9a20a42326b3"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NavigateButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""983d2561-fe5e-4d5f-97a5-88992b45f722"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NavigateButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3421620-8d74-4953-9511-6606f858e091"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NavigateButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a7212ff-e335-4140-bffe-09f01fe6b0b2"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NavigateButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -139,6 +192,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
         m_Menus_changescenetest = m_Menus.FindAction("change scene (test)", throwIfNotFound: true);
         m_Menus_changescenenext = m_Menus.FindAction("change scene next", throwIfNotFound: true);
+        m_Menus_NavigateButton = m_Menus.FindAction("NavigateButton", throwIfNotFound: true);
         // Expedition
         m_Expedition = asset.FindActionMap("Expedition", throwIfNotFound: true);
         m_Expedition_Drum = m_Expedition.FindAction("Drum", throwIfNotFound: true);
@@ -203,12 +257,14 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private IMenusActions m_MenusActionsCallbackInterface;
     private readonly InputAction m_Menus_changescenetest;
     private readonly InputAction m_Menus_changescenenext;
+    private readonly InputAction m_Menus_NavigateButton;
     public struct MenusActions
     {
         private @PlayerInputs m_Wrapper;
         public MenusActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @changescenetest => m_Wrapper.m_Menus_changescenetest;
         public InputAction @changescenenext => m_Wrapper.m_Menus_changescenenext;
+        public InputAction @NavigateButton => m_Wrapper.m_Menus_NavigateButton;
         public InputActionMap Get() { return m_Wrapper.m_Menus; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -224,6 +280,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @changescenenext.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenenext;
                 @changescenenext.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenenext;
                 @changescenenext.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnChangescenenext;
+                @NavigateButton.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnNavigateButton;
+                @NavigateButton.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnNavigateButton;
+                @NavigateButton.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnNavigateButton;
             }
             m_Wrapper.m_MenusActionsCallbackInterface = instance;
             if (instance != null)
@@ -234,6 +293,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @changescenenext.started += instance.OnChangescenenext;
                 @changescenenext.performed += instance.OnChangescenenext;
                 @changescenenext.canceled += instance.OnChangescenenext;
+                @NavigateButton.started += instance.OnNavigateButton;
+                @NavigateButton.performed += instance.OnNavigateButton;
+                @NavigateButton.canceled += instance.OnNavigateButton;
             }
         }
     }
@@ -275,6 +337,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     {
         void OnChangescenetest(InputAction.CallbackContext context);
         void OnChangescenenext(InputAction.CallbackContext context);
+        void OnNavigateButton(InputAction.CallbackContext context);
     }
     public interface IExpeditionActions
     {

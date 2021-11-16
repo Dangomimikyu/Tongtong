@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using DangoMimikyu.EventManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 // macros
 using cmdCommand = CommandAtrributes.Commands;
@@ -23,22 +24,38 @@ public class PlayerInputHandler : MonoBehaviour
 
 	private void Start()
 	{
+		EventManager.instance.StartListening(GameEvents.Misc_SceneChange, ChangeInputMap);
 		m_playerInputAction.Expedition.Drum.performed += ParseCommandInput;
 	}
 	private void OnEnable()
 	{
 		m_playerInputAction.Enable();
+		//m_playerInputAction.Expedition.Enable();
 	}
 
 	private void OnDisable()
 	{
 		m_playerInputAction.Disable();
 	}
+	#endregion
 
-	private void Update()
-	{
-		//var input =
-	}
+	#region Input map functions
+	private void ChangeInputMap(EventArgumentData ead)
+    {
+		string currentSceneName = SceneManager.GetActiveScene().name;
+
+		if (currentSceneName != "ExpeditionScene")
+        {
+			m_playerInputAction.Expedition.Enable();
+        }
+        else
+        {
+			if (!m_playerInputAction.Menus.enabled)
+            {
+				m_playerInputAction.Menus.Enable();
+            }
+        }
+    }
 	#endregion
 
 	private void ParseCommandInput(InputAction.CallbackContext ctx)
