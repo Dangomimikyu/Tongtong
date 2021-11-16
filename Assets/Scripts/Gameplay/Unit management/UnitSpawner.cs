@@ -12,7 +12,7 @@ public class UnitSpawner : MonoBehaviour
 	[SerializeField]
 	private UnitDataManager m_unitDataManager;
 
-	[Header("unit specifications")]
+	[Header("Unit specifications")]
 	[SerializeField]
 	private GameObject m_unitPrefab;
 	[SerializeField]
@@ -35,11 +35,6 @@ public class UnitSpawner : MonoBehaviour
 	{
 		EventManager.instance.StartListening(GameEvents.Gameplay_UpdateUnits, SpawnUnits);
 		EventManager.instance.StartListening(GameEvents.Misc_SceneChange, SpawnUnits);
-	}
-
-	void Update()
-	{
-
 	}
 	#endregion
 
@@ -71,6 +66,7 @@ public class UnitSpawner : MonoBehaviour
 				SpawnWeapon(unit, newBehaviour.unitData.leftWeapon, newBehaviour.unitData.rightWeapon);
 
 				m_unitDataManager.activeUnits.Add(newBehaviour);
+				EventManager.instance.DispatchEvent(GameEvents.Unit_Spawn, newBehaviour);
 				Debug.Log("spawned at: " + unit.transform.position);
 			}
 		}
@@ -89,6 +85,7 @@ public class UnitSpawner : MonoBehaviour
 				SpawnWeapon(unit, newBehaviour.unitData.leftWeapon, newBehaviour.unitData.rightWeapon);
 
 				m_unitDataManager.activeUnits.Add(newBehaviour);
+				EventManager.instance.DispatchEvent(GameEvents.Unit_Spawn, newBehaviour);
 				Debug.Log("spawned at: " + unit.transform.position);
 			}
 		}

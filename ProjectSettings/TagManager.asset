@@ -70,3 +70,6 @@ TagManager:
   - name: BeatUI
     uniqueID: 1146278001
     locked: 0
+  - name: InteractableUI
+    uniqueID: 559591779
+    locked: 0

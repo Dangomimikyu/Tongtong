@@ -23,10 +23,10 @@ public class TestAddUnit : MonoBehaviour
 			UnitData tempud = new UnitData();
 			Weapon wLeft = new Weapon();
 			wLeft.weaponType = WeaponAttributes.WeaponType.Pistol;
-			wLeft.twoHanded = true;
+			//wLeft.twoHanded = true;
 			Weapon wRight = new Weapon();
-			wRight.weaponType = WeaponAttributes.WeaponType.Pistol;
-			wRight.twoHanded = true;
+			wRight.weaponType = WeaponAttributes.WeaponType.Rifle;
+			//wRight.twoHanded = true;
 			tempud.leftWeapon = wLeft;
 			tempud.rightWeapon = wRight;
 			udlist.Add(tempud);

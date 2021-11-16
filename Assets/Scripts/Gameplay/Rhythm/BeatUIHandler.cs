@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using DangoMimikyu.EventManagement;
+using DG.Tweening;
 
 public class BeatUIHandler : MonoBehaviour
 {
@@ -26,22 +27,31 @@ public class BeatUIHandler : MonoBehaviour
         Color currentColour = overlayRenderer.color;
         overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 0.0f);
 
-        EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, RenderOutline);
-        EventManager.instance.StartListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
-        EventManager.instance.StartListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
+        //EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, RenderOutline);
+        //EventManager.instance.StartListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
+        //EventManager.instance.StartListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
     }
-    #endregion
 
-    #region Coroutines
-    private IEnumerator Fade()
+	private void Update()
+	{
+		if (overlayRenderer == null)
+		{
+            Debug.Log("overlay null");
+		}
+	}
+	#endregion
+
+	#region Coroutines
+	private IEnumerator Fade()
     {
-        while (overlayRenderer.color.a > 0)
-        {
-            Color currentColour = overlayRenderer.color;
-            var newAlpha = overlayRenderer.color.a - fadeSpeed * Time.deltaTime;
-            overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, newAlpha);
-            yield return null;
-        }
+		while (overlayRenderer.color.a > 0)
+		{
+			Color currentColour = overlayRenderer.color;
+			var newAlpha = overlayRenderer.color.a - fadeSpeed * Time.deltaTime;
+			overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, newAlpha);
+			yield return null;
+		}
+		yield break;
     }
     #endregion
 
@@ -50,13 +60,20 @@ public class BeatUIHandler : MonoBehaviour
     {
         if (overlayRenderer == null)
         {
-            Debug.Log("overlay is null");
+            Debug.Log("overlay is null 1");
             return;
         }
 
         Color currentColour = overlayRenderer.color;
         overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 1.0f);
-        StartCoroutine(Fade());
+        //StartCoroutine(Fade());
+        FadeImage();
+    }
+
+    private void FadeImage()
+	{
+        Color currentColour = overlayRenderer.color;
+        overlayRenderer.DOColor(new Color(currentColour.r, currentColour.g, currentColour.b, 0), 1);
     }
 
     private void ChangeOverlay(EventArgumentData ead)
@@ -69,7 +86,7 @@ public class BeatUIHandler : MonoBehaviour
 		}
 		else
 		{
-            overlayRenderer.sprite = regularBeatOverlay;
+            //overlayRenderer.sprite = regularBeatOverlay;
 		}
 	}
     #endregion

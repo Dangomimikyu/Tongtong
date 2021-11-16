@@ -67,9 +67,6 @@ public class UnitDataManager : MonoBehaviour
 			for (int i = 0; i < ud.Count; ++i)
 			{
 				// equip a weapon for testing
-				Weapon wpn = new Weapon();
-				wpn.weaponType = WeaponAttributes.WeaponType.Rifle;
-				ModifyWeapons(ud[i], wpn, true);
 				activeUnitData.Add(ud[i]);
 			}
 		}
