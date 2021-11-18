@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DangoMimikyu.EventManagement;
+using DG.Tweening;
 
 // macros
 using cmdCommand = CommandAtrributes.Commands;
@@ -60,8 +61,9 @@ public class UnitBehaviour : MonoBehaviour
         float multiplier = (float)potency + 0.5f;
         Debug.Log("multiplier: " + multiplier);
         Vector3 vel = Vector3.zero;
-        transform.localPosition = Vector3.SmoothDamp(transform.localPosition, new Vector3(transform.localPosition.x + multiplier, transform.localPosition.y, transform.localPosition.z), ref vel, Time.deltaTime * 0.01f);
+        //transform.localPosition = Vector3.SmoothDamp(transform.localPosition, new Vector3(transform.localPosition.x + multiplier, transform.localPosition.y, transform.localPosition.z), ref vel, Time.deltaTime * 0.01f);
         //transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(transform.localPosition.x + multiplier, transform.localPosition.y, transform.localPosition.z), Time.deltaTime);
+        transform.DOMoveX(transform.localPosition.x + multiplier, 1.0f).SetEase(Ease.InOutSine);
 
 	}
 

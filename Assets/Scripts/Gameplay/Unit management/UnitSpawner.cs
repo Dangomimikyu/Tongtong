@@ -45,8 +45,9 @@ public class UnitSpawner : MonoBehaviour
 		string currentSceneName = SceneManager.GetActiveScene().name;
 		Debug.Log("current scene name: " + currentSceneName);
 
-		// destroy the current UnitBehaviour GameObjects
+		// destroy the UnitBehaviour GameObjects from the previous scene
 		DestroyUnits();
+
 
 		// don't need to spawn anything if it's the other scenes
 		if (currentSceneName == "HomeBaseScene")
@@ -67,7 +68,7 @@ public class UnitSpawner : MonoBehaviour
 
 				m_unitDataManager.activeUnits.Add(newBehaviour);
 				EventManager.instance.DispatchEvent(GameEvents.Unit_Spawn, newBehaviour);
-				Debug.Log("spawned at: " + unit.transform.position);
+				Debug.Log("spawned at (home): " + unit.transform.position);
 			}
 		}
 		else if (currentSceneName == "ExpeditionScene")
@@ -86,7 +87,7 @@ public class UnitSpawner : MonoBehaviour
 
 				m_unitDataManager.activeUnits.Add(newBehaviour);
 				EventManager.instance.DispatchEvent(GameEvents.Unit_Spawn, newBehaviour);
-				Debug.Log("spawned at: " + unit.transform.position);
+				Debug.Log("spawned at (exp): " + unit.transform.position);
 			}
 		}
 	}
@@ -131,7 +132,15 @@ public class UnitSpawner : MonoBehaviour
 	#region Destroy functions
 	private void DestroyUnits()
 	{
+		List<UnitBehaviour> ublist = new List<UnitBehaviour>();
 		foreach (UnitBehaviour ub in m_unitDataManager.activeUnits)
+		{
+			//Destroy(ub.gameObject);
+			m_unitDataManager.activeUnits.Remove(ub);
+			ublist.Add(ub);
+		}
+
+		foreach (UnitBehaviour ub in ublist)
 		{
 			Destroy(ub.gameObject);
 		}

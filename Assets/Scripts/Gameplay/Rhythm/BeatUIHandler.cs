@@ -37,14 +37,6 @@ public class BeatUIHandler : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
 		EventManager.instance.StartListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
 	}
-
-	private void Update()
-	{
-		if (m_beatUICanvas == null)
-		{
-			Debug.Log("BREAKBREAKBREAK");
-		}
-	}
 	#endregion
 
 	#region Coroutines
@@ -90,10 +82,10 @@ public class BeatUIHandler : MonoBehaviour
 		Color currentColour = overlayRenderer.color;
 		overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 1.0f);
 		//StartCoroutine(Fade());
-		FadeImage();
+		FadeImage((float)ead.eventParams[0]);
 	}
 
-	private void FadeImage()
+	private void FadeImage(float beatDuration)
 	{
 		//Debug.Log("call");
 		if (overlayRenderer == null)
@@ -104,7 +96,7 @@ public class BeatUIHandler : MonoBehaviour
 
 		Color currentColour = overlayRenderer.color;
 		//overlayRenderer.DOColor(new Color(currentColour.r, currentColour.g, currentColour.b, 0), 1);
-		overlayRenderer.DOFade(0, 0.5f);
+		overlayRenderer.DOFade(0, beatDuration * 0.5f);
 	}
 
 	private void ChangeOverlay(EventArgumentData ead)

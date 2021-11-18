@@ -88,12 +88,14 @@ public class UnitDataManager : MonoBehaviour
 		}
 	}
 
-	private void ClearActiveList()
+	public void ClearActiveList()
 	{
 		for (int i = 0; i < activeUnits.Count; ++i)
 		{
-			activeUnits[i] = null;
+			//activeUnits[i] = null;
+			Destroy(activeUnits[i].gameObject);
 		}
+		activeUnits.Clear();
 	}
 	#endregion
 
