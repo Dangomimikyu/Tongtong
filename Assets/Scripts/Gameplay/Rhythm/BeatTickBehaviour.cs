@@ -12,18 +12,17 @@ public class BeatTickBehaviour : MonoBehaviour
     {
 		m_rectTransform = GetComponent<RectTransform>();
     }
-
-    void Update()
-    {
-
-    }
 	#endregion
 
 	#region Movement functions
-	public void Move(float beatDuration)
+	public void Move(float beatDuration, bool RtoL)
 	{
 		m_rectTransform = GetComponent<RectTransform>();
-		m_rectTransform.DOAnchorPosX(850.0f, beatDuration).SetEase(Ease.Linear).OnComplete(() => { Destroy(gameObject); }); // translate the beat tick then destroy the canvas when it's done
+		if (!RtoL)
+		{
+			m_rectTransform.anchoredPosition = new Vector2(850.0f, m_rectTransform.anchoredPosition.y);
+		}
+			m_rectTransform.DOAnchorPosX(0, beatDuration).SetEase(Ease.Linear).OnComplete(() => { Destroy(gameObject); }); // translate the beat tick then destroy the canvas when it's done
 	}
 	#endregion
 }

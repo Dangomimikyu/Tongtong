@@ -24,7 +24,7 @@ public class PlayerInputHandler : MonoBehaviour
 
 	private void Start()
 	{
-		EventManager.instance.StartListening(GameEvents.Misc_SceneChange, ChangeInputMap);
+		//EventManager.instance.StartListening(GameEvents.Misc_SceneChange, ChangeInputMap);
 		m_playerInputAction.Expedition.Drum.performed += ParseCommandInput;
 	}
 	private void OnEnable()
@@ -44,16 +44,15 @@ public class PlayerInputHandler : MonoBehaviour
     {
 		string currentSceneName = SceneManager.GetActiveScene().name;
 
-		if (currentSceneName != "ExpeditionScene")
+		if (currentSceneName == "ExpeditionScene")
         {
+			m_playerInputAction.Menus.Disable();
 			m_playerInputAction.Expedition.Enable();
         }
         else
         {
-			if (!m_playerInputAction.Menus.enabled)
-            {
-				m_playerInputAction.Menus.Enable();
-            }
+			m_playerInputAction.Expedition.Disable();
+			m_playerInputAction.Menus.Enable();
         }
     }
 	#endregion
@@ -69,6 +68,7 @@ public class PlayerInputHandler : MonoBehaviour
 			case cmdInput.Attack:
 			case cmdInput.Defend:
 			case cmdInput.Magic:
+				Debug.Log("PLAYER INPUT, value: " + input);
 				EventManager.instance.DispatchEvent(GameEvents.Input_Drum, input); // call the drum input event and let the beat tracker decide what to do
 				break;
 			default:

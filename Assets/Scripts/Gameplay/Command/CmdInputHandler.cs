@@ -23,6 +23,7 @@ public class CmdInputHandler : MonoBehaviour
 
 	#region Tracking coroutine variables
 	private Coroutine c_track = null;
+	[SerializeField]
 	private bool m_inputThisBeat = false; // true if the player has cast an input during this beat
 	private short m_currentBeat = 0;
 	#endregion

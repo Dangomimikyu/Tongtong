@@ -62,6 +62,7 @@ public class UnitBehaviour : MonoBehaviour
         Vector3 vel = Vector3.zero;
         transform.localPosition = Vector3.SmoothDamp(transform.localPosition, new Vector3(transform.localPosition.x + multiplier, transform.localPosition.y, transform.localPosition.z), ref vel, Time.deltaTime * 0.01f);
         //transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(transform.localPosition.x + multiplier, transform.localPosition.y, transform.localPosition.z), Time.deltaTime);
+
 	}
 
     public void Retreat(cmdPotency potency)
