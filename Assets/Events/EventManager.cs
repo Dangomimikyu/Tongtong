@@ -21,7 +21,7 @@ namespace DangoMimikyu.EventManagement
 			}
 			else
 			{
-				Debug.LogWarning("Existing EventManager already exist but you're trying to make a new one. will destroy the old one");
+				Debug.LogWarning("Existing EventManager already exist but you're trying to make a new one. Will destroy the old one");
 				Destroy(instance);
 				instance = this;
 			}

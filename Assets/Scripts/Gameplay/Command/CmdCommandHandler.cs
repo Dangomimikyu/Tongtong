@@ -12,6 +12,11 @@ public class CmdCommandHandler : MonoBehaviour
 {
 	private Dictionary<cmdInput[], cmdCommand> m_commandDictionary = new Dictionary<cmdInput[], cmdCommand>(new CommandDictionary());
 
+	~CmdCommandHandler()
+	{
+		EventManager.instance.StopListening(GameEvents.Input_CommandComplete, ProcessCommand);
+	}
+
 	#region Monobehaviour functions
 	void Start()
 	{

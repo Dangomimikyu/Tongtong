@@ -21,6 +21,12 @@ public class ComboTracker : MonoBehaviour
 	private short m_highestCombo = 0;
 	private bool m_feverStatus = false;
 
+	~ComboTracker()
+	{
+		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, ModifyCombo);
+		EventManager.instance.StopListening(GameEvents.Input_CommandFail, ModifyCombo);
+	}
+
 	#region Monobehaviour functions
 	private void Start()
 	{

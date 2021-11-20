@@ -10,10 +10,6 @@ public class BeatUIHandler : MonoBehaviour
 	public Sprite regularBeatOverlay;
 	public Sprite feverBeatOverlay;
 	public Image overlayRenderer;
-	[SerializeField]
-	private Canvas m_beatUICanvas;
-	[SerializeField]
-	private GameObject m_beatTickPrefab;
 
 	[Header("Overlay settings")]
 	[Range(0.0f, 1.0f)]
@@ -23,6 +19,13 @@ public class BeatUIHandler : MonoBehaviour
 	[Header("Combo variables")]
 	[SerializeField]
 	private int m_comboCount;
+
+	~BeatUIHandler()
+	{
+		EventManager.instance.StopListening(GameEvents.Gameplay_MetronomeBeat, RenderOutline);
+		EventManager.instance.StopListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
+		EventManager.instance.StopListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
+	}
 
 	#region Monobehaviour functions
 	private void Start()
@@ -39,37 +42,6 @@ public class BeatUIHandler : MonoBehaviour
 	}
 	#endregion
 
-	#region Coroutines
-	private IEnumerator Fade()
-	{
-		while (overlayRenderer.color.a > 0)
-		{
-			Color currentColour = overlayRenderer.color;
-			var newAlpha = overlayRenderer.color.a - fadeSpeed * Time.deltaTime;
-			overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, newAlpha);
-			yield return null;
-		}
-		yield break;
-	}
-	#endregion
-
-	#region Beat Tick functions
-	private void SpawnTick(EventArgumentData ead)
-	{
-		float beatDuration = (float)ead.eventParams[0];
-		//GameObject tick = Instantiate(m_beatTickPrefab, m_beatUICanvas.transform);
-		if (m_beatUICanvas == null)
-		{
-			Debug.Log("what the fuck");
-			return;
-		}
-		GameObject tick1 = Instantiate(m_beatTickPrefab, m_beatUICanvas.transform);
-		tick1.GetComponent<BeatTickBehaviour>().Move(beatDuration * 3f, true);
-		GameObject tick2 = Instantiate(m_beatTickPrefab, m_beatUICanvas.transform);
-		tick2.GetComponent<BeatTickBehaviour>().Move(beatDuration * 3f, false);
-	}
-	#endregion
-
 	#region Beat outline UI functions
 	public void RenderOutline(EventArgumentData ead)
 	{
@@ -81,7 +53,6 @@ public class BeatUIHandler : MonoBehaviour
 
 		Color currentColour = overlayRenderer.color;
 		overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 1.0f);
-		//StartCoroutine(Fade());
 		FadeImage((float)ead.eventParams[0]);
 	}
 

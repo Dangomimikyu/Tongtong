@@ -1,8 +1,10 @@
 // note: weapon in this context is defined as "something equip-able that's directly used in combat" so this includes shields
+using UnityEngine;
 using WeaponType = WeaponAttributes.WeaponType;
 
 public class Weapon
 {
+	public Transform firingPoint;
 	public WeaponType weaponType;
 	public float damage;
 	public bool twoHanded;

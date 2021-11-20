@@ -30,6 +30,12 @@ public class UnitSpawner : MonoBehaviour
 	[SerializeField]
 	private Vector3 m_fieldScaleSize;
 
+	~UnitSpawner()
+	{
+		EventManager.instance.StopListening(GameEvents.Gameplay_UpdateUnits, SpawnUnits);
+		EventManager.instance.StopListening(GameEvents.Misc_SceneChange, SpawnUnits);
+	}
+
 	#region Monobehaviour functions
 	void Start()
 	{

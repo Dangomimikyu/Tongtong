@@ -28,6 +28,11 @@ public class CmdInputHandler : MonoBehaviour
 	private short m_currentBeat = 0;
 	#endregion
 
+	~CmdInputHandler()
+	{
+		EventManager.instance.StopListening(GameEvents.Input_Drum, InputBeat);
+	}
+
 	#region Monobehaviour functions
 	private void Start()
 	{

@@ -34,9 +34,4 @@ public class TestAddUnit : MonoBehaviour
 		Debug.Log("dispatching event");
 		EventManager.instance.DispatchEvent(GameEvents.Gameplay_UpdateUnits, udlist);
 	}
-
-    void Update()
-    {
-
-    }
 }

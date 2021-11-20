@@ -955,6 +955,7 @@ GameObject:
   - component: {fileID: 589724963}
   - component: {fileID: 589724964}
   - component: {fileID: 589724965}
+  - component: {fileID: 589724966}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -1053,6 +1054,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &589724966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589724962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263cd6bb2d688af4cb0f4eb0038009ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &637236958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1571,8 +1584,6 @@ MonoBehaviour:
   regularBeatOverlay: {fileID: 21300000, guid: 6502a59559563ed4bb7249718c94ccf3, type: 3}
   feverBeatOverlay: {fileID: 21300000, guid: 17c8dee6fdf5b3b40b01c99686378f7e, type: 3}
   overlayRenderer: {fileID: 539918266}
-  m_beatUICanvas: {fileID: 0}
-  m_beatTickPrefab: {fileID: 5344270765126240817, guid: 6ed21bd8245e9cd4a920ab8a6d4aa3da, type: 3}
   fadeSpeed: 0.7
   m_comboCount: 0
 --- !u!1 &1118779035

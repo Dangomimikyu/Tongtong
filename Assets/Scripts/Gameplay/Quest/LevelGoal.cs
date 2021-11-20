@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DangoMimikyu.EventManagement;
 
 public class LevelGoal : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class LevelGoal : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		// end the current quest by dispatching event
-		Debug.Log("finished level");
+		EventManager.instance.DispatchEvent(GameEvents.Gameplay_QuestEnd);
 	}
 	#endregion
 }

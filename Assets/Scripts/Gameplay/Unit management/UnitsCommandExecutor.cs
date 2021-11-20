@@ -13,6 +13,12 @@ public class UnitsCommandExecutor : MonoBehaviour
 	[SerializeField]
 	private List<UnitBehaviour> m_playerUnits;
 
+	~UnitsCommandExecutor()
+	{
+		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, ExecuteCommand);
+		EventManager.instance.StopListening(GameEvents.Unit_Spawn, UnitSpawned);
+	}
+
 	#region Monobehaviour functions
 	private void Start()
     {

@@ -5,12 +5,10 @@ using UnityEngine;
 public class AccountInformation : MonoBehaviour
 {
     private uint money;
-    // crafting material list
+	// crafting material list
 
-
-
-    // Start is called before the first frame update
-    void Start()
+	#region Monobehaviour functions
+	void Start()
     {
 
     }
@@ -20,4 +18,5 @@ public class AccountInformation : MonoBehaviour
     {
 
     }
+    #endregion
 }
