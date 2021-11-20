@@ -14,8 +14,8 @@ public class Quest
 {
 	private string m_ownerAccountName = "";
 	public string questName { private set; get; }
-	private QuestManager m_questManager;
 	public QuestRewards questRewards;
+	public bool active;
 
 	#region Constructor
 	public Quest()
@@ -45,7 +45,11 @@ public class Quest
 	#region Completion rewards
 	public void CompleteQuest(EventArgumentData ead)
 	{
-		Debug.Log("completed quest");
+		if (active)
+		{
+			Debug.Log("completed quest");
+			QuestManager.instance.CompleteQuest(this);
+		}
 	}
 	#endregion
 }
