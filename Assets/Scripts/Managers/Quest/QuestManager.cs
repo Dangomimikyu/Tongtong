@@ -5,9 +5,9 @@ using DangoMimikyu.EventManagement;
 
 public class QuestManager : MonoBehaviour
 {
-    public static QuestManager instance { private set; get; }
-    private List<Quest> m_questList;
+    private List<Quest> m_questList = new List<Quest>();
 	private Quest m_activeQuest = null;
+	[SerializeField]
 	private AccountInformation m_playerAccountInformation;
 
 	~QuestManager()
@@ -16,23 +16,6 @@ public class QuestManager : MonoBehaviour
 	}
 
 	#region Monobehaviour functions
-	private void Awake()
-	{
-		if (!instance)
-		{
-			Debug.Log("created this instance of QuestManager");
-			instance = this;
-		}
-		else
-		{
-			Debug.LogWarning("Existing QuestManager already exist but you're trying to make a new one. Will destroy the old one");
-			Destroy(instance);
-			instance = this;
-		}
-
-		m_playerAccountInformation = new AccountInformation();
-	}
-
 	private void Start()
 	{
 		//EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
@@ -44,8 +27,10 @@ public class QuestManager : MonoBehaviour
 	#region Quest creation functions
 	private void CreateQuest()
 	{
+		//Quest newQuest = new Quest("testes name", 69);
 		Quest newQuest = new Quest();
 		newQuest.questRewards.money = 10;
+		newQuest.questManager = this;
 		m_questList.Add(newQuest);
 	}
 	#endregion
@@ -58,6 +43,7 @@ public class QuestManager : MonoBehaviour
 
 	public void CompleteQuest(Quest q)
 	{
+		Debug.Log("quest name: " + q.questName);
 		m_playerAccountInformation.ReceiveRewards(q);
 	}
 	#endregion

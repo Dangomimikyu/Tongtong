@@ -15,6 +15,7 @@ public class Quest
 	private string m_ownerAccountName = "";
 	public string questName { private set; get; }
 	public QuestRewards questRewards;
+	public QuestManager questManager;
 	public bool active;
 
 	#region Constructor
@@ -22,6 +23,14 @@ public class Quest
 	{
 		questName = "defaultQuestName";
 		questRewards.money = 1;
+		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
+	}
+
+	public Quest(string name = "defaultQuestName", uint moneyReward = 1)
+	{
+		questName = name;
+		questRewards.money = moneyReward;
+		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 	}
 
 	~Quest()
@@ -48,7 +57,7 @@ public class Quest
 		if (active)
 		{
 			Debug.Log("completed quest");
-			QuestManager.instance.CompleteQuest(this);
+			questManager.CompleteQuest(this);
 		}
 	}
 	#endregion

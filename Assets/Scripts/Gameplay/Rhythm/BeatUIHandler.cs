@@ -40,6 +40,13 @@ public class BeatUIHandler : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
 		EventManager.instance.StartListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
 	}
+
+	private void OnDisable()
+	{
+		EventManager.instance.StopListening(GameEvents.Gameplay_MetronomeBeat, RenderOutline);
+		EventManager.instance.StopListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
+		EventManager.instance.StopListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
+	}
 	#endregion
 
 	#region Beat outline UI functions
@@ -47,7 +54,7 @@ public class BeatUIHandler : MonoBehaviour
 	{
 		if (overlayRenderer == null)
 		{
-			//Debug.Log("overlay is null 1");
+			Debug.Log("overlay is null 1");
 			return;
 		}
 
@@ -67,7 +74,7 @@ public class BeatUIHandler : MonoBehaviour
 
 		Color currentColour = overlayRenderer.color;
 		//overlayRenderer.DOColor(new Color(currentColour.r, currentColour.g, currentColour.b, 0), 1);
-		overlayRenderer.DOFade(0, beatDuration * 0.5f);
+		overlayRenderer.DOFade(0.1f, beatDuration * 0.5f);
 	}
 
 	private void ChangeOverlay(EventArgumentData ead)
@@ -77,10 +84,12 @@ public class BeatUIHandler : MonoBehaviour
 		if (fever)
 		{
 			overlayRenderer.sprite = feverBeatOverlay;
+			//overlayRenderer.color = new Color(1f, 0f, 0f);
 		}
 		else
 		{
 			overlayRenderer.sprite = regularBeatOverlay;
+			//overlayRenderer.color = new Color(0.1084906f, 1f, 0.7643049f);
 		}
 	}
 	#endregion

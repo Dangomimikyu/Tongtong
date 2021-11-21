@@ -138,12 +138,23 @@ public class UnitSpawner : MonoBehaviour
 	#region Destroy functions
 	private void DestroyUnits()
 	{
+		if (m_unitDataManager.activeUnits.Count == 0)
+			return; // no need to continue further if theres nothing to destroy
+
 		List<UnitBehaviour> ublist = new List<UnitBehaviour>();
-		foreach (UnitBehaviour ub in m_unitDataManager.activeUnits)
+		//List<UnitBehaviour> currentActive = m_unitDataManager.activeUnits;
+		//foreach (UnitBehaviour ub in currentActive)
+		//{
+		//	//Destroy(ub.gameObject);
+		//	m_unitDataManager.activeUnits.Remove(ub);
+		//	ublist.Add(ub);
+		//}
+
+		int count = m_unitDataManager.activeUnits.Count;
+		for (int i = 0; i < count; ++i)
 		{
-			//Destroy(ub.gameObject);
-			m_unitDataManager.activeUnits.Remove(ub);
-			ublist.Add(ub);
+			ublist.Add(m_unitDataManager.activeUnits[0]);
+			m_unitDataManager.activeUnits.RemoveAt(0);
 		}
 
 		foreach (UnitBehaviour ub in ublist)

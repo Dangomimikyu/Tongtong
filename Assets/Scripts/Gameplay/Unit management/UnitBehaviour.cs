@@ -57,21 +57,23 @@ public class UnitBehaviour : MonoBehaviour
     public void MoveForward(cmdPotency potency)
 	{
         // choose a random point in front
+        float rand = Random.Range(0.75f, 1.25f);
         // distance depends on the potency
-        float multiplier = (float)potency + 0.5f;
-        Debug.Log("multiplier: " + multiplier);
-        Vector3 vel = Vector3.zero;
-        //transform.localPosition = Vector3.SmoothDamp(transform.localPosition, new Vector3(transform.localPosition.x + multiplier, transform.localPosition.y, transform.localPosition.z), ref vel, Time.deltaTime * 0.01f);
-        //transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(transform.localPosition.x + multiplier, transform.localPosition.y, transform.localPosition.z), Time.deltaTime);
-        transform.DOMoveX(transform.localPosition.x + multiplier, 1.0f).SetEase(Ease.InOutSine);
-
+        float moveDistance = (float)potency * rand + 0.5f; // range: 0.5 to 3
+        //Debug.Log("multiplier: " + multiplier);
+        transform.DOMoveX(transform.localPosition.x + moveDistance, 1.0f).SetEase(Ease.InOutSine);
 	}
 
     public void Retreat(cmdPotency potency)
 	{
-        // choose a random point behind
+        // choose a random point in front
+        float rand = Random.Range(0.75f, 1.25f);
         // distance depends on the potency
-	}
+        float moveDistance = (float)potency * rand + 0.5f; // range: 0.5 to 3
+        //Debug.Log("multiplier: " + multiplier);
+        transform.DOMoveX(transform.localPosition.x - moveDistance, 1.0f).SetEase(Ease.InOutSine);
+
+    }
     #endregion
 
     #region Combat functions
@@ -83,6 +85,7 @@ public class UnitBehaviour : MonoBehaviour
 
     public void Defend(cmdPotency potency)
     {
+
     }
 	#endregion
 

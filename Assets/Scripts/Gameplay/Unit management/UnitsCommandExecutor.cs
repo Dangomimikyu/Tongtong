@@ -12,6 +12,7 @@ public class UnitsCommandExecutor : MonoBehaviour
 {
 	[SerializeField]
 	private List<UnitBehaviour> m_playerUnits;
+	private UnitDataManager m_unitDataManager;
 
 	~UnitsCommandExecutor()
 	{
@@ -22,6 +23,7 @@ public class UnitsCommandExecutor : MonoBehaviour
 	#region Monobehaviour functions
 	private void Start()
     {
+		m_unitDataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
 		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, ExecuteCommand);
 		EventManager.instance.StartListening(GameEvents.Unit_Spawn, UnitSpawned);
     }
@@ -30,7 +32,8 @@ public class UnitsCommandExecutor : MonoBehaviour
 	#region Unit handling functions
 	private void UnitSpawned(EventArgumentData ead)
 	{
-		m_playerUnits.Add((UnitBehaviour)ead.eventParams[0]);
+		//m_playerUnits.Add((UnitBehaviour)ead.eventParams[0]);
+		m_playerUnits = m_unitDataManager.activeUnits;
 	}
 	#endregion
 
