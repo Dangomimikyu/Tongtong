@@ -68,7 +68,6 @@ public class PlayerInputHandler : MonoBehaviour
 			case cmdInput.Attack:
 			case cmdInput.Defend:
 			case cmdInput.Magic:
-				Debug.Log("PLAYER INPUT, value: " + input);
 				EventManager.instance.DispatchEvent(GameEvents.Input_Drum, input); // call the drum input event and let the beat tracker decide what to do
 				break;
 			default:

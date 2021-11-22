@@ -12,25 +12,26 @@ public class QuestManager : MonoBehaviour
 
 	~QuestManager()
 	{
-		//EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 	}
 
 	#region Monobehaviour functions
 	private void Start()
 	{
-		//EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
+		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 		// make a test quest first for demo purposes
-		CreateQuest();
+		CreateTestQuest();
 	}
 	#endregion
 
 	#region Quest creation functions
-	private void CreateQuest()
+	private void CreateTestQuest()
 	{
 		//Quest newQuest = new Quest("testes name", 69);
 		Quest newQuest = new Quest();
 		newQuest.questRewards.money = 10;
 		newQuest.questManager = this;
+		m_activeQuest = newQuest;
 		m_questList.Add(newQuest);
 	}
 	#endregion
@@ -38,7 +39,9 @@ public class QuestManager : MonoBehaviour
 	#region Quest payout functions
 	private void CompleteQuest(EventArgumentData ead)
 	{
-		m_playerAccountInformation.ReceiveRewards((Quest)ead.eventParams[0]);
+		//m_playerAccountInformation.ReceiveRewards((Quest)ead.eventParams[0]);
+		Debug.Log("quest name: " + m_activeQuest.questName);
+		m_playerAccountInformation.ReceiveRewards(m_activeQuest);
 	}
 
 	public void CompleteQuest(Quest q)

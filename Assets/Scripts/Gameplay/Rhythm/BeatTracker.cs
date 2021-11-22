@@ -49,6 +49,7 @@ public class BeatTracker : MonoBehaviour
 
 	#region Tracking coroutine variables
 	private bool m_outlineThisBeat = false;
+	private IEnumerator c_track;
 	[Range(0f, 1f)]
 	[SerializeField]
 	private float m_timeElapsed = 0.0f;
@@ -65,7 +66,10 @@ public class BeatTracker : MonoBehaviour
 	{
 		InitTimingZones();
 
-		StartCoroutine(TrackBeats());
+		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, EndTracking);
+
+		c_track = TrackBeats();
+		StartCoroutine(c_track);
 	}
 	#endregion
 
@@ -116,8 +120,15 @@ public class BeatTracker : MonoBehaviour
 
 			yield return null; // wait for next frame
 		}
-		EventManager.instance.DispatchEvent(GameEvents.Gameplay_QuestEnd, false);
 		yield break;
+	}
+	#endregion
+
+	#region Quest end functions
+	private void EndTracking(EventArgumentData ead)
+	{
+		Debug.Log("stopping tracking");
+		StopCoroutine(c_track);
 	}
 	#endregion
 
