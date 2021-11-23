@@ -336,6 +336,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2000701113}
   - {fileID: 1272437615}
   m_Father: {fileID: 817091642}
   m_RootOrder: 2
@@ -1528,8 +1529,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c595638256185d44c9ca6a3695922937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  regularBeatOverlay: {fileID: 21300000, guid: 6502a59559563ed4bb7249718c94ccf3, type: 3}
-  feverBeatOverlay: {fileID: 21300000, guid: 17c8dee6fdf5b3b40b01c99686378f7e, type: 3}
+  regularBeatOverlay: {fileID: 21300000, guid: 48dd6d7a5002aa448a292e7f2113bc27, type: 3}
+  feverBeatOverlay: {fileID: 21300000, guid: 610cbc1693c17e840aab00ea987c6bb2, type: 3}
   overlayRenderer: {fileID: 539918266}
   fadeSpeed: 0.7
   m_comboCount: 0
@@ -1748,7 +1749,7 @@ RectTransform:
   m_Children:
   - {fileID: 1185457185}
   m_Father: {fileID: 125380043}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2286,6 +2287,50 @@ Transform:
   m_Father: {fileID: 475959132}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2000701112
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2000701113}
+  - component: {fileID: 2000701114}
+  m_Layer: 0
+  m_Name: Quest End UI handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2000701113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000701112}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 125380043}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2000701114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000701112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a116db62d295e684fa9a8da7e22431a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rewardPanel: {fileID: 1185457186}
 --- !u!1 &2141154570
 GameObject:
   m_ObjectHideFlags: 0
