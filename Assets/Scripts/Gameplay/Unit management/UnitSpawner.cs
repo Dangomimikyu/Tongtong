@@ -70,7 +70,7 @@ public class UnitSpawner : MonoBehaviour
 				unit.transform.localScale = m_baseScaleSize;
 				unit.GetComponent<UnitBehaviour>().unitData = m_unitDataManager.activeUnitData[i];
 				UnitBehaviour newBehaviour = unit.GetComponent<UnitBehaviour>();
-				SpawnWeapon(unit, newBehaviour.unitData.leftWeapon, newBehaviour.unitData.rightWeapon);
+				SpawnWeapon(unit, ref newBehaviour.unitData.leftWeapon, ref newBehaviour.unitData.rightWeapon);
 
 				m_unitDataManager.activeUnits.Add(newBehaviour);
 				EventManager.instance.DispatchEvent(GameEvents.Unit_Spawn, newBehaviour);
@@ -89,7 +89,7 @@ public class UnitSpawner : MonoBehaviour
 				unit.transform.localScale = m_baseScaleSize;
 				unit.GetComponent<UnitBehaviour>().unitData = m_unitDataManager.activeUnitData[i];
 				UnitBehaviour newBehaviour = unit.GetComponent<UnitBehaviour>();
-				SpawnWeapon(unit, newBehaviour.unitData.leftWeapon, newBehaviour.unitData.rightWeapon);
+				SpawnWeapon(unit, ref newBehaviour.unitData.leftWeapon, ref newBehaviour.unitData.rightWeapon);
 
 				m_unitDataManager.activeUnits.Add(newBehaviour);
 				EventManager.instance.DispatchEvent(GameEvents.Unit_Spawn, newBehaviour);
@@ -98,13 +98,13 @@ public class UnitSpawner : MonoBehaviour
 		}
 	}
 
-	private void SpawnWeapon(GameObject parent, Weapon left, Weapon right)
+	private void SpawnWeapon(GameObject parent, ref Weapon left, ref Weapon right)
 	{
 		if (left != null)
 		{
 			GameObject leftWeaponPrefab = m_weaponAttributes.GetWeaponPrefab(left);
-			//GameObject leftWeapon = Instantiate(leftWeaponPrefab, parent.transform.position + m_leftWeaponPos, Quaternion.identity, parent.transform);
 			GameObject leftWeapon = Instantiate(leftWeaponPrefab, parent.transform.position, Quaternion.identity, parent.transform);
+			left.firingPoint = leftWeaponPrefab.GetComponent<WeaponInformation>().weaponFiringPoint;
 			leftWeapon.transform.localScale = Vector3.one;
 			if (left.twoHanded)
 			{
@@ -125,6 +125,7 @@ public class UnitSpawner : MonoBehaviour
 		{
 			GameObject rightWeaponPrefab = m_weaponAttributes.GetWeaponPrefab(right);
 			GameObject rightWeapon = Instantiate(rightWeaponPrefab, parent.transform.position + m_rightWeaponPos, Quaternion.identity, parent.transform);
+			right.firingPoint = rightWeaponPrefab.GetComponent<WeaponInformation>().weaponFiringPoint;
 			rightWeapon.transform.localPosition = m_rightWeaponPos;
 			rightWeapon.transform.localScale = Vector3.one;
 		}
