@@ -371,8 +371,8 @@ MonoBehaviour:
   gun_rocketPrefab: {fileID: 2860634163447809527, guid: f7584c251ed8f8d4fa4c53ae8aa32d1c, type: 3}
   gun_laserPrefab: {fileID: 1322018248614684964, guid: c7b425de6a5a3e642b0ce3fc91d33df3, type: 3}
   bullet_radioPrefab: {fileID: 0}
-  bullet_pistolPrefab: {fileID: 0}
-  bullet_riflePrefab: {fileID: 0}
+  bullet_pistolPrefab: {fileID: 4616792544379181470, guid: 11a4fd785e3950947bf93e3f6980a34c, type: 3}
+  bullet_riflePrefab: {fileID: 4616792544379181470, guid: 11a4fd785e3950947bf93e3f6980a34c, type: 3}
   bullet_sniperPrefab: {fileID: 0}
   bullet_rocketPrefab: {fileID: 0}
   bullet_laserPrefab: {fileID: 0}

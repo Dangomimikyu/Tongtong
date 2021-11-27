@@ -9,6 +9,7 @@ TagManager:
   - UnitManager
   - WeaponFirePoint
   - UnitEditingUIBox
+  - EnemyUnit
   layers:
   - Default
   - TransparentFX
