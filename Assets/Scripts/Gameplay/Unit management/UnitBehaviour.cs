@@ -79,8 +79,8 @@ public class UnitBehaviour : MonoBehaviour
     #region Combat functions
     public void Attack(cmdPotency potency, cmdCommand cmd)
 	{
-        //Transform firingPoint = unitData.leftWeapon;
-
+        Transform firingPoint = unitData.leftWeapon.firingPoint;
+        Debug.Log("firing point: " + firingPoint.transform.position);
 	}
 
     public void Defend(cmdPotency potency)
