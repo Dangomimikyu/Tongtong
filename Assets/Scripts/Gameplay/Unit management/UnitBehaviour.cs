@@ -24,11 +24,12 @@ public class UnitBehaviour : MonoBehaviour
     // private Enemy m_targettedEnemy
     private bool m_spawned = false;
 
+    private UnitObjectSpawner m_bulletSpawner;
+
 	#region Monobehaviour functions
 	void Start()
     {
-        // tell the unit manager that this has been spawned
-        //EventManager.instance.DispatchEvent(GameEvents.Unit_Spawn, GetComponent<UnitBehaviour>());
+        m_bulletSpawner = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitObjectSpawner>();
     }
 
     void Update()
@@ -42,14 +43,8 @@ public class UnitBehaviour : MonoBehaviour
 	{
         if (!m_spawned)
 		{
-
             m_spawned = true;
 		}
-	}
-
-    public void test()
-	{
-        Debug.Log("bruhmoment");
 	}
     #endregion
 
@@ -72,7 +67,6 @@ public class UnitBehaviour : MonoBehaviour
         float moveDistance = (float)potency * rand + 0.5f; // range: 0.5 to 3
         //Debug.Log("multiplier: " + multiplier);
         transform.DOMoveX(transform.localPosition.x - moveDistance, 1.0f).SetEase(Ease.InOutSine);
-
     }
     #endregion
 
@@ -81,6 +75,8 @@ public class UnitBehaviour : MonoBehaviour
 	{
         Transform firingPoint = unitData.leftWeapon.firingPoint;
         Debug.Log("firing point: " + firingPoint.transform.position);
+
+        m_bulletSpawner.SpawnBullet(gameObject, firingPoint, 300f, 10);
 	}
 
     public void Defend(cmdPotency potency)
