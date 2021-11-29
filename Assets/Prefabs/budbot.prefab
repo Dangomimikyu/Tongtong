@@ -39,13 +39,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2922324302884984903}
-  - component: {fileID: 8205543371538504661}
   - component: {fileID: 6969636466871059008}
   - component: {fileID: 1384062921019477988}
   - component: {fileID: 7695818674235318804}
+  - component: {fileID: 6643936035612520687}
   m_Layer: 0
   m_Name: budbot
-  m_TagString: Untagged
+  m_TagString: EnemyUnit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,27 +59,13 @@ Transform:
   m_GameObject: {fileID: 6998299827555771691}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 1856674831953372994}
   - {fileID: 5547317643700072939}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8205543371538504661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6998299827555771691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a7afcbf9b83b7045bc439666f06d366, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_selfCollider: {fileID: 1384062921019477988}
-  m_aggroCollider: {fileID: 0}
 --- !u!212 &6969636466871059008
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -169,7 +155,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -178,6 +164,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6643936035612520687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6998299827555771691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae64392765eca704ca9d9f412b88e5db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7493284231093274042
 GameObject:
   m_ObjectHideFlags: 0

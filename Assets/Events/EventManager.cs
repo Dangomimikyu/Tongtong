@@ -36,6 +36,7 @@ namespace DangoMimikyu.EventManagement
 			{
 				wrapper = new EventWrapper();                   // make a new event of this type
 				m_EventnameToEvent.Add(eventName, wrapper);     // add this new event to the dictionary
+				Debug.LogWarning(action.Method.Name + "started listening to " + eventName);
 			}
 			wrapper.eventAction += action;
 		}

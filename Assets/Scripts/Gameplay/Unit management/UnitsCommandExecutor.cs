@@ -27,6 +27,12 @@ public class UnitsCommandExecutor : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, ExecuteCommand);
 		EventManager.instance.StartListening(GameEvents.Unit_Spawn, UnitSpawned);
     }
+
+	private void OnDisable()
+	{
+		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, ExecuteCommand);
+		EventManager.instance.StopListening(GameEvents.Unit_Spawn, UnitSpawned);
+	}
 	#endregion
 
 	#region Unit handling functions
