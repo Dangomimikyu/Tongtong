@@ -15,9 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenuScene.unity
     guid: 13cf47f76ee6fef4298b352e26b56750
   - enabled: 1
-    path: Assets/Scenes/HomeBaseScene.unity
-    guid: 23bd06bc9ea127e4fbe679368bf61161
-  - enabled: 1
     path: Assets/Scenes/ExpeditionScene.unity
     guid: 4232a44f1c4b4fc43b9fb03188950844
+  - enabled: 1
+    path: Assets/Scenes/HomeBaseScene.unity
+    guid: 23bd06bc9ea127e4fbe679368bf61161
   m_configObjects: {}

@@ -36,10 +36,19 @@ public class EnemyBehaviour : MonoBehaviour
 	{
         EventManager.instance.StopListening(GameEvents.Gameplay_MetronomeBeat, MakeDecision);
     }
-    #endregion
 
-    #region AI decision functions
-    private void MakeDecision(EventArgumentData ead)
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.tag == "ViewBound")
+		{
+            Debug.Log("enemy making active");
+            EventManager.instance.DispatchEvent(GameEvents.Enemy_Active, this); // pass this EnemyBehaviour as the params
+		}
+	}
+	#endregion
+
+	#region AI decision functions
+	private void MakeDecision(EventArgumentData ead)
 	{
 
 	}

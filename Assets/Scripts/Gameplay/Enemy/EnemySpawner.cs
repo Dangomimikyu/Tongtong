@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DangoMimikyu.EventManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -47,8 +48,8 @@ public class EnemySpawner : MonoBehaviour
 		{
             testspawn = true;
             //m_spawnTimeElapsed = 0.0f;
-            //SpawnEnemies();
-            TestSpawn();
+            SpawnEnemies();
+            //TestSpawn();
 		}
     }
 	#endregion
@@ -68,6 +69,8 @@ public class EnemySpawner : MonoBehaviour
 
             GameObject budbot = Instantiate(m_enemyPrefab);
             budbot.transform.position = new Vector2(randomX, randomY);
+
+            EventManager.instance.DispatchEvent(GameEvents.Enemy_Spawn, budbot.GetComponent<EnemyBehaviour>());
 		}
 	}
 

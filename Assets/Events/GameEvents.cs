@@ -42,5 +42,9 @@ namespace DangoMimikyu.EventManagement
 		Unit_EquipItem,					// when unit equips/unequips something
 		Unit_Spawn,						// when unit spawns
 		Unit_Shoot,						// when unit shoots
+
+		// enemy events
+		Enemy_Spawn,
+		Enemy_Active,
 	}
 }
