@@ -86,7 +86,7 @@ public class UnitSpawner : MonoBehaviour
 				GameObject unit = Instantiate(m_unitPrefab, transform);
 				unit.transform.position = m_fieldSpawnLocations[i];
 				unit.transform.rotation = Quaternion.identity;
-				unit.transform.localScale = m_baseScaleSize;
+				unit.transform.localScale = m_fieldScaleSize;
 				unit.GetComponent<UnitBehaviour>().unitData = m_unitDataManager.activeUnitData[i];
 				UnitBehaviour newBehaviour = unit.GetComponent<UnitBehaviour>();
 				SpawnWeapon(unit, ref newBehaviour.unitData.leftWeapon, ref newBehaviour.unitData.rightWeapon);

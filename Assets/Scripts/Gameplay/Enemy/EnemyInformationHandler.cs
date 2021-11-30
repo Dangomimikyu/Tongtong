@@ -11,6 +11,12 @@ public class EnemyInformationHandler : MonoBehaviour
 	[SerializeField]
 	private List<EnemyBehaviour> m_activeEnemyList;
 
+	[Header("Enemy behaviour settings")]
+	[Tooltip("min number of beats to wait after an action")]
+	public int minWaitBeats;
+	[Tooltip("max number of beats to wait after an action")]
+	public int maxWaitBeats;
+
 	~EnemyInformationHandler()
 	{
 		EventManager.instance.StopListening(GameEvents.Gameplay_MetronomeBeat, MakeDecision);
@@ -51,6 +57,7 @@ public class EnemyInformationHandler : MonoBehaviour
 		foreach (EnemyBehaviour eb in m_activeEnemyList)
 		{
 			Debug.Log("making decision");
+			eb.MakeDecision();
 		}
 	}
 	#endregion

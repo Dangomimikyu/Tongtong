@@ -11,6 +11,7 @@ TagManager:
   - UnitEditingUIBox
   - EnemyUnit
   - ViewBound
+  - WeaponAttributes
   layers:
   - Default
   - TransparentFX

@@ -14,27 +14,14 @@ public class EnemyData
 public class EnemyBehaviour : MonoBehaviour
 {
     public EnemyData enemyData = new EnemyData();
-
-    ~EnemyBehaviour()
-	{
-        EventManager.instance.StopListening(GameEvents.Gameplay_MetronomeBeat, MakeDecision);
-    }
+    private int beatWaitCounter = 4; // how many beats to wait before deciding next action
+    private EnemyInformationHandler m_enemyManager;
 
     #region Monobehaviour functions
     void Start()
     {
         enemyData.health = 20;
-        EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, MakeDecision);
-    }
-
-    void Update()
-    {
-
-    }
-
-	private void OnDisable()
-	{
-        EventManager.instance.StopListening(GameEvents.Gameplay_MetronomeBeat, MakeDecision);
+        m_enemyManager = GameObject.FindGameObjectWithTag("EnemyManager").GetComponent<EnemyInformationHandler>();
     }
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -48,9 +35,15 @@ public class EnemyBehaviour : MonoBehaviour
 	#endregion
 
 	#region AI decision functions
-	private void MakeDecision(EventArgumentData ead)
+	public void MakeDecision()
 	{
+        if (--beatWaitCounter <= 0)
+        {
+            // reset the beat wait counter
+            beatWaitCounter = Random.Range(m_enemyManager.minWaitBeats, m_enemyManager.maxWaitBeats);
 
+            
+        }
 	}
     #endregion
 
