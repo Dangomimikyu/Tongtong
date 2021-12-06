@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 1384062921019477988}
   - component: {fileID: 7695818674235318804}
   - component: {fileID: 6643936035612520687}
+  - component: {fileID: 6753001604994884021}
   m_Layer: 0
   m_Name: budbot
   m_TagString: EnemyUnit
@@ -174,6 +175,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae64392765eca704ca9d9f412b88e5db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6753001604994884021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6998299827555771691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0140bb78dd59514690590111e45767b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7493284231093274042

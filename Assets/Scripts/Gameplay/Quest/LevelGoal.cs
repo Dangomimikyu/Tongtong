@@ -14,7 +14,7 @@ public class LevelGoal : MonoBehaviour
 	//}
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (m_questEnded)
+		if (m_questEnded || collision.gameObject.tag != "PlayerUnit")
 			return; // quest only needs to be ended once
 
 		Debug.Log("quest end trigger");

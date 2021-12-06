@@ -21,11 +21,11 @@ public class TestAddUnit : MonoBehaviour
 			//ublist.Add(tempub);
 
 			UnitData tempud = new UnitData();
-			Weapon wLeft = new Weapon();
-			wLeft.weaponType = WeaponAttributes.WeaponType.Pistol;
+			Weapon wLeft = new Weapon(WeaponAttributes.WeaponType.Pistol, true);
+			//wLeft.weaponType = WeaponAttributes.WeaponType.Pistol;
 			//wLeft.twoHanded = true;
-			Weapon wRight = new Weapon();
-			wRight.weaponType = WeaponAttributes.WeaponType.Rifle;
+			Weapon wRight = new Weapon(WeaponAttributes.WeaponType.Rifle, true);
+			//wRight.weaponType = WeaponAttributes.WeaponType.Rifle;
 			//wRight.twoHanded = true;
 			tempud.leftWeapon = wLeft;
 			tempud.rightWeapon = wRight;
@@ -33,5 +33,9 @@ public class TestAddUnit : MonoBehaviour
 		}
 		Debug.Log("dispatching event");
 		EventManager.instance.DispatchEvent(GameEvents.Gameplay_UpdateUnits, udlist);
+
+		// change scene after updating units
+		SceneController sc = GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>();
+		sc.LoadSceneString("HomeBaseScene");
 	}
 }

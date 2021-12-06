@@ -12,6 +12,9 @@ TagManager:
   - EnemyUnit
   - ViewBound
   - WeaponAttributes
+  - EnemyManager
+  - SceneController
+  - EnemyActiveTrigger
   layers:
   - Default
   - TransparentFX

@@ -42,9 +42,13 @@ namespace DangoMimikyu.EventManagement
 		Unit_EquipItem,					// when unit equips/unequips something
 		Unit_Spawn,						// when unit spawns
 		Unit_Shoot,						// when unit shoots
+		Unit_Damaged,					// unit takes damage
+		Unit_Died,						// unit was killed
 
 		// enemy events
-		Enemy_Spawn,
-		Enemy_Active,
+		Enemy_Spawn,					// enemy spawned
+		Enemy_Active,					// enemy bot entered the range near the player to be active
+		Enemy_Damaged,					// enemy bot took damage
+		Enemy_Died,						// enemy was killed
 	}
 }

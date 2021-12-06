@@ -24,12 +24,12 @@ public class UnitBehaviour : MonoBehaviour
     // private Enemy m_targettedEnemy
     private bool m_spawned = false;
 
-    private UnitObjectSpawner m_bulletSpawner;
+    private UnitObjectSpawner m_unitObjSpawner;
 
 	#region Monobehaviour functions
 	void Start()
     {
-        m_bulletSpawner = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitObjectSpawner>();
+        m_unitObjSpawner = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitObjectSpawner>();
     }
 
     void Update()
@@ -73,11 +73,19 @@ public class UnitBehaviour : MonoBehaviour
     #region Combat functions
     public void Attack(cmdPotency potency, cmdCommand cmd)
 	{
-        Transform firingPoint = unitData.leftWeapon.firingPoint;
-        Debug.Log("firing point: " + firingPoint.transform.position);
+        //Transform firingPoint = unitData.leftWeapon.firingPoint;
+        //Debug.Log("firing point: " + firingPoint.transform.position);
 
-        m_bulletSpawner.SpawnBullet(gameObject, firingPoint, 300f, 10);
+        //m_unitObjSpawner.SpawnBullet(gameObject, firingPoint, unitData.leftWeapon);
+        //m_unitObjSpawner.SpawnBullet(gameObject, firingPoint, unitData.rightWeapon);
+        ShootBullets();
 	}
+
+    public void ShootBullets()
+	{
+        m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.leftWeapon);
+        m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.rightWeapon);
+    }
 
     public void Defend(cmdPotency potency)
     {

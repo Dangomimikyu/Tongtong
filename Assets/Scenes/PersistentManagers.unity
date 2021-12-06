@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11119b51fd81dfd43bc383dc596fec88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_weaponAttributes: {fileID: 867243681}
   m_bulletPrefab: {fileID: 4616792544379181470, guid: 11a4fd785e3950947bf93e3f6980a34c, type: 3}
   m_shieldPrefab: {fileID: 0}
 --- !u!1 &634732067
@@ -274,7 +275,7 @@ GameObject:
   - component: {fileID: 634732071}
   m_Layer: 0
   m_Name: Scene Manager
-  m_TagString: Untagged
+  m_TagString: SceneController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -391,6 +392,38 @@ MonoBehaviour:
   bullet_sniperPrefab: {fileID: 0}
   bullet_rocketPrefab: {fileID: 0}
   bullet_laserPrefab: {fileID: 0}
+  m_bulletStatsList:
+  - velocity: 0
+    damage: 0
+    burstCooldown: 0
+    burstBulletCount: 0
+    ShootCooldown: 0
+  - velocity: 300
+    damage: 5
+    burstCooldown: 0
+    burstBulletCount: 0
+    ShootCooldown: 0
+  - velocity: 450
+    damage: 2.5
+    burstCooldown: 0.25
+    burstBulletCount: 3
+    ShootCooldown: 0
+  - velocity: 900
+    damage: 15
+    burstCooldown: 0
+    burstBulletCount: 0
+    ShootCooldown: 0
+  - velocity: 300
+    damage: 25
+    burstCooldown: 0
+    burstBulletCount: 0
+    ShootCooldown: 0
+  - velocity: 600
+    damage: 10
+    burstCooldown: 0.35
+    burstBulletCount: 0
+    ShootCooldown: 0
+  m_twoHandedList: 040000000500000006000000
 --- !u!4 &867243682
 Transform:
   m_ObjectHideFlags: 0
@@ -754,7 +787,7 @@ GameObject:
   - component: {fileID: 1911393324}
   m_Layer: 0
   m_Name: Enemy Information Handler
-  m_TagString: Untagged
+  m_TagString: EnemyManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -804,8 +837,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f9151dd185b91418262aca9fe038df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_totalEnemyList: []
   m_activeEnemyList: []
+  minWaitBeats: 2
+  maxWaitBeats: 5
 --- !u!114 &1911393324
 MonoBehaviour:
   m_ObjectHideFlags: 0

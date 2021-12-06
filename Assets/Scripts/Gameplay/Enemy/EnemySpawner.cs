@@ -96,8 +96,8 @@ public class EnemySpawner : MonoBehaviour
             GameObject budbot = Instantiate(m_enemyPrefab);
             EnemyBehaviour eb = budbot.GetComponent<EnemyBehaviour>();
             eb.enemyData.health = 20;
-            eb.enemyData.weapon = new Weapon();
-            eb.enemyData.weapon.weaponType = WeaponAttributes.WeaponType.Pistol;
+            eb.enemyData.weapon = new Weapon(WeaponAttributes.WeaponType.Pistol, false);
+            //eb.enemyData.weapon.weaponType = WeaponAttributes.WeaponType.Pistol;
             SpawnWeapon(budbot, ref eb.enemyData.weapon);
             budbot.transform.position = new Vector2(randomX, randomY);
         }

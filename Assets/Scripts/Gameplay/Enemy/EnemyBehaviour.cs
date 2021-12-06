@@ -17,19 +17,22 @@ public class EnemyBehaviour : MonoBehaviour
     private int beatWaitCounter = 4; // how many beats to wait before deciding next action
     private EnemyInformationHandler m_enemyManager;
 
+    private UnitObjectSpawner m_unitObjSpawner;
+
     #region Monobehaviour functions
     void Start()
     {
         enemyData.health = 20;
         m_enemyManager = GameObject.FindGameObjectWithTag("EnemyManager").GetComponent<EnemyInformationHandler>();
+        m_unitObjSpawner = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitObjectSpawner>();
     }
 
-	private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.gameObject.tag == "ViewBound")
+		if (collision.gameObject.tag == "EnemyActiveTrigger")
 		{
-            Debug.Log("enemy making active");
-            EventManager.instance.DispatchEvent(GameEvents.Enemy_Active, this); // pass this EnemyBehaviour as the params
+			Debug.Log("enemy making active");
+			EventManager.instance.DispatchEvent(GameEvents.Enemy_Active, this); // pass this EnemyBehaviour as the params
 		}
 	}
 	#endregion
@@ -42,7 +45,7 @@ public class EnemyBehaviour : MonoBehaviour
             // reset the beat wait counter
             beatWaitCounter = Random.Range(m_enemyManager.minWaitBeats, m_enemyManager.maxWaitBeats);
 
-            
+            Attack();
         }
 	}
     #endregion
@@ -50,7 +53,7 @@ public class EnemyBehaviour : MonoBehaviour
     #region Attacking functions
     private void Attack()
     {
-
+        m_unitObjSpawner.SpawnEnemyBullet(gameObject, enemyData.weapon);
     }
     #endregion
 }

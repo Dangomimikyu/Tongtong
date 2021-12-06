@@ -102,9 +102,9 @@ public class BeatTracker : MonoBehaviour
 	#region Coroutines
 	private IEnumerator TrackBeats()
 	{
-		while (Time.time < m_maxTime)
+		while (Time.timeSinceLevelLoad < m_maxTime)
 		{
-			m_timeElapsed = Time.time - (m_totalBeats * m_beatDuration);
+			m_timeElapsed = Time.timeSinceLevelLoad - (m_totalBeats * m_beatDuration);
 
 			if (m_timeElapsed >= (m_beatDuration * 0.5f) && !m_outlineThisBeat)
 			{
