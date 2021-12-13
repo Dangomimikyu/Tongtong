@@ -7,7 +7,7 @@ using DangoMimikyu.EventManagement;
 public class UnitData
 {
 	public uint id;
-	public float health = 10.0f;
+	public float health = 30.0f;
 	public Weapon leftWeapon = null;
 	public Weapon rightWeapon = null;
 }
@@ -25,23 +25,24 @@ public class UnitDataManager : MonoBehaviour
 
 	public string scene;
 
+	~UnitDataManager()
+	{
+		EventManager.instance.StopListening(GameEvents.Gameplay_UpdateUnits, SceneChangeHandler);
+		EventManager.instance.StopListening(GameEvents.Unit_Died, RemoveFromList);
+	}
+
 	#region Monobehaviour functions
 	void Start()
 	{
 		// listen to events
 		EventManager.instance.StartListening(GameEvents.Gameplay_UpdateUnits, SceneChangeHandler);
-
-		// init the active units to have 3 people to begin with
-		//for (int i = 0; i < 3; ++i)
-		//{
-		//	UnitBehaviour tempub = new UnitBehaviour();
-		//	activeUnits.Add(tempub);
-		//}
+		EventManager.instance.StartListening(GameEvents.Unit_Died, RemoveFromList);
 	}
 
-	void Update()
+	private void OnDisable()
 	{
-
+		EventManager.instance.StopListening(GameEvents.Gameplay_UpdateUnits, SceneChangeHandler);
+		EventManager.instance.StopListening(GameEvents.Unit_Died, RemoveFromList);
 	}
 	#endregion
 
@@ -72,17 +73,11 @@ public class UnitDataManager : MonoBehaviour
 		}
 		else if (currentSceneName == m_homeBaseSceneName)
 		{
-			// clear the current list
-			// ClearActiveList();
 			// add the list of unit behaviour to currently active (this is done to update the list on what weapon each unit has and their position in line
 			List<UnitBehaviour> ub = (List<UnitBehaviour>)ead.eventParams[0];
 			Debug.Log("called home, count: " + ub.Count);
 			for (int i = 0; i < ub.Count; ++i)
 			{
-				// equip a weapon for testing
-				//Weapon wpn = new Weapon();
-				//wpn.weaponType = WeaponAttributes.WeaponType.Pistol;
-				//ModifyWeapons(ub[i], wpn, true);
 				activeUnits.Add(ub[i]);
 			}
 		}
@@ -96,6 +91,22 @@ public class UnitDataManager : MonoBehaviour
 			Destroy(activeUnits[i].gameObject);
 		}
 		activeUnits.Clear();
+	}
+
+	private void RemoveFromList(EventArgumentData ead)
+	{
+		activeUnits.Remove((UnitBehaviour)ead.eventParams[0]);
+
+		// trigger lose event if all units have been killed
+		if (activeUnits.Count <= 0) // no more player units on the field
+		{
+			EventManager.instance.DispatchEvent(GameEvents.Gameplay_QuestAbandoned);
+		}
+	}
+
+	public UnitBehaviour GetFrontUnit()
+	{
+		return activeUnits[activeUnits.Count - 1];
 	}
 	#endregion
 
@@ -121,6 +132,12 @@ public class UnitDataManager : MonoBehaviour
 	private void ModifyArmour(EventArgumentData ead)
 	{
 
+	}
+	#endregion
+
+	#region Quest functions
+	private void QuestEnd(EventArgumentData ead)
+	{
 	}
 	#endregion
 }

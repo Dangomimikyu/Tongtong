@@ -121,7 +121,7 @@ public class BeatUIHandler : MonoBehaviour
 	#region Beat Input UI functions
 	private void EditInputUI(EventArgumentData ead)
 	{
-		CommandAtrributes.Inputs input = (CommandAtrributes.Inputs)ead.eventParams[0];
+		CommandAtrributes.Inputs input = (CommandAtrributes.Inputs)ead.eventParams[0];	
 		Sprite newSprite = m_noInputSprite; // set the newSprite to be the noInput initially
 
 		// check for double input
@@ -160,7 +160,7 @@ public class BeatUIHandler : MonoBehaviour
 
 	private void ResetBeatInputUI()
 	{
-		Debug.Log("RESETTING");
+		//Debug.Log("RESETTING");
 		foreach (Image i in inputDisplayList)
 		{
 			i.sprite = m_noInputSprite;

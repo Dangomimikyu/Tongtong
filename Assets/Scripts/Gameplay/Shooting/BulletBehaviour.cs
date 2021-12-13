@@ -21,7 +21,8 @@ public class BulletBehaviour : MonoBehaviour
 			// destroy this object then deal damage to enemy
 			Debug.Log("hit enemy");
 			EnemyBehaviour eb = collision.gameObject.GetComponent<EnemyBehaviour>();
-			eb.enemyData.health -= m_bulletInfo.damage;
+			//eb.enemyData.health -= m_bulletInfo.damage;
+			eb.TakeDamage(m_bulletInfo.damage);
 			if (eb.enemyData.health <= 0.0f)
 			{
 				EventManager.instance.DispatchEvent(GameEvents.Enemy_Died, eb);
@@ -39,7 +40,8 @@ public class BulletBehaviour : MonoBehaviour
 		{
 			Debug.Log("hit player");
 			UnitBehaviour ub = collision.gameObject.GetComponent<UnitBehaviour>();
-			ub.unitData.health -= m_bulletInfo.damage;
+			//ub.unitData.health -= m_bulletInfo.damage;
+			ub.TakeDamage(m_bulletInfo.damage);
 			if (ub.unitData.health <= 0.0f)
 			{
 				EventManager.instance.DispatchEvent(GameEvents.Unit_Died, ub);

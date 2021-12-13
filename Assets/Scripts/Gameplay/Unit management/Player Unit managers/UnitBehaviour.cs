@@ -20,7 +20,7 @@ public class UnitBehaviour : MonoBehaviour
     [SerializeField]
     private BoxCollider2D m_selfCollider;
     [SerializeField]
-    private BoxCollider2D m_aggroCollider;
+    private HealthBarController m_healthBarController;
     // private Enemy m_targettedEnemy
     private bool m_spawned = false;
 
@@ -102,5 +102,24 @@ public class UnitBehaviour : MonoBehaviour
 	{
 
 	}
-	#endregion
+    #endregion
+
+    #region Health functions
+    public void TakeDamage(float dmg)
+    {
+        unitData.health -= dmg;
+        m_healthBarController.UpdateHealth(unitData.health);
+    }
+
+    public void SetMaxHealth(float health)
+	{
+        unitData.health = health;
+        m_healthBarController.SetMaxHealth(health);
+	}
+
+    public void ToggleHealthUI(bool enable)
+	{
+        m_healthBarController.gameObject.SetActive(enable);
+	}
+    #endregion
 }

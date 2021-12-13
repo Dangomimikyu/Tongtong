@@ -8,8 +8,11 @@ public class EnemySpawner : MonoBehaviour
     [Header("External script references")]
     [SerializeField]
     private WeaponAttributes m_weaponAttributes;
+    [SerializeField]
+    private EnemyInformationHandler m_enemyInfoHandler;
 
     [Header("Spawning variables")]
+    [Tooltip("number of waves of enemies")]
     public int enemyWaves;
     [Tooltip("average timing between each enemy wave")]
     [SerializeField]
@@ -24,9 +27,10 @@ public class EnemySpawner : MonoBehaviour
     private int m_minEnemies = 1;
     [Tooltip("max number of enemies that can be spawned in one wave")]
     [SerializeField]
-    private int m_maxEnemies;
-    private float m_spawnTimeElapsed;   // amount of time elapsed since last spawn
-    private float m_spawnWaitTime;   // how long to wait before next spawn
+    private int m_maxEnemiesWave;
+    [Tooltip("max number of enemies that can be on screen")]
+    [SerializeField]
+    private int m_maxEnemiesScreen;
 
     [Header("Enemy specifications")]
     [SerializeField]
@@ -34,16 +38,22 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private Vector3 m_leftWeaponPos;
 
+    private float m_spawnTimeElapsed;       // amount of time elapsed since last spawn
+    private float m_spawnWaitTime;          // how long to wait before next spawn
+    private float m_currentWaveCount = 0;   // count of what wave the player is on right now
+
     private bool testspawn = false;
 
 	#region Monobehaviour functions
 	void Start()
     {
-        m_spawnTimeElapsed = -5.0f; // give the player about 5 seconds
+        //m_spawnTimeElapsed = -5.0f; // give the player about 5 seconds
+        m_spawnTimeElapsed = 0.0f;
         m_spawnWaitTime = m_spawnTimingDifference;
 
         // find weapon attributes
         m_weaponAttributes = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>();
+        m_enemyInfoHandler = GameObject.FindGameObjectWithTag("EnemyManager").GetComponent<EnemyInformationHandler>();
     }
 
     void Update()
@@ -52,7 +62,8 @@ public class EnemySpawner : MonoBehaviour
         if (m_spawnTimeElapsed > m_spawnWaitTime && !testspawn)
 		{
             testspawn = true;
-            //m_spawnTimeElapsed = 0.0f;
+            m_spawnTimeElapsed = 0.0f;
+            m_currentWaveCount++;
             //SpawnEnemies();
             TestSpawn();
 		}
@@ -62,7 +73,7 @@ public class EnemySpawner : MonoBehaviour
 	#region Spawning functions
     private void SpawnEnemies()
 	{
-        int numEnemies = Random.Range(m_minEnemies, m_maxEnemies);
+        int numEnemies = Random.Range(m_minEnemies, m_maxEnemiesWave);
 
         Vector2 spawnPosMin = m_spawnRegion.transform.position - (m_spawnRegion.transform.localScale * 0.5f);
         Vector2 spawnPosMax = m_spawnRegion.transform.position + (m_spawnRegion.transform.localScale * 0.5f);
@@ -82,25 +93,33 @@ public class EnemySpawner : MonoBehaviour
 
     private void TestSpawn()
 	{
-        Debug.Log("testing enemy spawn");
-        int numEnemies = Random.Range(m_minEnemies, m_maxEnemies);
+        //Debug.Log("spawning test enemies");
+        if (m_enemyInfoHandler.GetNumEnemies() > m_maxEnemiesScreen)
+		{
+            m_currentWaveCount--; // reduce the wave count since didn't spawn anything
+            return; // don't spawn any more if there are too many enemies on screen right now
+		}
 
+        int numEnemies = Random.Range(m_minEnemies, m_maxEnemiesWave);
         Vector2 spawnPosMin = m_spawnRegion.transform.position - (m_spawnRegion.transform.localScale * 0.5f);
         Vector2 spawnPosMax = m_spawnRegion.transform.position + (m_spawnRegion.transform.localScale * 0.5f);
 
         for (int i = 0; i < numEnemies; ++i)
         {
+
             float randomX = Random.Range(spawnPosMin.x, spawnPosMax.x);
-            float randomY = Random.Range(spawnPosMin.y, spawnPosMax.y);
+            //float randomY = Random.Range(spawnPosMin.y, spawnPosMax.y);
 
             GameObject budbot = Instantiate(m_enemyPrefab);
             EnemyBehaviour eb = budbot.GetComponent<EnemyBehaviour>();
-            eb.enemyData.health = 20;
+            eb.SetMaxHealth(40.0f);
             eb.enemyData.weapon = new Weapon(WeaponAttributes.WeaponType.Pistol, false);
             //eb.enemyData.weapon.weaponType = WeaponAttributes.WeaponType.Pistol;
             SpawnWeapon(budbot, ref eb.enemyData.weapon);
-            budbot.transform.position = new Vector2(randomX, randomY);
+            budbot.transform.position = new Vector2(randomX, m_spawnRegion.transform.position.y);
         }
+
+        testspawn = false;
     }
 
     private void SpawnWeapon(GameObject parent, ref Weapon weapon)

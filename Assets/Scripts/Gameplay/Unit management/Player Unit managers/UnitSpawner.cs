@@ -68,8 +68,10 @@ public class UnitSpawner : MonoBehaviour
 				unit.transform.position = m_baseSpawnLocations[i];
 				unit.transform.rotation = Quaternion.identity;
 				unit.transform.localScale = m_baseScaleSize;
-				unit.GetComponent<UnitBehaviour>().unitData = m_unitDataManager.activeUnitData[i];
+				UnitData tempUD = m_unitDataManager.activeUnitData[i];
+				unit.GetComponent<UnitBehaviour>().unitData = tempUD; // had to use a temp to prevent the UnitBehaviour from updating the UnitData (unit data is supposed to be the information class)
 				UnitBehaviour newBehaviour = unit.GetComponent<UnitBehaviour>();
+				newBehaviour.ToggleHealthUI(false);
 				SpawnWeapon(unit, ref newBehaviour.unitData.leftWeapon, ref newBehaviour.unitData.rightWeapon);
 
 				m_unitDataManager.activeUnits.Add(newBehaviour);
@@ -87,8 +89,11 @@ public class UnitSpawner : MonoBehaviour
 				unit.transform.position = m_fieldSpawnLocations[i];
 				unit.transform.rotation = Quaternion.identity;
 				unit.transform.localScale = m_fieldScaleSize;
-				unit.GetComponent<UnitBehaviour>().unitData = m_unitDataManager.activeUnitData[i];
+				UnitData tempUD = m_unitDataManager.activeUnitData[i];
+				unit.GetComponent<UnitBehaviour>().unitData = tempUD; // had to use a temp to prevent the UnitBehaviour from updating the UnitData (unit data is supposed to be the information class)
 				UnitBehaviour newBehaviour = unit.GetComponent<UnitBehaviour>();
+				newBehaviour.ToggleHealthUI(true);
+				newBehaviour.SetMaxHealth(newBehaviour.unitData.health);
 				SpawnWeapon(unit, ref newBehaviour.unitData.leftWeapon, ref newBehaviour.unitData.rightWeapon);
 
 				m_unitDataManager.activeUnits.Add(newBehaviour);

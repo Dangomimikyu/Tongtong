@@ -56,6 +56,12 @@ public class BeatTracker : MonoBehaviour
 	private short m_totalBeats = 0;
 	#endregion
 
+	~BeatTracker()
+	{
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, EndTracking);
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, EndTracking);
+	}
+
 	#region Monobehaviour functions
 	private void OnValidate()
 	{
@@ -67,9 +73,16 @@ public class BeatTracker : MonoBehaviour
 		InitTimingZones();
 
 		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, EndTracking);
+		EventManager.instance.StartListening(GameEvents.Gameplay_QuestAbandoned, EndTracking);
 
 		c_track = TrackBeats();
 		StartCoroutine(c_track);
+	}
+
+	private void OnDisable()
+	{
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, EndTracking);
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, EndTracking);
 	}
 	#endregion
 

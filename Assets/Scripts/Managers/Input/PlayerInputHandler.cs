@@ -26,6 +26,7 @@ public class PlayerInputHandler : MonoBehaviour
 	{
 		//EventManager.instance.StartListening(GameEvents.Misc_SceneChange, ChangeInputMap);
 		m_playerInputAction.Expedition.Drum.performed += ParseCommandInput;
+		m_playerInputAction.Expedition.PauseMenu.performed += ParseMenuInput;
 	}
 	private void OnEnable()
 	{

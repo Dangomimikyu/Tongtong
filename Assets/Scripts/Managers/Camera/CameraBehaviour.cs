@@ -30,5 +30,5 @@ public class CameraBehaviour : MonoBehaviour
         UnitDataManager dataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
         vc.Follow = dataManager.activeUnits[0].gameObject.transform;
     }
-    #endregion
+	#endregion
 }

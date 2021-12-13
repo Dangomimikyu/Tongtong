@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DangoMimikyu.EventManagement;
+using DG.Tweening;
 
 public class EnemyData
 {
@@ -13,18 +14,28 @@ public class EnemyData
 
 public class EnemyBehaviour : MonoBehaviour
 {
+    private enum EnemyDecision
+	{
+        Move,
+        Attack,
+        Defend,
+        Total
+    }
+
     public EnemyData enemyData = new EnemyData();
     private int beatWaitCounter = 4; // how many beats to wait before deciding next action
     private EnemyInformationHandler m_enemyManager;
-
+    private UnitDataManager m_unitDataManager;
     private UnitObjectSpawner m_unitObjSpawner;
+    [SerializeField]
+    private HealthBarController m_healthBarController;
 
     #region Monobehaviour functions
     void Start()
     {
-        enemyData.health = 20;
         m_enemyManager = GameObject.FindGameObjectWithTag("EnemyManager").GetComponent<EnemyInformationHandler>();
         m_unitObjSpawner = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitObjectSpawner>();
+        m_unitDataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -44,16 +55,65 @@ public class EnemyBehaviour : MonoBehaviour
         {
             // reset the beat wait counter
             beatWaitCounter = Random.Range(m_enemyManager.minWaitBeats, m_enemyManager.maxWaitBeats);
+            int behaviour = Random.Range(0, (int)EnemyDecision.Total);
 
-            Attack();
+			switch ((EnemyDecision)behaviour)
+			{
+				case EnemyDecision.Move:
+                    Debug.Log("enemy is move");
+                    Walk();
+					break;
+				case EnemyDecision.Attack:
+                    Debug.Log("enemy is attack");
+                    Attack();
+					break;
+				case EnemyDecision.Defend:
+                    Debug.Log("enemy is defend");
+                    // currently doesn't do anything as at week 9
+                    Defend();
+					break;
+				case EnemyDecision.Total:
+					break;
+				default:
+					break;
+			}
         }
 	}
     #endregion
 
-    #region Attacking functions
+    #region Combat functions
+    private void Walk()
+	{
+        // movement is done by moving 20% of the distance between this enemy and the frontmost player unit
+        UnitBehaviour frontMostUnit = m_unitDataManager.GetFrontUnit();
+        Vector3 frontUnitPos = frontMostUnit.gameObject.transform.position;
+        float movementDistance = 0.2f * (frontUnitPos - transform.position).magnitude;
+        Debug.Log("front unit position: " + frontUnitPos + " movement distance: " + movementDistance);
+        transform.DOMoveX(transform.position.x - movementDistance, 1.0f);
+	}
+
     private void Attack()
     {
         m_unitObjSpawner.SpawnEnemyBullet(gameObject, enemyData.weapon);
     }
-    #endregion
+
+    private void Defend()
+	{
+        // set up a shield in front
+	}
+	#endregion
+
+	#region Health functions
+	public void TakeDamage(float dmg)
+	{
+        enemyData.health -= dmg;
+        m_healthBarController.UpdateHealth(enemyData.health);
+	}
+
+    public void SetMaxHealth(float health)
+	{
+        enemyData.health = health;
+        m_healthBarController.SetMaxHealth(enemyData.health);
+	}
+	#endregion
 }

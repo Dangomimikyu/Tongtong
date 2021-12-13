@@ -22,6 +22,7 @@ public class EnemyInformationHandler : MonoBehaviour
 		EventManager.instance.StopListening(GameEvents.Enemy_Active, EnemyActive);
 		EventManager.instance.StopListening(GameEvents.Enemy_Damaged, EnemyDamaged);
 		EventManager.instance.StopListening(GameEvents.Enemy_Died, EnemyDied);
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, RemoveAll);
 	}
 
 	#region Monobehaviour functions
@@ -32,6 +33,7 @@ public class EnemyInformationHandler : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Enemy_Active, EnemyActive);
 		EventManager.instance.StartListening(GameEvents.Enemy_Damaged, EnemyDamaged);
 		EventManager.instance.StartListening(GameEvents.Enemy_Died, EnemyDied);
+		EventManager.instance.StartListening(GameEvents.Gameplay_QuestAbandoned, RemoveAll);
 	}
 
 	private void OnDisable()
@@ -41,6 +43,7 @@ public class EnemyInformationHandler : MonoBehaviour
 		EventManager.instance.StopListening(GameEvents.Enemy_Active, EnemyActive);
 		EventManager.instance.StopListening(GameEvents.Enemy_Damaged, EnemyDamaged);
 		EventManager.instance.StopListening(GameEvents.Enemy_Died, EnemyDied);
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, RemoveAll);
 	}
 	#endregion
 
@@ -80,6 +83,19 @@ public class EnemyInformationHandler : MonoBehaviour
 			Debug.Log("making decision");
 			eb.MakeDecision();
 		}
+	}
+
+	private void RemoveAll(EventArgumentData ead)
+	{
+		// used when scene change
+		m_activeEnemyList.Clear();
+	}
+	#endregion
+
+	#region Information getters
+	public int GetNumEnemies()
+	{
+		return m_activeEnemyList.Count; // return the number of enemies on screen right now
 	}
 	#endregion
 }

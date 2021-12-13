@@ -399,7 +399,7 @@ MonoBehaviour:
     burstBulletCount: 0
     ShootCooldown: 0
   - velocity: 300
-    damage: 5
+    damage: 3
     burstCooldown: 0
     burstBulletCount: 0
     ShootCooldown: 0
@@ -421,7 +421,7 @@ MonoBehaviour:
   - velocity: 600
     damage: 10
     burstCooldown: 0.35
-    burstBulletCount: 0
+    burstBulletCount: 2
     ShootCooldown: 0
   m_twoHandedList: 040000000500000006000000
 --- !u!4 &867243682
@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 1856155042}
   m_Layer: 0
   m_Name: Player Information Handler
-  m_TagString: Untagged
+  m_TagString: PlayerManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -866,7 +866,7 @@ GameObject:
   - component: {fileID: 2099407787}
   m_Layer: 0
   m_Name: Quest Manager
-  m_TagString: Untagged
+  m_TagString: QuestManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

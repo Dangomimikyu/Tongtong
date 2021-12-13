@@ -156,6 +156,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""9b913bed-fe1d-4056-bfde-908223816e67"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -200,6 +209,17 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": ""Scale(factor=4)"",
                     ""groups"": """",
                     ""action"": ""Drum"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d5ca7ad-76f0-466f-b5af-d49deebcaf2d"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -733,6 +753,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         // Expedition
         m_Expedition = asset.FindActionMap("Expedition", throwIfNotFound: true);
         m_Expedition_Drum = m_Expedition.FindAction("Drum", throwIfNotFound: true);
+        m_Expedition_PauseMenu = m_Expedition.FindAction("PauseMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -862,11 +883,13 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Expedition;
     private IExpeditionActions m_ExpeditionActionsCallbackInterface;
     private readonly InputAction m_Expedition_Drum;
+    private readonly InputAction m_Expedition_PauseMenu;
     public struct ExpeditionActions
     {
         private @PlayerInputs m_Wrapper;
         public ExpeditionActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Drum => m_Wrapper.m_Expedition_Drum;
+        public InputAction @PauseMenu => m_Wrapper.m_Expedition_PauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Expedition; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -879,6 +902,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Drum.started -= m_Wrapper.m_ExpeditionActionsCallbackInterface.OnDrum;
                 @Drum.performed -= m_Wrapper.m_ExpeditionActionsCallbackInterface.OnDrum;
                 @Drum.canceled -= m_Wrapper.m_ExpeditionActionsCallbackInterface.OnDrum;
+                @PauseMenu.started -= m_Wrapper.m_ExpeditionActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.performed -= m_Wrapper.m_ExpeditionActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.canceled -= m_Wrapper.m_ExpeditionActionsCallbackInterface.OnPauseMenu;
             }
             m_Wrapper.m_ExpeditionActionsCallbackInterface = instance;
             if (instance != null)
@@ -886,6 +912,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @Drum.started += instance.OnDrum;
                 @Drum.performed += instance.OnDrum;
                 @Drum.canceled += instance.OnDrum;
+                @PauseMenu.started += instance.OnPauseMenu;
+                @PauseMenu.performed += instance.OnPauseMenu;
+                @PauseMenu.canceled += instance.OnPauseMenu;
             }
         }
     }
@@ -1005,6 +1034,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     public interface IExpeditionActions
     {
         void OnDrum(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

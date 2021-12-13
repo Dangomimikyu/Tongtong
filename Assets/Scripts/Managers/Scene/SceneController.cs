@@ -32,11 +32,6 @@ public class SceneController : MonoBehaviour
 	{
 		m_playerInputAction.Disable();
 	}
-
-	void Update()
-	{
-
-	}
 	#endregion
 
 	#region Coroutines
@@ -61,16 +56,6 @@ public class SceneController : MonoBehaviour
 				SceneManager.UnloadSceneAsync(scene);
 			}
 		}
-	}
-
-	private void LoadSplashScene()
-	{
-		SceneManager.LoadScene("ExpeditionScene", LoadSceneMode.Additive);
-	}
-
-	private void LoadLoginScene(EventArgumentData ead)
-	{
-
 	}
 
 	public void LoadSceneString(string name)

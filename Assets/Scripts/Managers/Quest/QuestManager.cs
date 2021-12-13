@@ -13,26 +13,42 @@ public class QuestManager : MonoBehaviour
 	~QuestManager()
 	{
 		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, AbandonedQuest);
 	}
 
 	#region Monobehaviour functions
 	private void Start()
 	{
 		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
+		EventManager.instance.StartListening(GameEvents.Gameplay_QuestAbandoned, AbandonedQuest);
+
 		// make a test quest first for demo purposes
 		CreateTestQuest();
+	}
+
+	private void OnDisable()
+	{
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, AbandonedQuest);
 	}
 	#endregion
 
 	#region Quest creation functions
 	private void CreateTestQuest()
 	{
-		//Quest newQuest = new Quest("testes name", 69);
-		Quest newQuest = new Quest();
-		newQuest.questRewards.money = 10;
+		//Quest newQuest =
+		//("testes name", 69);
+		Quest newQuest = new Quest("Mvmt && atk demo", 10);
 		newQuest.questManager = this;
 		m_activeQuest = newQuest;
 		m_questList.Add(newQuest);
+	}
+	#endregion
+
+	#region Information getter functions
+	public Quest GetCurrentQuest()
+	{
+		return m_activeQuest;
 	}
 	#endregion
 
@@ -48,6 +64,21 @@ public class QuestManager : MonoBehaviour
 	{
 		Debug.Log("quest name: " + q.questName);
 		m_playerAccountInformation.ReceiveRewards(q);
+	}
+
+	private void AbandonedQuest(EventArgumentData ead)
+	{
+		Debug.Log("Quest failed: " + m_activeQuest.questName);
+		m_playerAccountInformation.ReceiveRewards(m_activeQuest);
+	}
+	#endregion
+
+	#region Rewards functions
+	private void TestAddRewards()
+	{
+		QuestRewards qr = new QuestRewards();
+		qr.money = 30;
+		m_activeQuest.AddReward(qr);
 	}
 	#endregion
 }
