@@ -36,8 +36,6 @@ public class QuestManager : MonoBehaviour
 	#region Quest creation functions
 	private void CreateTestQuest()
 	{
-		//Quest newQuest =
-		//("testes name", 69);
 		Quest newQuest = new Quest("Mvmt && atk demo", 10);
 		newQuest.questManager = this;
 		m_activeQuest = newQuest;

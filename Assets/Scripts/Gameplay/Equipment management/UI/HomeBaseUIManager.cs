@@ -1,20 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
-public class MenuUnitBehaviour : MonoBehaviour
+public class HomeBaseUIManager : MonoBehaviour
 {
+    [Header("Object references")]
     [SerializeField]
-    private BoxCollider2D m_boxCollider;
-    private bool m_inBox = false;
-    private bool m_dragged = false;
+    private Canvas m_popupCanvas;
 
-    private void Awake()
+	#region Monobehaviour functions
+	private void Start()
     {
-        m_boxCollider = GetComponent<BoxCollider2D>();
+        ToggleEquipmentPopup(false);
     }
 
-    void Update()
+	private void Update()
+	{
+
+	}
+    #endregion
+
+    #region Visibility functions
+    public void ToggleEquipmentPopup(bool enable)
+	{
+        m_popupCanvas.gameObject.SetActive(enable);
+	}
+    #endregion
+
+    /* drag and drop functions
+	private void Update()
     {
         if (m_dragged)
         {
@@ -50,4 +66,5 @@ public class MenuUnitBehaviour : MonoBehaviour
             m_inBox = false;
         }
     }
+    */
 }

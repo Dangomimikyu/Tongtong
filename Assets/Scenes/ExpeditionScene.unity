@@ -3114,7 +3114,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1272437615}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3316,8 +3316,8 @@ RectTransform:
   - {fileID: 1185457185}
   - {fileID: 181714679}
   - {fileID: 1898647626}
-  - {fileID: 1296300626}
   - {fileID: 1187742144}
+  - {fileID: 1296300626}
   m_Father: {fileID: 125380043}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3429,7 +3429,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1272437615}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4747,9 +4747,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_questEndCanvasGroup: {fileID: 1272437619}
-  m_questName: {fileID: 0}
-  m_questRewards: {fileID: 0}
-  m_questGrade: {fileID: 0}
+  m_questName: {fileID: 1898647627}
+  m_questRewards: {fileID: 1187742145}
+  m_questGrade: {fileID: 1296300627}
 --- !u!1 &2141154570
 GameObject:
   m_ObjectHideFlags: 0

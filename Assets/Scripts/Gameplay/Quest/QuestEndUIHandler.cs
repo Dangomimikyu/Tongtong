@@ -45,7 +45,7 @@ public class QuestEndUIHandler : MonoBehaviour
     private void ToggleRewardPanel(EventArgumentData ead)
 	{
         m_questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
-        m_questName.text = m_questManager.GetCurrentQuest().questName;
+        m_questName.text = m_questManager.GetCurrentQuest()?.questName;
 
         //m_questEndCanvasGroup.gameObject.SetActive(!m_questEndCanvasGroup.gameObject.activeSelf);
         m_questEndCanvasGroup.DOFade(1.0f, 1.0f).SetEase(Ease.Linear);
