@@ -21,7 +21,7 @@ namespace DangoMimikyu.EventManagement
 			}
 			else
 			{
-				Debug.LogWarning("Existing EventManager already exist but you're trying to make a new one. will destroy the old one");
+				Debug.LogWarning("Existing EventManager already exist but you're trying to make a new one. Will destroy the old one");
 				Destroy(instance);
 				instance = this;
 			}
@@ -36,6 +36,7 @@ namespace DangoMimikyu.EventManagement
 			{
 				wrapper = new EventWrapper();                   // make a new event of this type
 				m_EventnameToEvent.Add(eventName, wrapper);     // add this new event to the dictionary
+				Debug.LogWarning(action.Method.Name + "started listening to " + eventName);
 			}
 			wrapper.eventAction += action;
 		}
@@ -59,6 +60,7 @@ namespace DangoMimikyu.EventManagement
 				EventArgumentData eventData;
 				eventData = new EventArgumentData(eventName, arguments); // don't need a null check because if the invoke isn't expecting arguments, having arguments doesn't do anything
 
+				Debug.Log("dispatching event");
 				// invoke the event
 				wrapper.InvokeEvent(eventData);
 			}

@@ -23,9 +23,15 @@ public class CmdInputHandler : MonoBehaviour
 
 	#region Tracking coroutine variables
 	private Coroutine c_track = null;
+	[SerializeField]
 	private bool m_inputThisBeat = false; // true if the player has cast an input during this beat
 	private short m_currentBeat = 0;
 	#endregion
+
+	~CmdInputHandler()
+	{
+		EventManager.instance.StopListening(GameEvents.Input_Drum, InputBeat);
+	}
 
 	#region Monobehaviour functions
 	private void Start()
@@ -110,7 +116,7 @@ public class CmdInputHandler : MonoBehaviour
 
 	private void ResetInputs()
 	{
-		Debug.Log("resetting inputs");
+		//Debug.Log("resetting inputs");
 		for (int i = 0; i < 4; ++i)
 		{
 			m_inputs.SetValue(cmdInput.None, i);

@@ -3,7 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - EndGoal
+  - PlayerUnit
+  - UnitManager
+  - WeaponFirePoint
+  - UnitEditingUIBox
+  - EnemyUnit
+  - ViewBound
+  - WeaponAttributes
+  - EnemyManager
+  - SceneController
+  - EnemyActiveTrigger
+  - PlayerManager
+  - QuestManager
   layers:
   - Default
   - TransparentFX
@@ -40,4 +53,31 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 2056437233
+    locked: 0
+  - name: Background
+    uniqueID: 2465003487
+    locked: 0
+  - name: Foreground
+    uniqueID: 1154338747
+    locked: 0
+  - name: PlayerUnits
+    uniqueID: 3334013303
+    locked: 0
+  - name: UnitWeapon
+    uniqueID: 420650769
+    locked: 0
+  - name: SuperForeground
+    uniqueID: 4269427165
+    locked: 0
+  - name: UnitUI
+    uniqueID: 924172949
+    locked: 0
+  - name: BeatUI
+    uniqueID: 1146278001
+    locked: 0
+  - name: InteractableUI
+    uniqueID: 559591779
     locked: 0

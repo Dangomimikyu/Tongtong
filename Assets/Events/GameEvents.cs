@@ -5,6 +5,9 @@ namespace DangoMimikyu.EventManagement
 	public enum GameEvents
 	{
 		None,
+		// misc
+		Misc_SceneChange,				// changed scene
+
 		// networking
 		Networking_ClientConnect,		// client connected
 		Networking_ClientDisconnect,	// client disconnected
@@ -20,6 +23,7 @@ namespace DangoMimikyu.EventManagement
 		Gameplay_WeaponDiscarded,		// discarded a weapon
 		Gameplay_ArmourCrafted,			// crafted an armour
 		Gameplay_ArmourDiscarded,		// discarded an armour
+		Gameplay_UpdateUnits,			// something happened with units
 
 		/// Expedition events
 		Gameplay_MetronomeBeat,			// metronome is supposed to beat
@@ -33,5 +37,18 @@ namespace DangoMimikyu.EventManagement
 		Input_CommandFail,				// command failed
 		Input_MenuNavigation,			// any menu navigation function
 		Input_MenuButton,				// any menu button selection
+
+		// unit events
+		Unit_EquipItem,					// when unit equips/unequips something
+		Unit_Spawn,						// when unit spawns
+		Unit_Shoot,						// when unit shoots
+		Unit_Damaged,					// unit takes damage
+		Unit_Died,						// unit was killed
+
+		// enemy events
+		Enemy_Spawn,					// enemy spawned
+		Enemy_Active,					// enemy bot entered the range near the player to be active
+		Enemy_Damaged,					// enemy bot took damage
+		Enemy_Died,						// enemy was killed
 	}
 }
