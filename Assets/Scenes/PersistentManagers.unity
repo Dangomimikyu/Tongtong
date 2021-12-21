@@ -380,49 +380,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f854748cea52efd4e81812c74629c255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun_radioPrefab: {fileID: 0}
-  gun_pistolPrefab: {fileID: 1235264860163416614, guid: 6bea68b4070278f40a4f5e8c7bff1e14, type: 3}
-  gun_riflePrefab: {fileID: 408283420786274803, guid: f635785616ff1304b80a9762ebde19ab, type: 3}
-  gun_sniperPrefab: {fileID: 2046141438522689072, guid: c6659246af740a0448a910061800ccd9, type: 3}
-  gun_rocketPrefab: {fileID: 2860634163447809527, guid: f7584c251ed8f8d4fa4c53ae8aa32d1c, type: 3}
-  gun_laserPrefab: {fileID: 1322018248614684964, guid: c7b425de6a5a3e642b0ce3fc91d33df3, type: 3}
-  bullet_radioPrefab: {fileID: 0}
-  bullet_pistolPrefab: {fileID: 4616792544379181470, guid: 11a4fd785e3950947bf93e3f6980a34c, type: 3}
-  bullet_riflePrefab: {fileID: 4616792544379181470, guid: 11a4fd785e3950947bf93e3f6980a34c, type: 3}
-  bullet_sniperPrefab: {fileID: 0}
-  bullet_rocketPrefab: {fileID: 0}
-  bullet_laserPrefab: {fileID: 0}
-  m_bulletStatsList:
-  - velocity: 0
-    damage: 0
-    burstCooldown: 0
-    burstBulletCount: 0
-    ShootCooldown: 0
-  - velocity: 300
-    damage: 3
-    burstCooldown: 0
-    burstBulletCount: 0
-    ShootCooldown: 0
-  - velocity: 450
-    damage: 2.5
-    burstCooldown: 0.25
-    burstBulletCount: 3
-    ShootCooldown: 0
-  - velocity: 900
-    damage: 15
-    burstCooldown: 0
-    burstBulletCount: 0
-    ShootCooldown: 0
-  - velocity: 300
-    damage: 25
-    burstCooldown: 0
-    burstBulletCount: 0
-    ShootCooldown: 0
-  - velocity: 600
-    damage: 10
-    burstCooldown: 0.35
-    burstBulletCount: 2
-    ShootCooldown: 0
+  m_weaponInformation:
+  - {fileID: 11400000, guid: 2ecc267199a66974699ee0cf724bbe8a, type: 2}
+  - {fileID: 11400000, guid: 9f031b1310d9d724db1bcd4d0bff37f6, type: 2}
+  - {fileID: 11400000, guid: 2b5a2db4005791244a3f0557db5e9e55, type: 2}
+  - {fileID: 11400000, guid: 02bc13dcc03501742bbfceaaa6bef550, type: 2}
+  - {fileID: 11400000, guid: 668e4398557ab354ea8b45491f2e78a1, type: 2}
+  - {fileID: 11400000, guid: 7b7f816d5a7bb4743b082a861d1575c9, type: 2}
   m_twoHandedList: 040000000500000006000000
 --- !u!4 &867243682
 Transform:
@@ -436,7 +400,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &867243683
 MonoBehaviour:
@@ -457,124 +421,6 @@ MonoBehaviour:
   Text_Color_Inactive: {r: 1, g: 1, b: 1, a: 1}
   TextStyle_Inactive: 0
   Background_Color_Inactive: {r: 0.4528302, g: 0.13883945, b: 0.13883945, a: 1}
---- !u!1 &1051278668
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1051278669}
-  - component: {fileID: 1051278672}
-  - component: {fileID: 1051278671}
-  - component: {fileID: 1051278670}
-  - component: {fileID: 1051278673}
-  m_Layer: 0
-  m_Name: Network Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1051278669
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051278668}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1051278670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051278668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Port: 7777
-  DualMode: 1
-  NoDelay: 1
-  Interval: 10
-  Timeout: 10000
-  FastResend: 2
-  CongestionWindow: 0
-  SendWindowSize: 4096
-  ReceiveWindowSize: 4096
-  NonAlloc: 1
-  debugLog: 0
-  statisticsGUI: 0
-  statisticsLog: 0
---- !u!114 &1051278671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051278668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59275e1aff5a66c42a3bb2da330d6760, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
-  PersistNetworkManagerToOfflineScene: 0
-  runInBackground: 1
-  autoStartServerBuild: 1
-  serverTickRate: 30
-  offlineScene: Assets/Scenes/ExpeditionScene.unity
-  onlineScene: Assets/Scenes/ExpeditionScene.unity
-  transport: {fileID: 1051278670}
-  networkAddress: localhost
-  maxConnections: 100
-  authenticator: {fileID: 0}
-  playerPrefab: {fileID: 5459583725571867507, guid: 779ee7d10f007be48974e4d9badb9665, type: 3}
-  autoCreatePlayer: 1
-  playerSpawnMethod: 0
-  spawnPrefabs: []
-  m_startingPosition: {fileID: 0}
---- !u!114 &1051278672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051278668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ada511fb05d52f04a832f22c7004ac5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Text_Color: {r: 0, g: 0, b: 0, a: 1}
-  TextStyle: 0
-  Background_Color: {r: 0.2569865, g: 0.6508356, b: 0.990566, a: 1}
-  Custom_Inactive_Colors: 1
-  Text_Color_Inactive: {r: 0, g: 0, b: 0, a: 1}
-  TextStyle_Inactive: 0
-  Background_Color_Inactive: {r: 0.15267888, g: 0.43931016, b: 0.6886792, a: 1}
---- !u!114 &1051278673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051278668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 631fb199bcc7fba47885f5536d284e53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1247948809
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,7 +573,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1856155040
 MonoBehaviour:
@@ -823,7 +669,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1911393323
 MonoBehaviour:
@@ -883,7 +729,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2099407785
 MonoBehaviour:

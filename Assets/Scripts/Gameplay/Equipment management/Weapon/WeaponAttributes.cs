@@ -34,45 +34,36 @@ public class WeaponAttributes : MonoBehaviour
 	}
 	#endregion
 
-	#region Editor information
-	[Header("Gun prefabs")]
-	[SerializeField]
-	GameObject gun_radioPrefab;
-	[SerializeField]
-	GameObject gun_pistolPrefab;
-	[SerializeField]
-	GameObject gun_riflePrefab;
-	[SerializeField]
-	GameObject gun_sniperPrefab;
-	[SerializeField]
-	GameObject gun_rocketPrefab;
-	[SerializeField]
-	GameObject gun_laserPrefab;
+	#region All weapon information
+	List<GameObject> gunPrefabList = new List<GameObject>();
+	List<GameObject> bulletPrefabList = new List<GameObject>();
+	private List<BulletData> m_bulletStatsList = new List<BulletData>();
 
-	[Header("Bullet prefabs")]
+	[Header("Weapon info")]
 	[SerializeField]
-	GameObject bullet_radioPrefab;
-	[SerializeField]
-	GameObject bullet_pistolPrefab;
-	[SerializeField]
-	GameObject bullet_riflePrefab;
-	[SerializeField]
-	GameObject bullet_sniperPrefab;
-	[SerializeField]
-	GameObject bullet_rocketPrefab;
-	[SerializeField]
-	GameObject bullet_laserPrefab;
-
-	[Header("Weapon stats")]
-	[SerializeField]
-	private List<BulletData> m_bulletStatsList;
+	private List<WeaponTemplate> m_weaponInformation;
 	[SerializeField]
 	private List<WeaponType> m_twoHandedList;
 	#endregion
 
+	#region Monobehaviour functions
+	private void Start()
+	{
+		for (int i = 0; i < m_weaponInformation.Count; ++i)
+		{
+			Debug.Log("index: " + i);
+			gunPrefabList.Add(m_weaponInformation[i].weaponPrefab);
+			bulletPrefabList.Add(m_weaponInformation[i].bulletPrefab);
+			m_bulletStatsList.Add(m_weaponInformation[i].bulletData);
+		}
+
+		Debug.Log("finished starting");
+	}
+	#endregion
+
 	#region Retrieval functions
-		#region Prefab
-		public GameObject GetWeaponPrefab(Weapon weapon)
+	#region Prefab
+	public GameObject GetWeaponPrefab(Weapon weapon)
 		{
 			switch (weapon.weaponType)
 			{
@@ -81,17 +72,12 @@ public class WeaponAttributes : MonoBehaviour
 					Debug.LogWarning("unable to get a weapon prefab because this weapontype is none");
 					return null;
 				case WeaponType.Radio:
-					return gun_radioPrefab;
 				case WeaponType.Pistol:
-					return gun_pistolPrefab;
 				case WeaponType.Rifle:
-					return gun_riflePrefab;
 				case WeaponType.Sniper:
-					return gun_sniperPrefab;
 				case WeaponType.Rocket:
-					return gun_rocketPrefab;
 				case WeaponType.Lazer:
-					return gun_laserPrefab;
+				return gunPrefabList[(int)weapon.weaponType - 1];
 			}
 		}
 
@@ -104,17 +90,12 @@ public class WeaponAttributes : MonoBehaviour
 					Debug.LogWarning("unable to get a bullet prefab because this weapontype is none");
 					return null;
 				case WeaponType.Radio:
-					return bullet_radioPrefab;
 				case WeaponType.Pistol:
-					return bullet_pistolPrefab;
 				case WeaponType.Rifle:
-					return bullet_riflePrefab;
 				case WeaponType.Sniper:
-					return bullet_sniperPrefab;
 				case WeaponType.Rocket:
-					return bullet_rocketPrefab;
 				case WeaponType.Lazer:
-					return bullet_laserPrefab;
+				return bulletPrefabList[(int)weapon.weaponType - 1];
 			}
 		}
 	#endregion
