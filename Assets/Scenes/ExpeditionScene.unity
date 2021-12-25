@@ -1474,8 +1474,8 @@ MonoBehaviour:
   redtext: {fileID: 752747432}
   m_beatsPerMinute: 120
   m_maxTime: 300
-  m_greenZone: 0.3
-  m_yellowZone: 0.25
+  m_greenZone: 0.4
+  m_yellowZone: 0.2
   m_redZone: 0.1
   m_timeElapsed: 0
 --- !u!1 &517851856
@@ -2698,6 +2698,7 @@ MonoBehaviour:
   regularBeatOverlay: {fileID: 21300000, guid: 48dd6d7a5002aa448a292e7f2113bc27, type: 3}
   feverBeatOverlay: {fileID: 21300000, guid: 610cbc1693c17e840aab00ea987c6bb2, type: 3}
   m_noInputSprite: {fileID: 21300000, guid: a1f2fd13f8bf44c458afe9a1519f8f66, type: 3}
+  m_waitInputSprite: {fileID: 21300000, guid: f95632134ca9776458e051c98b529389, type: 3}
   m_leftArrowInputSprite: {fileID: 21300000, guid: dc8d37c02644f1346802eaea8d9d0a75, type: 3}
   m_rightArrowInputSprite: {fileID: 21300000, guid: 00170754f8068fb4dbf0d522ad63414e, type: 3}
   m_upArrowInputSprite: {fileID: 21300000, guid: 21a9a2a0565dd934f8d0ae74bb9dce04, type: 3}

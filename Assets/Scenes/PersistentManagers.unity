@@ -684,8 +684,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_activeEnemyList: []
-  minWaitBeats: 2
-  maxWaitBeats: 5
+  minWaitBeats: 6
+  maxWaitBeats: 10
 --- !u!114 &1911393324
 MonoBehaviour:
   m_ObjectHideFlags: 0

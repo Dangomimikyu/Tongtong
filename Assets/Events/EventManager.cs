@@ -60,7 +60,7 @@ namespace DangoMimikyu.EventManagement
 				EventArgumentData eventData;
 				eventData = new EventArgumentData(eventName, arguments); // don't need a null check because if the invoke isn't expecting arguments, having arguments doesn't do anything
 
-				Debug.Log("dispatching event");
+				//Debug.Log("dispatching event");
 				// invoke the event
 				wrapper.InvokeEvent(eventData);
 			}

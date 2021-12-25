@@ -64,7 +64,6 @@ public class PlayerInputHandler : MonoBehaviour
 
 		switch (input)
 		{
-			case cmdInput.None:
 			case cmdInput.Walk:
 			case cmdInput.Attack:
 			case cmdInput.Defend:
