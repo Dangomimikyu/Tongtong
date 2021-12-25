@@ -9,6 +9,14 @@ TagManager:
   - UnitManager
   - WeaponFirePoint
   - UnitEditingUIBox
+  - EnemyUnit
+  - ViewBound
+  - WeaponAttributes
+  - EnemyManager
+  - SceneController
+  - EnemyActiveTrigger
+  - PlayerManager
+  - QuestManager
   layers:
   - Default
   - TransparentFX

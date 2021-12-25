@@ -1,23 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DangoMimikyu.EventManagement;
 
 public class LevelGoal : MonoBehaviour
 {
+	private bool m_questEnded = false;
+
 	#region Monobehaviour functions
-	void Start()
-    {
-    }
-
-    void Update()
-    {
-
-    }
-
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		// end the current quest by dispatching event
-		Debug.Log("finished level");
+		if (m_questEnded || collision.gameObject.tag != "PlayerUnit")
+			return; // quest only needs to be ended once
+
+		Debug.Log("quest end trigger");
+		m_questEnded = true;
+		EventManager.instance.DispatchEvent(GameEvents.Gameplay_QuestEnd, true);
 	}
 	#endregion
 }

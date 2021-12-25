@@ -26,6 +26,7 @@ public class PlayerInputHandler : MonoBehaviour
 	{
 		//EventManager.instance.StartListening(GameEvents.Misc_SceneChange, ChangeInputMap);
 		m_playerInputAction.Expedition.Drum.performed += ParseCommandInput;
+		m_playerInputAction.Expedition.PauseMenu.performed += ParseMenuInput;
 	}
 	private void OnEnable()
 	{
@@ -63,12 +64,10 @@ public class PlayerInputHandler : MonoBehaviour
 
 		switch (input)
 		{
-			case cmdInput.None:
 			case cmdInput.Walk:
 			case cmdInput.Attack:
 			case cmdInput.Defend:
 			case cmdInput.Magic:
-				Debug.Log("PLAYER INPUT, value: " + input);
 				EventManager.instance.DispatchEvent(GameEvents.Input_Drum, input); // call the drum input event and let the beat tracker decide what to do
 				break;
 			default:

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class WeaponAttributes : MonoBehaviour
 {
+	#region Data type definitions
 	// define the types of weapon
+	[System.Serializable]
 	public enum WeaponType
 	{
 		None,
@@ -16,65 +18,110 @@ public class WeaponAttributes : MonoBehaviour
 		Lazer,
 	}
 
-	public GameObject gun_radioPrefab;
-	public GameObject gun_pistolPrefab;
-	public GameObject gun_riflePrefab;
-	public GameObject gun_sniperPrefab;
-	public GameObject gun_rocketPrefab;
-	public GameObject gun_laserPrefab;
+	[System.Serializable]
+	public struct BulletData
+	{
+		[Tooltip("Bullet's initial velocity")]
+		public float velocity;
+		[Tooltip("Bullet damage")]
+		public float damage;
+		[Tooltip("Cooldown duration for weapons that fire in burst shots")]
+		public float burstCooldown; // for weapons like rifle that shoot in 3 bullet bursts
+		[Tooltip("Number of shots to first in one burst shot")]
+		public int burstBulletCount;
+		[Tooltip("Cooldown duration between shots, counted in metronome beats")]
+		public int ShootCooldown;
+	}
+	#endregion
 
-	public GameObject bullet_radioPrefab;
-	public GameObject bullet_pistolPrefab;
-	public GameObject bullet_riflePrefab;
-	public GameObject bullet_sniperPrefab;
-	public GameObject bullet_rocketPrefab;
-	public GameObject bullet_laserPrefab;
+	#region All weapon information
+	List<GameObject> gunPrefabList = new List<GameObject>();
+	List<GameObject> bulletPrefabList = new List<GameObject>();
+	private List<BulletData> m_bulletStatsList = new List<BulletData>();
+
+	[Header("Weapon info")]
+	[SerializeField]
+	private List<WeaponTemplate> m_weaponInformation;
+	[SerializeField]
+	private List<WeaponType> m_twoHandedList;
+	#endregion
+
+	#region Monobehaviour functions
+	private void Start()
+	{
+		for (int i = 0; i < m_weaponInformation.Count; ++i)
+		{
+			Debug.Log("index: " + i);
+			gunPrefabList.Add(m_weaponInformation[i].weaponPrefab);
+			bulletPrefabList.Add(m_weaponInformation[i].bulletPrefab);
+			m_bulletStatsList.Add(m_weaponInformation[i].bulletData);
+		}
+
+		Debug.Log("finished starting");
+	}
+	#endregion
 
 	#region Retrieval functions
+	#region Prefab
 	public GameObject GetWeaponPrefab(Weapon weapon)
-	{
-		switch (weapon.weaponType)
 		{
-			default:
-			case WeaponType.None:
-				Debug.LogWarning("unable to get a weapon prefab because this weapontype is none");
-				return null;
-			case WeaponType.Radio:
-				return gun_radioPrefab;
-			case WeaponType.Pistol:
-				return gun_pistolPrefab;
-			case WeaponType.Rifle:
-				return gun_riflePrefab;
-			case WeaponType.Sniper:
-				return gun_sniperPrefab;
-			case WeaponType.Rocket:
-				return gun_rocketPrefab;
-			case WeaponType.Lazer:
-				return gun_laserPrefab;
+			switch (weapon.weaponType)
+			{
+				default:
+				case WeaponType.None:
+					Debug.LogWarning("unable to get a weapon prefab because this weapontype is none");
+					return null;
+				case WeaponType.Radio:
+				case WeaponType.Pistol:
+				case WeaponType.Rifle:
+				case WeaponType.Sniper:
+				case WeaponType.Rocket:
+				case WeaponType.Lazer:
+				return gunPrefabList[(int)weapon.weaponType - 1];
+			}
 		}
-	}
 
-	public GameObject GetBulletPrefab(Weapon weapon)
-	{
-		switch (weapon.weaponType)
+		public GameObject GetBulletPrefab(Weapon weapon)
 		{
-			default:
-			case WeaponType.None:
-				Debug.LogWarning("unable to get a bullet prefab because this weapontype is none");
-				return null;
-			case WeaponType.Radio:
-				return bullet_radioPrefab;
-			case WeaponType.Pistol:
-				return bullet_pistolPrefab;
-			case WeaponType.Rifle:
-				return bullet_riflePrefab;
-			case WeaponType.Sniper:
-				return bullet_sniperPrefab;
-			case WeaponType.Rocket:
-				return bullet_rocketPrefab;
-			case WeaponType.Lazer:
-				return bullet_laserPrefab;
+			switch (weapon.weaponType)
+			{
+				default:
+				case WeaponType.None:
+					Debug.LogWarning("unable to get a bullet prefab because this weapontype is none");
+					return null;
+				case WeaponType.Radio:
+				case WeaponType.Pistol:
+				case WeaponType.Rifle:
+				case WeaponType.Sniper:
+				case WeaponType.Rocket:
+				case WeaponType.Lazer:
+				return bulletPrefabList[(int)weapon.weaponType - 1];
+			}
 		}
-	}
+	#endregion
+
+		#region Bullet values
+		public float GetBulletVelocity(Weapon wpn)
+		{
+			return m_bulletStatsList[(int)wpn.weaponType].velocity;
+		}
+
+		public float GetBulletDamage(Weapon wpn)
+		{
+			return m_bulletStatsList[(int)wpn.weaponType].damage;
+		}
+
+		public BulletData GetBulletData(WeaponType weaponType)
+		{
+			return m_bulletStatsList[(int)weaponType];
+		}
+		#endregion
+
+		#region Two handed functions
+		public bool GetIsTwohanded(WeaponType wpnType)
+		{
+			return m_twoHandedList.Contains(wpnType);
+		}
+		#endregion
 	#endregion
 }

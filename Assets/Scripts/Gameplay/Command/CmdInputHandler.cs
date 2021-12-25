@@ -14,6 +14,8 @@ public class CmdInputHandler : MonoBehaviour
 	[Header("Script references")]
 	[SerializeField]
 	private BeatTracker m_beatTracker;
+	[SerializeField]
+	private BeatUIHandler m_beatUIHandler;
 	#endregion
 
 	#region CommandAttributes variables
@@ -21,26 +23,33 @@ public class CmdInputHandler : MonoBehaviour
 	private cmdPotency m_potency; // keeps track of current potency
 	#endregion
 
-	#region Tracking coroutine variables
-	private Coroutine c_track = null;
+	#region input verification variables
+	private bool m_waiting = false;
 	[SerializeField]
 	private bool m_inputThisBeat = false; // true if the player has cast an input during this beat
 	private short m_currentBeat = 0;
 	#endregion
 
+	~CmdInputHandler()
+	{
+		EventManager.instance.StopListening(GameEvents.Input_Drum, InputBeat);
+		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, WaitPostCommand);
+		EventManager.instance.StopListening(GameEvents.Input_CommandFail, ResetWait);
+	}
+
 	#region Monobehaviour functions
 	private void Start()
 	{
 		EventManager.instance.StartListening(GameEvents.Input_Drum, InputBeat);
-	}
-	private void OnEnable()
-	{
-		//EventManager.instance.StartListening(GameEvents.Input_Drum, InputBeat);
+		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, WaitPostCommand);
+		EventManager.instance.StartListening(GameEvents.Input_CommandFail, ResetWait);
 	}
 
 	private void OnDisable()
 	{
 		EventManager.instance.StopListening(GameEvents.Input_Drum, InputBeat);
+		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, WaitPostCommand);
+		EventManager.instance.StopListening(GameEvents.Input_CommandFail, ResetWait);
 	}
 	#endregion
 
@@ -49,63 +58,91 @@ public class CmdInputHandler : MonoBehaviour
 	{
 		cmdInput input = (cmdInput)ead.eventParams[0];
 
-		// determine the potency of this action based on the timing; no action needed for green zone or if there was no input
-		if (input != cmdInput.None)
+		if (m_waiting)
 		{
-			m_beatTracker.ProcessPotency(ref m_potency);
+			if (input != cmdInput.None)
+			{
+				EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
+				m_waiting = false;
+				return;
+			}
+
+			if (++m_currentBeat == 4) // finished waiting
+			{
+				m_currentBeat = 0;
+				m_waiting = false;
+
+				// call this function again after resetting
+				EventArgumentData temp = ead;
+				temp.eventParams[0] = cmdInput.BeatEnd;
+				//InputBeat(temp);
+
+				m_beatUIHandler.CompleteWait();
+			}
 		}
-
-		// process the input or command
-		switch (input)
+		else
 		{
-			case cmdInput.None:
-				if (!m_inputThisBeat)
-				{
-					// only reset the command array if the player missed this beat
-					ResetInputs();
-					EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
-				}
-				else if (m_currentBeat == 4)
-				{
-					// send the completed command to be processed
-					Debug.Log("command complete");
-					EventManager.instance.DispatchEvent(GameEvents.Input_CommandComplete, m_inputs, m_potency);
-					ResetInputs();
-				}
-				m_inputThisBeat = false;
-				break;
-			case cmdInput.Walk:
-			case cmdInput.Attack:
-			case cmdInput.Defend:
-			case cmdInput.Magic:
-				if (m_inputThisBeat) // check for double input on this beat
-				{
-					Debug.Log("double input");
-					ResetInputs();
-					EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
-					return;
-				}
+			// determine the potency of this action based on the timing; no action needed for green zone or if there was no input
+			if (input != cmdInput.None && input != cmdInput.BeatEnd)
+			{
+				m_beatTracker.ProcessPotency(ref m_potency);
+			}
 
-				for (int i = 0; i < m_inputs.Length; ++i)
-				{
-					if (m_inputs[i] == cmdInput.None && !m_inputThisBeat)
+			// process the input or command
+			switch (input)
+			{
+				case cmdInput.None:
+					if (!m_inputThisBeat)
 					{
-						m_inputs[i] = input;
-						m_inputThisBeat = true;
+						// only reset the command array if the player missed this beat
+						ResetInputs();
+						EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
 					}
-				}
-				++m_currentBeat;
+					m_inputThisBeat = false;
+					break;
+				case cmdInput.BeatEnd:
+					if (m_currentBeat == 4)
+					{
+						// send the completed command to be processed
+						Debug.Log("command complete");
+						EventManager.instance.DispatchEvent(GameEvents.Input_CommandComplete, m_inputs, m_potency);
+						ResetInputs();
+					}
+					m_inputThisBeat = false;
+					break;
+				case cmdInput.Walk:
+				case cmdInput.Attack:
+				case cmdInput.Defend:
+				case cmdInput.Magic:
+					if (m_inputThisBeat) // check for double input on this beat
+					{
+						Debug.Log("double input");
+						ResetInputs();
+						EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
+						return;
+					}
 
-				string outputstring = "";
-				for (int i = 0; i < 4; ++i)
-				{
-					outputstring += " " + m_inputs[i];
-				}
-				Debug.Log("input array:" + outputstring + " currentBeat: " + m_currentBeat);
-				break;
-			default:
-				Debug.LogError("Unexpected player input");
-				break;
+					for (int i = 0; i < m_inputs.Length; ++i)
+					{
+						if (m_inputs[i] == cmdInput.None && !m_inputThisBeat)
+						{
+							m_inputs[i] = input;
+							m_inputThisBeat = true;
+						}
+					}
+					++m_currentBeat;
+
+					string outputstring = "";
+					for (int i = 0; i < 4; ++i)
+					{
+						outputstring += " " + m_inputs[i];
+					}
+					Debug.Log("input array:" + outputstring + " currentBeat: " + m_currentBeat);
+					break;
+				default:
+					Debug.LogError("Unexpected player input");
+					break;
+			}
 		}
 	}
 
@@ -118,6 +155,24 @@ public class CmdInputHandler : MonoBehaviour
 		}
 		m_currentBeat = 0;
 		m_potency = cmdPotency.High;
+	}
+	#endregion
+
+	#region Wait timer event handlers
+	private void WaitPostCommand(EventArgumentData ead)
+	{
+		m_waiting = true;
+		m_currentBeat = 0;
+
+		m_beatUIHandler.WaitPostCommand();
+	}
+
+	private void ResetWait(EventArgumentData ead)
+	{
+		m_waiting = false;
+		m_currentBeat = 0;
+
+		m_beatUIHandler.FailedCommand();
 	}
 	#endregion
 }

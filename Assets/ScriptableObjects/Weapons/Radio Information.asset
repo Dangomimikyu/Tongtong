@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f49e163dc9b08eb4f8b40d12d174d657, type: 3}
+  m_Name: Radio Information
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 6210899807976338612, guid: 99b5ad9b7706ce84fa4265acab1d7052, type: 3}
+  bulletPrefab: {fileID: 4616792544379181470, guid: 11a4fd785e3950947bf93e3f6980a34c, type: 3}
+  bulletData:
+    velocity: 0
+    damage: 0
+    burstCooldown: 0
+    burstBulletCount: 0
+    ShootCooldown: 0

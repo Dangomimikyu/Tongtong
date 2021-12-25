@@ -4,10 +4,11 @@ public class CommandAtrributes
 	public enum Inputs
 	{
 		None,
+		BeatEnd,
 		Walk,
 		Attack,
 		Defend,
-		Magic,
+		Magic
 	}
 
 	// commands are the combination of inputs in a specific order and on-beat

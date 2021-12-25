@@ -32,11 +32,6 @@ public class SceneController : MonoBehaviour
 	{
 		m_playerInputAction.Disable();
 	}
-
-	void Update()
-	{
-
-	}
 	#endregion
 
 	#region Coroutines
@@ -63,31 +58,20 @@ public class SceneController : MonoBehaviour
 		}
 	}
 
-	private void LoadSplashScene()
-	{
-		SceneManager.LoadScene("ExpeditionScene", LoadSceneMode.Additive);
-	}
-
-	private void LoadLoginScene(EventArgumentData ead)
-	{
-
-	}
-
-	private void LoadSceneString(string name)
+	public void LoadSceneString(string name)
 	{
 		// load scene by name
 		UnloadAllScenes();
 		SceneManager.LoadScene(name);
+		StartCoroutine(LoadNewScene());
 	}
 
 	private void LoadSceneNext(InputAction.CallbackContext ctx)
 	{
 		// load next scene according to build settings
-		//UnloadAllScenes();
 		int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 		SceneManager.LoadScene(nextSceneIndex);
 		StartCoroutine(LoadNewScene());
-		//EventManager.instance.DispatchEvent(GameEvents.Misc_SceneChange, SceneManager.GetSceneByBuildIndex(nextSceneIndex).name);
 	}
 
 	private void ChangeScene(InputAction.CallbackContext ctx)

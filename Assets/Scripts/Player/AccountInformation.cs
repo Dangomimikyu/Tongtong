@@ -4,20 +4,13 @@ using UnityEngine;
 
 public class AccountInformation : MonoBehaviour
 {
+	[SerializeField]
     private uint money;
-    // crafting material list
+	// crafting material list
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+	public void ReceiveRewards(Quest q)
+	{
+		Debug.Log("quest reward received: " + q.questRewards.money);
+		money += q.questRewards.money;
+	}
 }

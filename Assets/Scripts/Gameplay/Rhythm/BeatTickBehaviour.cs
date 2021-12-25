@@ -1,3 +1,4 @@
+// note: this was for the previous form of beat UI that looks like Crypt of the Necrodancer
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
