@@ -1536,6 +1536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_beatTracker: {fileID: 499667615}
+  m_beatUIHandler: {fileID: 1042238463}
   m_inputThisBeat: 0
 --- !u!114 &517851860
 MonoBehaviour:

@@ -52,8 +52,8 @@ public class BeatUIHandler : MonoBehaviour
 		EventManager.instance.StopListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
 		EventManager.instance.StopListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
 		EventManager.instance.StopListening(GameEvents.Input_Drum, EditInputUI);
-		EventManager.instance.StopListening(GameEvents.Input_CommandComplete, WaitPostCommand);
-		EventManager.instance.StopListening(GameEvents.Input_CommandFail, FailedCommand);
+		//EventManager.instance.StopListening(GameEvents.Input_CommandComplete, WaitPostCommand);
+		//EventManager.instance.StopListening(GameEvents.Input_CommandFail, FailedCommand);
 	}
 
 	#region Monobehaviour functions
@@ -69,8 +69,8 @@ public class BeatUIHandler : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
 		EventManager.instance.StartListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
 		EventManager.instance.StartListening(GameEvents.Input_Drum, EditInputUI);
-		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, WaitPostCommand);
-		EventManager.instance.StartListening(GameEvents.Input_CommandFail, FailedCommand);
+		//EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, WaitPostCommand);
+		//EventManager.instance.StartListening(GameEvents.Input_CommandFail, FailedCommand);
 	}
 
 	private void OnDisable()
@@ -79,8 +79,8 @@ public class BeatUIHandler : MonoBehaviour
 		EventManager.instance.StopListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
 		EventManager.instance.StopListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
 		EventManager.instance.StopListening(GameEvents.Input_Drum, EditInputUI);
-		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, WaitPostCommand);
-		EventManager.instance.StopListening(GameEvents.Input_CommandFail, FailedCommand);
+		//EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, WaitPostCommand);
+		//EventManager.instance.StopListening(GameEvents.Input_CommandFail, FailedCommand);
 	}
 	#endregion
 
@@ -198,11 +198,31 @@ public class BeatUIHandler : MonoBehaviour
 		ResetBeatUIWait();
 	}
 
+	public void WaitPostCommand()
+	{
+		m_currentWaiting = true;
+
+		// set all the input UI to be the waiting sprite
+		ResetBeatUIWait();
+	}
+
 	private void FailedCommand(EventArgumentData ead)
 	{
 		Debug.LogWarning("failed command");
 		ResetBeatInputUI();
 	}
+
+	public void FailedCommand()
+	{
+		Debug.LogWarning("failed command");
+		ResetBeatInputUI();
+	}
+
+	public void CompleteWait()
+    {
+		Debug.Log("UI finished waiting");
+		ResetBeatInputUI();
+    }
 
 	private void ResetBeatInputUI()
 	{
@@ -234,16 +254,17 @@ public class BeatUIHandler : MonoBehaviour
 		if (m_currentWaiting)
 		{
 			Debug.Log("wait count size: " + m_waitBeatCount);
+			//inputDisplayList[m_waitBeatCount].sprite = newSprite;
 			inputDisplayList[m_waitBeatCount].sprite = newSprite;
 			m_waitBeatCount++;
 
-			if (m_waitBeatCount >= 4)
-			{
-				Debug.Log("finished waiting");
-				m_currentWaiting = false;
-				m_waitBeatCount = 0;
-				ResetBeatInputUI();
-			}
+			//if (m_waitBeatCount >= 4)
+			//{
+			//	Debug.Log("finished waiting");
+			//	m_currentWaiting = false;
+			//	m_waitBeatCount = 0;
+			//	ResetBeatInputUI();
+			//}
 		}
 		else
 		{

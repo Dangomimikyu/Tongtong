@@ -14,6 +14,8 @@ public class CmdInputHandler : MonoBehaviour
 	[Header("Script references")]
 	[SerializeField]
 	private BeatTracker m_beatTracker;
+	[SerializeField]
+	private BeatUIHandler m_beatUIHandler;
 	#endregion
 
 	#region CommandAttributes variables
@@ -74,6 +76,8 @@ public class CmdInputHandler : MonoBehaviour
 				EventArgumentData temp = ead;
 				temp.eventParams[0] = cmdInput.BeatEnd;
 				//InputBeat(temp);
+
+				m_beatUIHandler.CompleteWait();
 			}
 		}
 		else
@@ -159,12 +163,16 @@ public class CmdInputHandler : MonoBehaviour
 	{
 		m_waiting = true;
 		m_currentBeat = 0;
+
+		m_beatUIHandler.WaitPostCommand();
 	}
 
 	private void ResetWait(EventArgumentData ead)
 	{
 		m_waiting = false;
 		m_currentBeat = 0;
+
+		m_beatUIHandler.FailedCommand();
 	}
 	#endregion
 }
