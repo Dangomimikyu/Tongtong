@@ -17,6 +17,6 @@ MonoBehaviour:
   bulletData:
     velocity: 300
     damage: 3
-    burstCooldown: 0
-    burstBulletCount: 0
+    burstCooldown: 0.8
+    burstBulletCount: 2
     ShootCooldown: 0

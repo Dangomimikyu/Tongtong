@@ -14,23 +14,46 @@ public class BeatUIHandler : MonoBehaviour
 	public Sprite regularBeatOverlay;
 	public Sprite feverBeatOverlay;
 
-	[SerializeField]
+	[SerializeField] // [to remove]
 	private Sprite m_noInputSprite;
-	[SerializeField]
+	[SerializeField] // [to remove]
 	private Sprite m_waitInputSprite;
-	[SerializeField]
+	[SerializeField] // [to remove]
 	private Sprite m_leftArrowInputSprite;
-	[SerializeField]
+	[SerializeField] // [to remove]
 	private Sprite m_rightArrowInputSprite;
-	[SerializeField]
+	[SerializeField] // [to remove]
 	private Sprite m_upArrowInputSprite;
-	[SerializeField]
+	[SerializeField] // [to remove]
 	private Sprite m_downArrowInputSprite;
+
+	[SerializeField]
+	private GameObject m_leftArrowPrefab;
+	[SerializeField]
+	private GameObject m_rightArrowPrefab;
+	[SerializeField]
+	private GameObject m_topArrowPrefab;
+	[SerializeField]
+	private GameObject m_bottomArrowPrefab;
+
 
 	[Header("Image references")]
 	public Image overlayRenderer;
 	[SerializeField]
-	public List<Image> inputDisplayList;
+	public List<Image> inputDisplayList; // [to remove]
+
+	[Header("Spawn region references")]
+	[SerializeField]
+	private Canvas m_feedbackCanvas;
+	[SerializeField]
+	private RectTransform m_leftSpawnRegion;
+	[SerializeField]
+	private RectTransform m_rightSpawnRegion;
+	[SerializeField]
+	private RectTransform m_topSpawnRegion;
+	[SerializeField]
+	private RectTransform m_bottomSpawnRegion;
+
 
 	[Header("Overlay settings")]
 	[Range(0.0f, 1.0f)]
@@ -52,8 +75,6 @@ public class BeatUIHandler : MonoBehaviour
 		EventManager.instance.StopListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
 		EventManager.instance.StopListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
 		EventManager.instance.StopListening(GameEvents.Input_Drum, EditInputUI);
-		//EventManager.instance.StopListening(GameEvents.Input_CommandComplete, WaitPostCommand);
-		//EventManager.instance.StopListening(GameEvents.Input_CommandFail, FailedCommand);
 	}
 
 	#region Monobehaviour functions
@@ -63,14 +84,10 @@ public class BeatUIHandler : MonoBehaviour
 		Color currentColour = overlayRenderer.color;
 		overlayRenderer.color = new Color(currentColour.r, currentColour.g, currentColour.b, 0.0f);
 
-		//EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, SpawnTick);
-
 		EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, RenderBeatPulse);
 		EventManager.instance.StartListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
 		EventManager.instance.StartListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
 		EventManager.instance.StartListening(GameEvents.Input_Drum, EditInputUI);
-		//EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, WaitPostCommand);
-		//EventManager.instance.StartListening(GameEvents.Input_CommandFail, FailedCommand);
 	}
 
 	private void OnDisable()
@@ -79,12 +96,10 @@ public class BeatUIHandler : MonoBehaviour
 		EventManager.instance.StopListening(GameEvents.Gameplay_ComboFever, ChangeOverlay);
 		EventManager.instance.StopListening(GameEvents.Gameplay_BreakCombo, ChangeOverlay);
 		EventManager.instance.StopListening(GameEvents.Input_Drum, EditInputUI);
-		//EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, WaitPostCommand);
-		//EventManager.instance.StopListening(GameEvents.Input_CommandFail, FailedCommand);
 	}
 	#endregion
 
-	#region Beat Bar UI functions
+	#region Beat Overlay UI functions
 	public void RenderBeatPulse(EventArgumentData ead)
 	{
 		if (overlayRenderer == null)
@@ -125,6 +140,7 @@ public class BeatUIHandler : MonoBehaviour
 	#endregion
 
 	#region Beat Input UI functions
+	/* deprecated version
 	private void EditInputUI(EventArgumentData ead)
 	{
 		cmdInput input = (cmdInput)ead.eventParams[0];
@@ -189,6 +205,68 @@ public class BeatUIHandler : MonoBehaviour
 
 		SetBeatInputUI(newSprite);
 	}
+	*/
+
+	private void EditInputUI(EventArgumentData ead)
+	{
+		cmdInput input = (cmdInput)ead.eventParams[0];
+
+		switch (input)
+		{
+			case cmdInput.None:
+				break;
+			case cmdInput.BeatEnd:
+				break;
+			case cmdInput.Walk:
+				GameObject arrowLeft = Instantiate(m_leftArrowPrefab,
+					new Vector3(Random.Range(m_leftSpawnRegion.rect.xMin * 0.5f, m_leftSpawnRegion.rect.xMax * 0.5f),
+								Random.Range(m_leftSpawnRegion.rect.yMin * 0.5f, m_leftSpawnRegion.rect.yMax * 0.5f),
+								0) + m_leftSpawnRegion.transform.position,
+								Quaternion.identity,
+								m_feedbackCanvas.transform);
+
+				arrowLeft.GetComponent<Image>().DOFade(0.0f, 0.3f);
+				Destroy(arrowLeft, 2.0f); // destroy the arrow after 2 seconds
+				break;
+			case cmdInput.Attack:
+				GameObject arrowRight = Instantiate(m_rightArrowPrefab,
+					new Vector3(Random.Range(m_rightSpawnRegion.rect.xMin * 0.5f, m_rightSpawnRegion.rect.xMax * 0.5f),
+								Random.Range(m_rightSpawnRegion.rect.yMin * 0.5f, m_rightSpawnRegion.rect.yMax * 0.5f),
+								0) + m_rightSpawnRegion.transform.position,
+								Quaternion.identity,
+								m_feedbackCanvas.transform);
+
+
+				arrowRight.GetComponent<Image>().DOFade(0.0f, 0.3f);
+				Destroy(arrowRight, 2.0f); // destroy the arrow after 2 seconds
+
+				break;
+			case cmdInput.Defend:
+				GameObject arrowUp = Instantiate(m_topArrowPrefab,
+					new Vector3(Random.Range(m_topSpawnRegion.rect.xMin * 0.5f, m_topSpawnRegion.rect.xMax * 0.5f),
+								Random.Range(m_topSpawnRegion.rect.yMin * 0.5f, m_topSpawnRegion.rect.yMax * 0.5f),
+								0) + m_topSpawnRegion.transform.position,
+								Quaternion.identity,
+								m_feedbackCanvas.transform);
+
+				arrowUp.GetComponent<Image>().DOFade(0.0f, 0.3f);
+				Destroy(arrowUp, 2.0f); // destroy the arrow after 2 seconds
+				break;
+			case cmdInput.Magic:
+				GameObject arrowDown = Instantiate(m_bottomArrowPrefab,
+					new Vector3(Random.Range(m_bottomSpawnRegion.rect.xMin * 0.5f, m_bottomSpawnRegion.rect.xMax * 0.5f),
+								Random.Range(m_bottomSpawnRegion.rect.yMin * 0.5f, m_bottomSpawnRegion.rect.yMax * 0.5f),
+								0) + m_bottomSpawnRegion.transform.position,
+								Quaternion.identity,
+								m_feedbackCanvas.transform);
+
+				arrowDown.GetComponent<Image>().DOFade(0.0f, 0.3f);
+				Destroy(arrowDown, 2.0f); // destroy the arrow after 2 seconds
+				break;
+			default:
+				break;
+		}
+	}
 
 	private void WaitPostCommand(EventArgumentData ead)
 	{
@@ -219,11 +297,13 @@ public class BeatUIHandler : MonoBehaviour
 	}
 
 	public void CompleteWait()
-    {
-		Debug.Log("UI finished waiting");
-		ResetBeatInputUI();
-    }
+	{
+		Debug.LogError("UI finished waiting");
 
+		//ResetBeatInputUI();
+	}
+
+	// [to remove]
 	private void ResetBeatInputUI()
 	{
 		Debug.Log("reset beat input ui");

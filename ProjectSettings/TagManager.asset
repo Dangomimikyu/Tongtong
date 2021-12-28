@@ -17,6 +17,7 @@ TagManager:
   - EnemyActiveTrigger
   - PlayerManager
   - QuestManager
+  - audiosource
   layers:
   - Default
   - TransparentFX

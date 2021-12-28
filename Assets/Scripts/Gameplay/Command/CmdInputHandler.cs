@@ -25,6 +25,7 @@ public class CmdInputHandler : MonoBehaviour
 
 	#region input verification variables
 	private bool m_waiting = false;
+	private bool m_justEndWaiting = false; // needed to tell the checker that it just finished waiting and not to preemptively fail the player
 	[SerializeField]
 	private bool m_inputThisBeat = false; // true if the player has cast an input during this beat
 	private short m_currentBeat = 0;
@@ -67,10 +68,12 @@ public class CmdInputHandler : MonoBehaviour
 				return;
 			}
 
-			if (++m_currentBeat == 4) // finished waiting
+			if (++m_currentBeat >= 4) // finished waiting
 			{
 				m_currentBeat = 0;
 				m_waiting = false;
+				m_inputThisBeat = false;
+				m_justEndWaiting = true;
 
 				// call this function again after resetting
 				EventArgumentData temp = ead;
@@ -92,15 +95,25 @@ public class CmdInputHandler : MonoBehaviour
 			switch (input)
 			{
 				case cmdInput.None:
-					if (!m_inputThisBeat)
+					if (!m_inputThisBeat) // [to remove]
 					{
+						//check if waiting just ended
+						if (m_justEndWaiting)
+						{
+							Debug.LogError("here here");
+							m_justEndWaiting = false;
+							return;
+						}
+
 						// only reset the command array if the player missed this beat
+						Debug.LogError("player missed beat");
 						ResetInputs();
 						EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
 					}
 					m_inputThisBeat = false;
 					break;
 				case cmdInput.BeatEnd:
+					Debug.LogError("cmon man");
 					if (m_currentBeat == 4)
 					{
 						// send the completed command to be processed
@@ -114,13 +127,13 @@ public class CmdInputHandler : MonoBehaviour
 				case cmdInput.Attack:
 				case cmdInput.Defend:
 				case cmdInput.Magic:
-					if (m_inputThisBeat) // check for double input on this beat
-					{
-						Debug.Log("double input");
-						ResetInputs();
-						EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
-						return;
-					}
+					//if (m_inputThisBeat) // check for double input on this beat
+					//{
+					//	Debug.Log("double input");
+					//	ResetInputs();
+					//	EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
+					//	return;
+					//}
 
 					for (int i = 0; i < m_inputs.Length; ++i)
 					{

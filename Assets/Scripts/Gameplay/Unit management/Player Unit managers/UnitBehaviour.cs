@@ -3,7 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DangoMimikyu.EventManagement;
+using UnityEngine.UI;
 using DG.Tweening;
 
 // macros
@@ -14,14 +14,16 @@ using wpnType = WeaponAttributes.WeaponType;
 
 public class UnitBehaviour : MonoBehaviour
 {
-    [Header("Unit stats")]
+    [Header("Unit script references")]
     [SerializeField]
     public UnitData unitData = new UnitData();
     [SerializeField]
     private BoxCollider2D m_selfCollider;
     [SerializeField]
+    private Image m_overheadUI;
+    [Header("Unit stats")]
+    [SerializeField]
     private HealthBarController m_healthBarController;
-    // private Enemy m_targettedEnemy
     private bool m_spawned = false;
 
     private UnitObjectSpawner m_unitObjSpawner;
@@ -30,6 +32,7 @@ public class UnitBehaviour : MonoBehaviour
 	void Start()
     {
         m_unitObjSpawner = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitObjectSpawner>();
+        m_overheadUI.gameObject.SetActive(false);
     }
 
     void Update()
@@ -121,5 +124,20 @@ public class UnitBehaviour : MonoBehaviour
 	{
         m_healthBarController.gameObject.SetActive(enable);
 	}
-    #endregion
+	#endregion
+
+	#region UI functions
+    public void UpdateHeadUI(Sprite newSprite)
+	{
+        if (newSprite == null)
+		{
+            m_overheadUI.gameObject.SetActive(false);
+		}
+		else
+		{
+            m_overheadUI.sprite = newSprite;
+            m_overheadUI.gameObject.SetActive(true);
+		}
+	}
+	#endregion
 }

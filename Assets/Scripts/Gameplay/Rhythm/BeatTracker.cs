@@ -51,6 +51,7 @@ public class BeatTracker : MonoBehaviour
 	private bool m_outlineThisBeat = false;
 	private bool m_inputThisBeat = false;
 	private bool m_waiting = false;
+	private short m_waitCount = 0;
 	private IEnumerator c_track;
 	[Range(0f, 1f)]
 	[SerializeField]
@@ -133,6 +134,7 @@ public class BeatTracker : MonoBehaviour
 			if (m_timeElapsed >= (m_beatDuration * 0.5f) && !m_outlineThisBeat)
 			{
 				m_outlineThisBeat = true;
+				Debug.Log("metronome beat now");
 				EventManager.instance.DispatchEvent(GameEvents.Gameplay_MetronomeBeat, m_beatDuration);
 				if (m_waiting)
 					EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
@@ -146,7 +148,17 @@ public class BeatTracker : MonoBehaviour
 				else
 				{
 					if (!m_waiting)
+					{
 						EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
+					}
+					else
+					{
+						if (++m_waitCount >= 4)
+						{
+							m_waiting = false;
+							m_waitCount = 0;
+						}
+					}
 				}
 				m_outlineThisBeat = false;
 				m_inputThisBeat = false;
@@ -177,11 +189,13 @@ public class BeatTracker : MonoBehaviour
 	private void StartWait(EventArgumentData ead)
 	{
 		m_waiting = true;
+		m_waitCount = 0;
 	}
 
 	private void CommandFail(EventArgumentData ead)
 	{
 		m_waiting = false;
+		m_waitCount = 0;
 	}
 	#endregion
 

@@ -24,12 +24,14 @@ public class UnitsCommandExecutor : MonoBehaviour
 	private void Start()
     {
 		m_unitDataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
-    }
+		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, ExecuteCommand);
+		EventManager.instance.StartListening(GameEvents.Unit_Spawn, UnitSpawned);
+	}
 
 	private void OnEnable()
 	{
-		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, ExecuteCommand);
-		EventManager.instance.StartListening(GameEvents.Unit_Spawn, UnitSpawned);
+		//EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, ExecuteCommand);
+		//EventManager.instance.StartListening(GameEvents.Unit_Spawn, UnitSpawned);
 	}
 
 	private void OnDisable()
@@ -42,9 +44,7 @@ public class UnitsCommandExecutor : MonoBehaviour
 	#region Unit handling functions
 	private void UnitSpawned(EventArgumentData ead)
 	{
-		//m_playerUnits.Add((UnitBehaviour)ead.eventParams[0]);
 		m_playerUnits = m_unitDataManager.activeUnits;
-		Debug.Log("unit spawned bruh");
 	}
 	#endregion
 
