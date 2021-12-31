@@ -21,7 +21,7 @@ public class UnitObjectSpawner : MonoBehaviour
 		int burstCount = 0;
 		while (burstCount < wpn.burstBulletcount)
 		{
-			Debug.Log("firing burst shot: " + burstCount);
+			Debug.Log("firing burst shot: " + burstCount + " weapon type: " + wpn.weaponType);
 			burstCount++;
 			GameObject bullet = Instantiate(m_bulletPrefab, tongBot.transform);
 			bullet.transform.position += wpn.firingPoint.localPosition;

@@ -13,8 +13,16 @@ using cmdPotency = CommandAtrributes.Potency;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+	[Header("External object references")]
 	[SerializeField]
 	private PlayerInputs m_playerInputAction;
+	[SerializeField]
+	private PauseMenuHandler m_pauseMenuHandler;
+
+	public enum MenuType
+	{
+		Pause = 1,
+	}
 
 	#region Monobehaviour functions
 	private void Awake()
@@ -78,6 +86,16 @@ public class PlayerInputHandler : MonoBehaviour
 
 	private void ParseMenuInput(InputAction.CallbackContext ctx)
 	{
+		MenuType scaleVal = (MenuType)ctx.ReadValue<float>();
 
+		switch (scaleVal)
+		{
+			case MenuType.Pause:
+				m_pauseMenuHandler?.TogglePause();
+				break;
+			default:
+				Debug.Log("invalid menu change");
+				break;
+		}
 	}
 }

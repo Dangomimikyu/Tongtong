@@ -51,8 +51,12 @@ public class BeatTracker : MonoBehaviour
 	private bool m_outlineThisBeat = false;
 	private bool m_inputThisBeat = false;
 	private bool m_waiting = false;
+	private bool m_gamePause = false;
 	private short m_waitCount = 0;
 	private IEnumerator c_track;
+
+	[SerializeField]
+	private float m_totalTimeElapsed = 0.0f;
 	[Range(0f, 1f)]
 	[SerializeField]
 	private float m_timeElapsed = 0.0f;
@@ -66,6 +70,7 @@ public class BeatTracker : MonoBehaviour
 		EventManager.instance.StopListening(GameEvents.Input_Drum, PlayerInputBeat);
 		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, StartWait);
 		EventManager.instance.StopListening(GameEvents.Input_CommandFail, CommandFail);
+		EventManager.instance.StopListening(GameEvents.Menu_Pause, GamePause);
 	}
 
 	#region Monobehaviour functions
@@ -83,6 +88,7 @@ public class BeatTracker : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Input_Drum, PlayerInputBeat);
 		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, StartWait);
 		EventManager.instance.StartListening(GameEvents.Input_CommandFail, CommandFail);
+		EventManager.instance.StartListening(GameEvents.Menu_Pause, GamePause);
 
 		c_track = TrackBeats();
 		StartCoroutine(c_track);
@@ -95,6 +101,7 @@ public class BeatTracker : MonoBehaviour
 		EventManager.instance.StopListening(GameEvents.Input_Drum, PlayerInputBeat);
 		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, StartWait);
 		EventManager.instance.StopListening(GameEvents.Input_CommandFail, CommandFail);
+		EventManager.instance.StopListening(GameEvents.Menu_Pause, GamePause);
 	}
 	#endregion
 
@@ -129,8 +136,14 @@ public class BeatTracker : MonoBehaviour
 	{
 		while (Time.timeSinceLevelLoad < m_maxTime)
 		{
-			m_timeElapsed = Time.timeSinceLevelLoad - (m_totalBeats * m_beatDuration);
+			while (m_gamePause)
+			{
+				yield return null;
+			}
 
+			m_totalTimeElapsed += Time.deltaTime;
+			//m_timeElapsed = Time.timeSinceLevelLoad - (m_totalBeats * m_beatDuration);
+			m_timeElapsed = m_totalTimeElapsed - (m_totalBeats * m_beatDuration);
 			if (m_timeElapsed >= (m_beatDuration * 0.5f) && !m_outlineThisBeat)
 			{
 				m_outlineThisBeat = true;
@@ -196,6 +209,19 @@ public class BeatTracker : MonoBehaviour
 	{
 		m_waiting = false;
 		m_waitCount = 0;
+	}
+
+	private void GamePause(EventArgumentData ead)
+	{
+		Debug.Log("game pause call");
+		if ((bool)ead.eventParams[0] == true) // pause the game
+		{
+			m_gamePause = true;
+		}
+		else // unpause the game
+		{
+			m_gamePause = false;
+		}
 	}
 	#endregion
 

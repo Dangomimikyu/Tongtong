@@ -195,7 +195,7 @@
                     "id": "1d5ca7ad-76f0-466f-b5af-d49deebcaf2d",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Scale",
                     "groups": "",
                     "action": "PauseMenu",
                     "isComposite": false,

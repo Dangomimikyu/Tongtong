@@ -21,10 +21,15 @@ public class UnitBehaviour : MonoBehaviour
     private BoxCollider2D m_selfCollider;
     [SerializeField]
     private Image m_overheadUI;
+
     [Header("Unit stats")]
     [SerializeField]
     private HealthBarController m_healthBarController;
     private bool m_spawned = false;
+
+    [Header("Prefab references")]
+    [SerializeField]
+    private GameObject m_shieldPrefab;
 
     private UnitObjectSpawner m_unitObjSpawner;
 
@@ -33,11 +38,6 @@ public class UnitBehaviour : MonoBehaviour
     {
         m_unitObjSpawner = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitObjectSpawner>();
         m_overheadUI.gameObject.SetActive(false);
-    }
-
-    void Update()
-    {
-
     }
     #endregion
 
@@ -92,8 +92,23 @@ public class UnitBehaviour : MonoBehaviour
 
     public void Defend(cmdPotency potency)
     {
+        GameObject newShield = Instantiate(m_shieldPrefab, transform);
 
-    }
+		switch (potency)
+		{
+			case cmdPotency.Low:
+                //newShield.GetComponent<ShieldBehaviour>().SetShieldHealth();
+                break;
+			case cmdPotency.Medium:
+				break;
+			case cmdPotency.High:
+				break;
+			default:
+				break;
+		}
+
+		//newShield.GetComponent<ShieldBehaviour>().SetShieldHealth()
+	}
 	#endregion
 
 	#region Preparation functions

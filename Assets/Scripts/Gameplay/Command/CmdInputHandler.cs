@@ -73,7 +73,7 @@ public class CmdInputHandler : MonoBehaviour
 				m_currentBeat = 0;
 				m_waiting = false;
 				m_inputThisBeat = false;
-				m_justEndWaiting = true;
+				//m_justEndWaiting = true;
 
 				// call this function again after resetting
 				EventArgumentData temp = ead;
@@ -81,6 +81,7 @@ public class CmdInputHandler : MonoBehaviour
 				//InputBeat(temp);
 
 				m_beatUIHandler.CompleteWait();
+				EventManager.instance.DispatchEvent(GameEvents.Unit_FinishWaiting);
 			}
 		}
 		else
@@ -98,22 +99,20 @@ public class CmdInputHandler : MonoBehaviour
 					if (!m_inputThisBeat) // [to remove]
 					{
 						//check if waiting just ended
-						if (m_justEndWaiting)
-						{
-							Debug.LogError("here here");
-							m_justEndWaiting = false;
-							return;
-						}
+						//if (m_justEndWaiting)
+						//{
+						//	Debug.LogError("here here");
+						//	m_justEndWaiting = false;
+						//	return;
+						//}
 
 						// only reset the command array if the player missed this beat
-						Debug.LogError("player missed beat");
 						ResetInputs();
 						EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
 					}
 					m_inputThisBeat = false;
 					break;
 				case cmdInput.BeatEnd:
-					Debug.LogError("cmon man");
 					if (m_currentBeat == 4)
 					{
 						// send the completed command to be processed

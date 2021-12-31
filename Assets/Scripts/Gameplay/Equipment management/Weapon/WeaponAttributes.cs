@@ -32,6 +32,24 @@ public class WeaponAttributes : MonoBehaviour
 		[Tooltip("Cooldown duration between shots, counted in metronome beats")]
 		public int ShootCooldown;
 	}
+
+	// define the types of shield
+	[System.Serializable]
+	public enum ShieldType
+	{
+		Small,
+		Tall,
+		Tank
+	}
+
+	[System.Serializable]
+	public struct ShieldData
+	{
+		[Tooltip("Shield health")]
+		public float health;
+		[Tooltip("Vertical Scaling")]
+		public Vector3 vertScaling;
+	}
 	#endregion
 
 	#region All weapon information
@@ -44,6 +62,13 @@ public class WeaponAttributes : MonoBehaviour
 	private List<WeaponTemplate> m_weaponInformation;
 	[SerializeField]
 	private List<WeaponType> m_twoHandedList;
+	[SerializeField]
+	private List<ShieldTemplate> m_shieldInformation;
+	#endregion
+
+	#region All shield information
+	[SerializeField]
+	//private List<ShieldTemplate> m_shieldInformation;
 	#endregion
 
 	#region Monobehaviour functions
@@ -64,40 +89,40 @@ public class WeaponAttributes : MonoBehaviour
 	#region Retrieval functions
 	#region Prefab
 	public GameObject GetWeaponPrefab(Weapon weapon)
+	{
+		switch (weapon.weaponType)
 		{
-			switch (weapon.weaponType)
-			{
-				default:
-				case WeaponType.None:
-					Debug.LogWarning("unable to get a weapon prefab because this weapontype is none");
-					return null;
-				case WeaponType.Radio:
-				case WeaponType.Pistol:
-				case WeaponType.Rifle:
-				case WeaponType.Sniper:
-				case WeaponType.Rocket:
-				case WeaponType.Lazer:
-				return gunPrefabList[(int)weapon.weaponType - 1];
-			}
+			default:
+			case WeaponType.None:
+				Debug.LogWarning("unable to get a weapon prefab because this weapontype is none");
+				return null;
+			case WeaponType.Radio:
+			case WeaponType.Pistol:
+			case WeaponType.Rifle:
+			case WeaponType.Sniper:
+			case WeaponType.Rocket:
+			case WeaponType.Lazer:
+			return gunPrefabList[(int)weapon.weaponType - 1];
 		}
+	}
 
-		public GameObject GetBulletPrefab(Weapon weapon)
+	public GameObject GetBulletPrefab(Weapon weapon)
+	{
+		switch (weapon.weaponType)
 		{
-			switch (weapon.weaponType)
-			{
-				default:
-				case WeaponType.None:
-					Debug.LogWarning("unable to get a bullet prefab because this weapontype is none");
-					return null;
-				case WeaponType.Radio:
-				case WeaponType.Pistol:
-				case WeaponType.Rifle:
-				case WeaponType.Sniper:
-				case WeaponType.Rocket:
-				case WeaponType.Lazer:
-				return bulletPrefabList[(int)weapon.weaponType - 1];
-			}
+			default:
+			case WeaponType.None:
+				Debug.LogWarning("unable to get a bullet prefab because this weapontype is none");
+				return null;
+			case WeaponType.Radio:
+			case WeaponType.Pistol:
+			case WeaponType.Rifle:
+			case WeaponType.Sniper:
+			case WeaponType.Rocket:
+			case WeaponType.Lazer:
+			return bulletPrefabList[(int)weapon.weaponType - 1];
 		}
+	}
 	#endregion
 
 		#region Bullet values
