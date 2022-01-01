@@ -37,14 +37,17 @@ public class WeaponAttributes : MonoBehaviour
 	[System.Serializable]
 	public enum ShieldType
 	{
-		Small,
-		Tall,
-		Tank
+		None,
+		Buckler,
+		Kite,
+		Tower
 	}
 
 	[System.Serializable]
 	public struct ShieldData
 	{
+		[Tooltip("Shield level")]
+		public int level;
 		[Tooltip("Shield health")]
 		public float health;
 		[Tooltip("Vertical Scaling")]
@@ -53,8 +56,10 @@ public class WeaponAttributes : MonoBehaviour
 	#endregion
 
 	#region All weapon information
-	List<GameObject> gunPrefabList = new List<GameObject>();
-	List<GameObject> bulletPrefabList = new List<GameObject>();
+	private List<GameObject> gunPrefabList = new List<GameObject>();
+	private List<GameObject> bulletPrefabList = new List<GameObject>();
+	private List<GameObject> shieldPrefabList = new List<GameObject>();
+
 	private List<BulletData> m_bulletStatsList = new List<BulletData>();
 
 	[Header("Weapon info")]
@@ -66,21 +71,20 @@ public class WeaponAttributes : MonoBehaviour
 	private List<ShieldTemplate> m_shieldInformation;
 	#endregion
 
-	#region All shield information
-	[SerializeField]
-	//private List<ShieldTemplate> m_shieldInformation;
-	#endregion
-
 	#region Monobehaviour functions
 	private void Start()
 	{
 		for (int i = 0; i < m_weaponInformation.Count; ++i)
 		{
-			Debug.Log("index: " + i);
 			gunPrefabList.Add(m_weaponInformation[i].weaponPrefab);
 			bulletPrefabList.Add(m_weaponInformation[i].bulletPrefab);
 			m_bulletStatsList.Add(m_weaponInformation[i].bulletData);
 		}
+
+		for (int i = 0; i < m_shieldInformation.Count; ++i)
+        {
+			shieldPrefabList.Add(m_shieldInformation[i].shieldPrefab);
+        }
 
 		Debug.Log("finished starting");
 	}
@@ -123,6 +127,19 @@ public class WeaponAttributes : MonoBehaviour
 			return bulletPrefabList[(int)weapon.weaponType - 1];
 		}
 	}
+
+	public GameObject GetShieldPrefab(ShieldData shieldData)
+    {
+		if (shieldData.level > 0)
+        {
+			return shieldPrefabList[shieldData.level - 1];
+        }
+		else
+        {
+			Debug.LogError("invalid shield level");
+			return null;
+        }
+    }
 	#endregion
 
 		#region Bullet values

@@ -547,6 +547,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 668e4398557ab354ea8b45491f2e78a1, type: 2}
   - {fileID: 11400000, guid: 7b7f816d5a7bb4743b082a861d1575c9, type: 2}
   m_twoHandedList: 040000000500000006000000
+  m_shieldInformation:
+  - {fileID: 11400000, guid: 6c1f96e9a1fff9243a555cbe5504f555, type: 2}
+  - {fileID: 11400000, guid: dc522c95c7873f14383dd9534f9f34b8, type: 2}
+  - {fileID: 11400000, guid: c3627485ab0b51448812e660ff0ec75d, type: 2}
 --- !u!4 &867243682
 Transform:
   m_ObjectHideFlags: 0
