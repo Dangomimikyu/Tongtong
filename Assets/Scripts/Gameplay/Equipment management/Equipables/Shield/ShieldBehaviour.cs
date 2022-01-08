@@ -19,6 +19,7 @@ public class ShieldBehaviour : MonoBehaviour
 
 	public void TakeDamage(float dmg)
 	{
+		Debug.Log("shield take damage");
 		m_health -= dmg;
 		if (m_health <= 0.0f)
 		{

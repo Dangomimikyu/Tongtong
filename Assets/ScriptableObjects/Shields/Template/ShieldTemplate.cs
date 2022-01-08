@@ -11,4 +11,6 @@ public class ShieldTemplate : ScriptableObject
 	public WeaponAttributes.ShieldType shieldType;
 	[Tooltip("Shield information")]
 	public WeaponAttributes.ShieldData shieldData;
+	[Tooltip("Shield colour")]
+	public Color shieldColour;
 }

@@ -47,10 +47,12 @@ public class PauseMenuHandler : MonoBehaviour
 		if (m_commandCanvas.gameObject.activeInHierarchy)
 		{
 			m_commandCanvas.gameObject.SetActive(false);
+			m_mainPauseCanvas.gameObject.SetActive(true);
 		}
 		else
 		{
 			m_commandCanvas.gameObject.SetActive(true);
+			m_mainPauseCanvas.gameObject.SetActive(false);
 		}
 	}
 	#endregion
