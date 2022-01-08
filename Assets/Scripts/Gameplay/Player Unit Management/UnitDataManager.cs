@@ -8,6 +8,7 @@ public class UnitData
 {
 	public uint id;
 	public float health = 30.0f;
+	public WeaponAttributes.ShieldData shieldData = new WeaponAttributes.ShieldData();
 	public Weapon leftWeapon = null;
 	public Weapon rightWeapon = null;
 }

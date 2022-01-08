@@ -8,18 +8,23 @@ using cmdPotency = CommandAtrributes.Potency;
 public class ShieldBehaviour : MonoBehaviour
 {
     [Header("Inspector debug variables")]
-    [SerializeField]
-    private float m_health;
+    public float m_health;
 
 	#region Value setting functions
-	private void SetPotency(cmdPotency pot)
-    {
-
-    }
-
-    private void SetShieldHealth(float health)
+	public void SetLifetime(float duration)
 	{
-		m_health = health;
+		Destroy(gameObject, duration);
+	}
+
+
+	public void TakeDamage(float dmg)
+	{
+		m_health -= dmg;
+		if (m_health <= 0.0f)
+		{
+			Debug.Log("shield destroyed");
+			Destroy(gameObject);
+		}
 	}
 	#endregion
 }

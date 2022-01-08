@@ -18,6 +18,7 @@ TagManager:
   - PlayerManager
   - QuestManager
   - audiosource
+  - PlayerUnitShield
   layers:
   - Default
   - TransparentFX

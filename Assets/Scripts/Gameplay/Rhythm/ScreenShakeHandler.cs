@@ -9,7 +9,7 @@ using CmdInput = CommandAtrributes.Inputs;
 
 public class ScreenShakeHandler : MonoBehaviour
 {
-	private CinemachineImpulseSource m_impulseSource;
+	public CinemachineImpulseSource m_impulseSource;
 
 	~ScreenShakeHandler()
 	{
@@ -19,7 +19,7 @@ public class ScreenShakeHandler : MonoBehaviour
 	#region Monobehaviour functions
 	private void Start()
 	{
-		m_impulseSource = GetComponent<CinemachineImpulseSource>();
+		//m_impulseSource = GetComponent<CinemachineImpulseSource>();
 
 		EventManager.instance.StartListening(GameEvents.Input_CommandFail, CommandFailShake);
 	}
@@ -34,8 +34,8 @@ public class ScreenShakeHandler : MonoBehaviour
 	private void CommandFailShake(EventArgumentData ead)
 	{
 		Debug.Log("command fail shake");
-		m_impulseSource.m_ImpulseDefinition.m_AmplitudeGain = 11.0f;
-		m_impulseSource.m_ImpulseDefinition.m_FrequencyGain = 11.0f;
+		//m_impulseSource.m_ImpulseDefinition.m_AmplitudeGain = 11.0f;
+		//m_impulseSource.m_ImpulseDefinition.m_FrequencyGain = 11.0f;
 		m_impulseSource.GenerateImpulse();
 	}
 	#endregion

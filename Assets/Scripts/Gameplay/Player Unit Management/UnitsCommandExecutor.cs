@@ -17,7 +17,8 @@ public class UnitsCommandExecutor : MonoBehaviour
 	~UnitsCommandExecutor()
 	{
 		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, ExecuteCommand);
-		EventManager.instance.StopListening(GameEvents.Unit_Spawn, UnitSpawned);
+		EventManager.instance.StopListening(GameEvents.Unit_Spawn, UpdateUnitsList);
+		EventManager.instance.StopListening(GameEvents.Unit_Died, UpdateUnitsList);
 	}
 
 	#region Monobehaviour functions
@@ -25,7 +26,8 @@ public class UnitsCommandExecutor : MonoBehaviour
     {
 		m_unitDataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
 		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, ExecuteCommand);
-		EventManager.instance.StartListening(GameEvents.Unit_Spawn, UnitSpawned);
+		EventManager.instance.StartListening(GameEvents.Unit_Spawn, UpdateUnitsList);
+		EventManager.instance.StartListening(GameEvents.Unit_Died, UpdateUnitsList);
 	}
 
 	private void OnEnable()
@@ -37,12 +39,13 @@ public class UnitsCommandExecutor : MonoBehaviour
 	private void OnDisable()
 	{
 		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, ExecuteCommand);
-		EventManager.instance.StopListening(GameEvents.Unit_Spawn, UnitSpawned);
+		EventManager.instance.StopListening(GameEvents.Unit_Spawn, UpdateUnitsList);
+		EventManager.instance.StopListening(GameEvents.Unit_Died, UpdateUnitsList);
 	}
 	#endregion
 
 	#region Unit handling functions
-	private void UnitSpawned(EventArgumentData ead)
+	private void UpdateUnitsList(EventArgumentData ead)
 	{
 		m_playerUnits = m_unitDataManager.activeUnits;
 	}

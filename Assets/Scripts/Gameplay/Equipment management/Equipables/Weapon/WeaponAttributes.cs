@@ -50,6 +50,8 @@ public class WeaponAttributes : MonoBehaviour
 		public int level;
 		[Tooltip("Shield health")]
 		public float health;
+		[Tooltip("Despawn time")]
+		public float lifetimeDur;
 		[Tooltip("Vertical Scaling")]
 		public Vector3 vertScaling;
 	}

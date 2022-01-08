@@ -15,9 +15,10 @@ public class PlayerInputHandler : MonoBehaviour
 {
 	[Header("External object references")]
 	[SerializeField]
-	private PlayerInputs m_playerInputAction;
-	[SerializeField]
 	private PauseMenuHandler m_pauseMenuHandler;
+
+	// player input
+	private PlayerInputs m_playerInputAction;
 
 	public enum MenuType
 	{
@@ -91,6 +92,9 @@ public class PlayerInputHandler : MonoBehaviour
 		switch (scaleVal)
 		{
 			case MenuType.Pause:
+				// change the input map
+				// [change input map]
+				// change UI and inform game that it's being paused
 				m_pauseMenuHandler?.TogglePause();
 				break;
 			default:

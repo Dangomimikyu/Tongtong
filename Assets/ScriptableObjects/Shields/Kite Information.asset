@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941065cea9f494e479dde7eb27e5c5b9, type: 3}
   m_Name: Kite Information
   m_EditorClassIdentifier: 
-  shieldPrefab: {fileID: 0}
+  shieldPrefab: {fileID: 1223230578067976846, guid: a038b33576530a141b567f8f56908eb5, type: 3}
   shieldType: 0
   shieldData:
-    health: 0
-    vScaling: {x: 0, y: 0, z: 0}
+    level: 2
+    health: 15
+    lifetimeDur: 5
+    vertScaling: {x: 0, y: 0, z: 0}

@@ -36,6 +36,14 @@ public class BulletBehaviour : MonoBehaviour
 
 			Destroy(gameObject); // destroy the bullet
 		}
+		else if (collision.gameObject.tag == "PlayerUnitShield" && !m_bulletInfo.friendly)
+		{
+			Debug.Log("hit shield");
+			ShieldBehaviour sb = collision.gameObject.GetComponent<ShieldBehaviour>();
+			sb.TakeDamage(m_bulletInfo.damage);
+
+			Destroy(gameObject); // destroy this bullet
+		}
 		else if (collision.gameObject.tag == "PlayerUnit" && !m_bulletInfo.friendly) // enemy bullet hit player
 		{
 			Debug.Log("hit player");
@@ -54,13 +62,13 @@ public class BulletBehaviour : MonoBehaviour
 				EventManager.instance.DispatchEvent(GameEvents.Unit_Damaged, ub);
 			}
 
-			Destroy(gameObject);
+			Destroy(gameObject); // destroy this bullet
 		}
 		else if (collision.gameObject.tag == "ViewBound")
 		{
 			// destroy this object since it went beyond the screen view
 			Debug.Log("bullet hit viewbound");
-			Destroy(gameObject);
+			Destroy(gameObject); // destroy this bullet
 		}
 	}
 	#endregion

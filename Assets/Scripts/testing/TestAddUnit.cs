@@ -5,6 +5,9 @@ using DangoMimikyu.EventManagement;
 
 public class TestAddUnit : MonoBehaviour
 {
+	[SerializeField]
+	private ShieldTemplate m_shieldInformation;
+
     void Start()
     {
 		//List<UnitBehaviour> ublist = new List<UnitBehaviour>();
@@ -29,6 +32,7 @@ public class TestAddUnit : MonoBehaviour
 			//wRight.twoHanded = true;
 			tempud.leftWeapon = wLeft;
 			tempud.rightWeapon = wRight;
+			tempud.shieldData = m_shieldInformation.shieldData;
 			udlist.Add(tempud);
 		}
 		Debug.Log("dispatching event");

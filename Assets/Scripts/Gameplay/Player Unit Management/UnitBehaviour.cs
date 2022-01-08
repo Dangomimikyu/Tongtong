@@ -38,6 +38,8 @@ public class UnitBehaviour : MonoBehaviour
     {
         m_unitObjSpawner = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitObjectSpawner>();
         m_overheadUI.gameObject.SetActive(false);
+
+        m_shieldPrefab = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>().GetShieldPrefab(unitData.shieldData);
     }
     #endregion
 
@@ -93,17 +95,21 @@ public class UnitBehaviour : MonoBehaviour
     public void Defend(cmdPotency potency)
     {
         GameObject newShield = Instantiate(m_shieldPrefab, transform);
+        newShield.GetComponent<ShieldBehaviour>().m_health = unitData.shieldData.health;
 
-		switch (potency)
+        switch (potency)
 		{
 			case cmdPotency.Low:
-                //newShield.GetComponent<ShieldBehaviour>().SetShieldHealth();
+                newShield.GetComponent<ShieldBehaviour>().SetLifetime(unitData.shieldData.lifetimeDur);
                 break;
 			case cmdPotency.Medium:
-				break;
+                newShield.GetComponent<ShieldBehaviour>().SetLifetime(unitData.shieldData.lifetimeDur * 1.25f);
+                break;
 			case cmdPotency.High:
+                newShield.GetComponent<ShieldBehaviour>().SetLifetime(unitData.shieldData.lifetimeDur * 1.5f);
 				break;
 			default:
+                Debug.LogError("unexpected potency level");
 				break;
 		}
 
@@ -144,14 +150,17 @@ public class UnitBehaviour : MonoBehaviour
 	#region UI functions
     public void UpdateHeadUI(Sprite newSprite)
 	{
+        if (m_overheadUI == null)
+            return;
+
         if (newSprite == null)
 		{
-            m_overheadUI.gameObject.SetActive(false);
+            m_overheadUI.gameObject?.SetActive(false);
 		}
 		else
 		{
             m_overheadUI.sprite = newSprite;
-            m_overheadUI.gameObject.SetActive(true);
+            m_overheadUI.gameObject?.SetActive(true);
 		}
 	}
 	#endregion
