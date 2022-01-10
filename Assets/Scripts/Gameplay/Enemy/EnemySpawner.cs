@@ -67,19 +67,6 @@ public class EnemySpawner : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, MetronomeTick);
 	}
 
-	void Update()
-	{
-  //      m_spawnTimeElapsed += Time.deltaTime;
-  //      if (m_spawnTimeElapsed > m_spawnWaitTime && !testspawn)
-		//{
-  //          testspawn = true;
-  //          m_spawnTimeElapsed = 0.0f;
-  //          m_currentWaveCount++;
-  //          //SpawnEnemies();
-  //          TestSpawn();
-		//}
-	}
-
 	private void OnDisable()
 	{
 		EventManager.instance.StopListening(GameEvents.Gameplay_MetronomeBeat, MetronomeTick);

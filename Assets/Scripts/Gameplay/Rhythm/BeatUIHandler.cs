@@ -298,8 +298,6 @@ public class BeatUIHandler : MonoBehaviour
 
 	public void CompleteWait()
 	{
-		Debug.LogError("UI finished waiting");
-
 		//ResetBeatInputUI();
 	}
 

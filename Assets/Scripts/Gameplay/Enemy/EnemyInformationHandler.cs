@@ -22,6 +22,7 @@ public class EnemyInformationHandler : MonoBehaviour
 		EventManager.instance.StopListening(GameEvents.Enemy_Active, EnemyActive);
 		EventManager.instance.StopListening(GameEvents.Enemy_Damaged, EnemyDamaged);
 		EventManager.instance.StopListening(GameEvents.Enemy_Died, EnemyDied);
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, RemoveAll);
 		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, RemoveAll);
 	}
 
@@ -33,6 +34,7 @@ public class EnemyInformationHandler : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Enemy_Active, EnemyActive);
 		EventManager.instance.StartListening(GameEvents.Enemy_Damaged, EnemyDamaged);
 		EventManager.instance.StartListening(GameEvents.Enemy_Died, EnemyDied);
+		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, RemoveAll);
 		EventManager.instance.StartListening(GameEvents.Gameplay_QuestAbandoned, RemoveAll);
 	}
 
@@ -43,6 +45,7 @@ public class EnemyInformationHandler : MonoBehaviour
 		EventManager.instance.StopListening(GameEvents.Enemy_Active, EnemyActive);
 		EventManager.instance.StopListening(GameEvents.Enemy_Damaged, EnemyDamaged);
 		EventManager.instance.StopListening(GameEvents.Enemy_Died, EnemyDied);
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, RemoveAll);
 		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, RemoveAll);
 	}
 	#endregion

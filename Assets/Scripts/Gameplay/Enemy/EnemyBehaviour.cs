@@ -84,17 +84,23 @@ public class EnemyBehaviour : MonoBehaviour
     #region Combat functions
     private void Walk()
 	{
-        // movement is done by moving 20% of the distance between this enemy and the frontmost player unit
-        UnitBehaviour frontMostUnit = m_unitDataManager.GetFrontUnit();
-        Vector3 frontUnitPos = frontMostUnit.gameObject.transform.position;
-        float movementDistance = 0.2f * (frontUnitPos - transform.position).magnitude;
-        Debug.Log("front unit position: " + frontUnitPos + " movement distance: " + movementDistance);
-        transform.DOMoveX(transform.position.x - movementDistance, 1.0f);
+        if (gameObject != null)
+        {
+            // movement is done by moving 20% of the distance between this enemy and the frontmost player unit
+            UnitBehaviour frontMostUnit = m_unitDataManager.GetFrontUnit();
+            Vector3 frontUnitPos = frontMostUnit.gameObject.transform.position;
+            float movementDistance = 0.2f * (frontUnitPos - transform.position).magnitude;
+            Debug.Log("front unit position: " + frontUnitPos + " movement distance: " + movementDistance);
+            transform.DOMoveX(transform.position.x - movementDistance, 1.0f);
+        }
 	}
 
     private void Attack()
     {
-        m_unitObjSpawner.SpawnEnemyBullet(gameObject, enemyData.weapon);
+        if (gameObject != null)
+		{
+            m_unitObjSpawner.SpawnEnemyBullet(gameObject, enemyData.weapon);
+		}
     }
 
     private void Defend()
