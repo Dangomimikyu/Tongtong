@@ -50,14 +50,14 @@ public class BulletBehaviour : MonoBehaviour
 			UnitBehaviour ub = collision.gameObject.GetComponent<UnitBehaviour>();
 			//ub.unitData.health -= m_bulletInfo.damage;
 			ub.TakeDamage(m_bulletInfo.damage);
-			if (ub.unitData.health <= 0.0f)
+			if (ub.unitData.currentHealth <= 0.0f)
 			{
 				EventManager.instance.DispatchEvent(GameEvents.Unit_Died, ub);
 				Destroy(ub.gameObject);
 			}
 			else
 			{
-				Debug.Log("player health: " + ub.unitData.health);
+				Debug.Log("player health: " + ub.unitData.currentHealth);
 				// send event to update the player unit's health
 				EventManager.instance.DispatchEvent(GameEvents.Unit_Damaged, ub);
 			}

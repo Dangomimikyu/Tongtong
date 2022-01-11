@@ -48,10 +48,22 @@ public class QuestManager : MonoBehaviour
 	{
 		return m_activeQuest;
 	}
-	#endregion
+    #endregion
 
-	#region Quest payout functions
-	private void CompleteQuest(EventArgumentData ead)
+    #region Quest action functions
+	public void StartQuest()
+    {
+		// start the current quest
+    }
+
+	public void AbandonQuest()
+    {
+
+    }
+    #endregion
+
+    #region Quest payout functions
+    private void CompleteQuest(EventArgumentData ead)
 	{
 		//m_playerAccountInformation.ReceiveRewards((Quest)ead.eventParams[0]);
 		Debug.Log("quest name: " + m_activeQuest.questName);

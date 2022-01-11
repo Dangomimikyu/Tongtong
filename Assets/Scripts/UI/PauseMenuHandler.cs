@@ -40,6 +40,7 @@ public class PauseMenuHandler : MonoBehaviour
 	{
 		m_permenantPauseUI.gameObject.SetActive(enable);
 		m_mainPauseCanvas.gameObject.SetActive(enable);
+		m_commandCanvas.gameObject.SetActive(false);
 	}
 
 	private void ToggleCommandUI()

@@ -131,15 +131,19 @@ public class UnitBehaviour : MonoBehaviour
     #region Health functions
     public void TakeDamage(float dmg)
     {
-        unitData.health -= dmg;
-        m_healthBarController.UpdateHealth(unitData.health);
+        unitData.currentHealth -= dmg;
+        m_healthBarController.UpdateHealth(unitData.currentHealth);
     }
 
     public void SetMaxHealth(float health)
 	{
-        unitData.health = health;
         m_healthBarController.SetMaxHealth(health);
 	}
+
+    public void SetCurrentHealth(float currHealth)
+    {
+        unitData.currentHealth = currHealth;
+    }
 
     public void ToggleHealthUI(bool enable)
 	{

@@ -26,6 +26,6 @@ public class UnitUIController : MonoBehaviour
 	private void ModifyHealthBar(EventArgumentData ead)
 	{
 		UnitBehaviour ub = (UnitBehaviour)ead.eventParams[0];
-		float newHealth = ub.unitData.health;
+		float newHealth = ub.unitData.currentHealth;
 	}
 }

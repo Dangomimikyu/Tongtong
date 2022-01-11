@@ -93,7 +93,8 @@ public class UnitSpawner : MonoBehaviour
 				unit.GetComponent<UnitBehaviour>().unitData = tempUD; // had to use a temp to prevent the UnitBehaviour from updating the UnitData (unit data is supposed to be the information class)
 				UnitBehaviour newBehaviour = unit.GetComponent<UnitBehaviour>();
 				newBehaviour.ToggleHealthUI(true);
-				newBehaviour.SetMaxHealth(newBehaviour.unitData.health);
+				newBehaviour.SetMaxHealth(newBehaviour.unitData.maxHealth);
+				newBehaviour.SetCurrentHealth(newBehaviour.unitData.currentHealth);
 				SpawnWeapon(unit, ref newBehaviour.unitData.leftWeapon, ref newBehaviour.unitData.rightWeapon);
 
 				m_unitDataManager.activeUnits.Add(newBehaviour);
