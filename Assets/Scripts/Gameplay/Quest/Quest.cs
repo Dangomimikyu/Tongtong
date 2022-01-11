@@ -5,9 +5,37 @@ using DangoMimikyu.EventManagement;
 
 public struct QuestRewards
 {
+	#region Operation overloads
+	public static QuestRewards operator +(QuestRewards self, QuestRewards other)
+	{
+		self.money += other.money;
+		return self;
+	}
+
+	public static QuestRewards operator -(QuestRewards self, QuestRewards other)
+	{
+		self.money -= other.money;
+		return self;
+	}
+
+	public static bool operator ==(QuestRewards self, QuestRewards other)
+	{
+		if (self.money == other.money)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	public static bool operator !=(QuestRewards self, QuestRewards other)
+	{
+		return !(self == other);
+	}
+	#endregion
+
 	public uint money;
 	//CraftingMaterial[] materials;
-
 }
 
 public class Quest
@@ -23,34 +51,29 @@ public class Quest
 	{
 		questName = "defaultQuestName";
 		questRewards.money = 1;
-		//EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 	}
 
 	public Quest(string name = "defaultQuestName", uint moneyReward = 1)
 	{
 		questName = name;
 		questRewards.money = moneyReward;
-		//EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 	}
 
 	~Quest()
 	{
-		//EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 	}
 	#endregion
 
-	#region Monobehaviour functions
-	/*
-	private void Start()
+	#region reward functions
+	public void AddReward(QuestRewards qr)
 	{
-		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
+		questRewards += qr;
 	}
 
-	private void OnDisable()
-	{
-		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
-	}
-	*/
+	//public QuestRewards GetRewards()
+	//{
+	//	return null;
+	//}
 	#endregion
 
 	#region Completion rewards

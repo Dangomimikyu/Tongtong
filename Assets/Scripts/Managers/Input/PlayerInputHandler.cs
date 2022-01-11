@@ -13,8 +13,17 @@ using cmdPotency = CommandAtrributes.Potency;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+	[Header("External object references")]
 	[SerializeField]
+	private PauseMenuHandler m_pauseMenuHandler;
+
+	// player input
 	private PlayerInputs m_playerInputAction;
+
+	public enum MenuType
+	{
+		Pause = 1,
+	}
 
 	#region Monobehaviour functions
 	private void Awake()
@@ -26,6 +35,7 @@ public class PlayerInputHandler : MonoBehaviour
 	{
 		//EventManager.instance.StartListening(GameEvents.Misc_SceneChange, ChangeInputMap);
 		m_playerInputAction.Expedition.Drum.performed += ParseCommandInput;
+		m_playerInputAction.Expedition.PauseMenu.performed += ParseMenuInput;
 	}
 	private void OnEnable()
 	{
@@ -63,7 +73,6 @@ public class PlayerInputHandler : MonoBehaviour
 
 		switch (input)
 		{
-			case cmdInput.None:
 			case cmdInput.Walk:
 			case cmdInput.Attack:
 			case cmdInput.Defend:
@@ -78,6 +87,19 @@ public class PlayerInputHandler : MonoBehaviour
 
 	private void ParseMenuInput(InputAction.CallbackContext ctx)
 	{
+		MenuType scaleVal = (MenuType)ctx.ReadValue<float>();
 
+		switch (scaleVal)
+		{
+			case MenuType.Pause:
+				// change the input map
+				// [change input map]
+				// change UI and inform game that it's being paused
+				m_pauseMenuHandler?.TogglePause();
+				break;
+			default:
+				Debug.Log("invalid menu change");
+				break;
+		}
 	}
 }

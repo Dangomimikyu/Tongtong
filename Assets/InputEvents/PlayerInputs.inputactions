@@ -134,6 +134,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PauseMenu",
+                    "type": "Button",
+                    "id": "9b913bed-fe1d-4056-bfde-908223816e67",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -142,7 +151,7 @@
                     "id": "2fa3a113-4de2-4e40-b12e-e06804e0ed67",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
-                    "processors": "Scale",
+                    "processors": "Scale(factor=2)",
                     "groups": "",
                     "action": "Drum",
                     "isComposite": false,
@@ -153,7 +162,7 @@
                     "id": "a8b2beb1-5f8f-476f-a24d-0f4551107322",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
-                    "processors": "Scale(factor=2)",
+                    "processors": "Scale(factor=3)",
                     "groups": "",
                     "action": "Drum",
                     "isComposite": false,
@@ -164,7 +173,7 @@
                     "id": "b95dd495-846d-4a6c-94ac-d3b8a9200735",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
-                    "processors": "Scale(factor=3)",
+                    "processors": "Scale(factor=4)",
                     "groups": "",
                     "action": "Drum",
                     "isComposite": false,
@@ -175,9 +184,20 @@
                     "id": "2ecb1d4d-2eb4-4480-bae9-ae4e18f6c0d6",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
-                    "processors": "Scale(factor=4)",
+                    "processors": "Scale(factor=5)",
                     "groups": "",
                     "action": "Drum",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d5ca7ad-76f0-466f-b5af-d49deebcaf2d",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "Scale",
+                    "groups": "",
+                    "action": "PauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

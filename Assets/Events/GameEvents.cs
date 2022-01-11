@@ -8,10 +8,8 @@ namespace DangoMimikyu.EventManagement
 		// misc
 		Misc_SceneChange,				// changed scene
 
-		// networking
-		Networking_ClientConnect,		// client connected
-		Networking_ClientDisconnect,	// client disconnected
-		Networking_DailyReset,			// reset daily rewards and quests
+		// menu
+		Menu_Pause,						// open pause menu
 
 		// gameplay events
 		/// Home base events
@@ -42,5 +40,14 @@ namespace DangoMimikyu.EventManagement
 		Unit_EquipItem,					// when unit equips/unequips something
 		Unit_Spawn,						// when unit spawns
 		Unit_Shoot,						// when unit shoots
+		Unit_Damaged,					// unit takes damage
+		Unit_Died,						// unit was killed
+		Unit_FinishWaiting,				// finished waiting after 4 counts, so should remove the overhead UI
+
+		// enemy events
+		Enemy_Spawn,					// enemy spawned
+		Enemy_Active,					// enemy bot entered the range near the player to be active
+		Enemy_Damaged,					// enemy bot took damage
+		Enemy_Died,						// enemy was killed
 	}
 }

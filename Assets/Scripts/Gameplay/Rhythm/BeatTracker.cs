@@ -49,12 +49,29 @@ public class BeatTracker : MonoBehaviour
 
 	#region Tracking coroutine variables
 	private bool m_outlineThisBeat = false;
+	private bool m_inputThisBeat = false;
+	private bool m_waiting = false;
+	private bool m_gamePause = false;
+	private short m_waitCount = 0;
 	private IEnumerator c_track;
+
+	[SerializeField]
+	private float m_totalTimeElapsed = 0.0f;
 	[Range(0f, 1f)]
 	[SerializeField]
 	private float m_timeElapsed = 0.0f;
 	private short m_totalBeats = 0;
 	#endregion
+
+	~BeatTracker()
+	{
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, EndTracking);
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, EndTracking);
+		EventManager.instance.StopListening(GameEvents.Input_Drum, PlayerInputBeat);
+		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, StartWait);
+		EventManager.instance.StopListening(GameEvents.Input_CommandFail, CommandFail);
+		EventManager.instance.StopListening(GameEvents.Menu_Pause, GamePause);
+	}
 
 	#region Monobehaviour functions
 	private void OnValidate()
@@ -67,9 +84,24 @@ public class BeatTracker : MonoBehaviour
 		InitTimingZones();
 
 		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, EndTracking);
+		EventManager.instance.StartListening(GameEvents.Gameplay_QuestAbandoned, EndTracking);
+		EventManager.instance.StartListening(GameEvents.Input_Drum, PlayerInputBeat);
+		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, StartWait);
+		EventManager.instance.StartListening(GameEvents.Input_CommandFail, CommandFail);
+		EventManager.instance.StartListening(GameEvents.Menu_Pause, GamePause);
 
 		c_track = TrackBeats();
 		StartCoroutine(c_track);
+	}
+
+	private void OnDisable()
+	{
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, EndTracking);
+		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, EndTracking);
+		EventManager.instance.StopListening(GameEvents.Input_Drum, PlayerInputBeat);
+		EventManager.instance.StopListening(GameEvents.Input_CommandSuccess, StartWait);
+		EventManager.instance.StopListening(GameEvents.Input_CommandFail, CommandFail);
+		EventManager.instance.StopListening(GameEvents.Menu_Pause, GamePause);
 	}
 	#endregion
 
@@ -102,19 +134,47 @@ public class BeatTracker : MonoBehaviour
 	#region Coroutines
 	private IEnumerator TrackBeats()
 	{
-		while (Time.time < m_maxTime)
+		while (Time.timeSinceLevelLoad < m_maxTime)
 		{
-			m_timeElapsed = Time.time - (m_totalBeats * m_beatDuration);
+			while (m_gamePause)
+			{
+				yield return null;
+			}
 
+			m_totalTimeElapsed += Time.deltaTime;
+			//m_timeElapsed = Time.timeSinceLevelLoad - (m_totalBeats * m_beatDuration);
+			m_timeElapsed = m_totalTimeElapsed - (m_totalBeats * m_beatDuration);
 			if (m_timeElapsed >= (m_beatDuration * 0.5f) && !m_outlineThisBeat)
 			{
 				m_outlineThisBeat = true;
+				Debug.Log("metronome beat now");
 				EventManager.instance.DispatchEvent(GameEvents.Gameplay_MetronomeBeat, m_beatDuration);
+				if (m_waiting)
+					EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
 			}
 			else if (m_timeElapsed >= m_beatDuration)
 			{
+				if (m_inputThisBeat)
+				{
+					EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.BeatEnd);
+				}
+				else
+				{
+					if (!m_waiting)
+					{
+						EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
+					}
+					else
+					{
+						if (++m_waitCount >= 4)
+						{
+							m_waiting = false;
+							m_waitCount = 0;
+						}
+					}
+				}
 				m_outlineThisBeat = false;
-				EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
+				m_inputThisBeat = false;
 				++m_totalBeats;
 			}
 
@@ -124,11 +184,44 @@ public class BeatTracker : MonoBehaviour
 	}
 	#endregion
 
-	#region Quest end functions
+	#region Event handling functions
 	private void EndTracking(EventArgumentData ead)
 	{
 		Debug.Log("stopping tracking");
 		StopCoroutine(c_track);
+	}
+
+	private void PlayerInputBeat(EventArgumentData ead)
+	{
+		if ((cmdInput)ead.eventParams[0] != cmdInput.None && (cmdInput)ead.eventParams[0] != cmdInput.BeatEnd) // received this event from PlayerInputHandler
+		{
+			m_inputThisBeat = true;
+		}
+	}
+
+	private void StartWait(EventArgumentData ead)
+	{
+		m_waiting = true;
+		m_waitCount = 0;
+	}
+
+	private void CommandFail(EventArgumentData ead)
+	{
+		m_waiting = false;
+		m_waitCount = 0;
+	}
+
+	private void GamePause(EventArgumentData ead)
+	{
+		Debug.Log("game pause call");
+		if ((bool)ead.eventParams[0] == true) // pause the game
+		{
+			m_gamePause = true;
+		}
+		else // unpause the game
+		{
+			m_gamePause = false;
+		}
 	}
 	#endregion
 

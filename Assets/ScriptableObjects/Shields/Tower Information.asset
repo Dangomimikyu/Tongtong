@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 941065cea9f494e479dde7eb27e5c5b9, type: 3}
+  m_Name: Tower Information
+  m_EditorClassIdentifier: 
+  shieldPrefab: {fileID: 1223230578067976846, guid: a038b33576530a141b567f8f56908eb5, type: 3}
+  shieldType: 0
+  shieldData:
+    level: 3
+    health: 20
+    lifetimeDur: 10
+    vertScaling: {x: 0, y: 0, z: 0}
