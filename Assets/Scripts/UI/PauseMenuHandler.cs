@@ -68,8 +68,10 @@ public class PauseMenuHandler : MonoBehaviour
 	public void AbandonQuest()
 	{
 		// called by the "Abandon quest" button in pause menu
-		Button btn;
+		//Button btn;
 
+		ToggleMainPauseMenu(false);
+		EventManager.instance.DispatchEvent(GameEvents.Gameplay_QuestAbandoned);
 	}
 	#endregion
 }
