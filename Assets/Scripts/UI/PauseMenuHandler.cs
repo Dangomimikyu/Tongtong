@@ -13,6 +13,8 @@ public class PauseMenuHandler : MonoBehaviour
 	private Canvas m_mainPauseCanvas;
 	[SerializeField]
 	private Canvas m_commandCanvas;
+	[SerializeField]
+	private Canvas m_settingsCanvas;
 
 	private bool m_currentPauseState = false;
 
