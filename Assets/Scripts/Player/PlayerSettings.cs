@@ -1,24 +1,25 @@
-// note: the player settings work by notifying when a specific setting is updated and the value of that setting will be taken from the associated UI element.
+// note: the player settings work by updating player pref when a specific setting is updated and the value of that setting will be taken from the associated UI element.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerSettings : MonoBehaviour
 {
     [Header("External object references")]
     [SerializeField]
     private Slider m_musicVolSlider;
-    [SerializeField]
-    private int m_musicVolValue;
+    //[SerializeField]
+    //private TMP_Text m_musicVolValue;
     [SerializeField]
     private Slider m_sfxVolSlider;
+    //[SerializeField]
+    //private TMP_Text m_sfxVolValue;
     [SerializeField]
-    private int m_sfxVolValue;
+    private Slider m_uiVolSlider;
     [SerializeField]
-    private Dropdown m_delayDropdown;
-    [SerializeField]
-    private bool m_delayEnabled;
+    private Toggle m_delayEnabled;
 
 
     public enum SettingOptions
@@ -38,7 +39,9 @@ public class PlayerSettings : MonoBehaviour
             case SettingOptions.Music:
                 break;
             case SettingOptions.BeatDelay:
-                m_delayEnabled = m_delayDropdown.options[m_delayDropdown.value] == m_delayDropdown.options[0] ? true : false;
+                //m_delayEnabled = m_delayDropdown.options[m_delayDropdown.value] == m_delayDropdown.options[0] ? true : false;
+                int delayEnable = m_delayEnabled.enabled ? 1 : 0;
+                PlayerPrefs.SetInt("BeatDelay", delayEnable);
                 break;
             case SettingOptions.Resolution:
                 break;
@@ -49,6 +52,9 @@ public class PlayerSettings : MonoBehaviour
     }
 
     #region Specific option setters
-    //private void 
+    public void SetMusicVol(float vol)
+	{
+
+	}
     #endregion
 }

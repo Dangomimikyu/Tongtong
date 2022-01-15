@@ -8,22 +8,21 @@ public class PauseMenuHandler : MonoBehaviour
 {
 	[Header("Object references")]
 	[SerializeField]
-	private Canvas m_permenantPauseUI;
+	private Canvas m_permenantPauseUI = null;
 	[SerializeField]
-	private Canvas m_mainPauseCanvas;
+	private Canvas m_mainPauseCanvas = null;
 	[SerializeField]
-	private Canvas m_commandCanvas;
+	private Canvas m_commandCanvas = null;
 	[SerializeField]
-	private Canvas m_settingsCanvas;
+	private Canvas m_settingsCanvas = null;
 
 	private bool m_currentPauseState = false;
 
 	#region Monobehaviour functions
 	void Start()
 	{
-		m_permenantPauseUI.gameObject.SetActive(false);
-		m_mainPauseCanvas.gameObject.SetActive(false);
-		m_commandCanvas.gameObject.SetActive(false);
+		m_permenantPauseUI?.gameObject.SetActive(false);
+		DisableAllUI();
 	}
 	#endregion
 
@@ -38,11 +37,18 @@ public class PauseMenuHandler : MonoBehaviour
 	#endregion
 
 	#region UI enabling functions
+	private void DisableAllUI()
+	{
+		m_mainPauseCanvas.gameObject?.SetActive(false);
+		m_commandCanvas.gameObject?.SetActive(false);
+		m_settingsCanvas.gameObject?.SetActive(false);
+	}
+
 	private void ToggleMainPauseMenu(bool enable)
 	{
 		m_permenantPauseUI.gameObject.SetActive(enable);
 		m_mainPauseCanvas.gameObject.SetActive(enable);
-		m_commandCanvas.gameObject.SetActive(false);
+		m_commandCanvas.gameObject?.SetActive(false);
 	}
 
 	private void ToggleCommandUI()
@@ -56,6 +62,20 @@ public class PauseMenuHandler : MonoBehaviour
 		{
 			m_commandCanvas.gameObject.SetActive(true);
 			m_mainPauseCanvas.gameObject.SetActive(false);
+		}
+	}
+
+	private void ToggleSettingsUI()
+	{
+
+		if (m_settingsCanvas.gameObject.activeInHierarchy)
+		{
+			DisableAllUI();
+		}
+		else
+		{
+			DisableAllUI();
+			m_settingsCanvas.gameObject.SetActive(true);
 		}
 	}
 	#endregion
@@ -74,6 +94,17 @@ public class PauseMenuHandler : MonoBehaviour
 
 		ToggleMainPauseMenu(false);
 		EventManager.instance.DispatchEvent(GameEvents.Gameplay_QuestAbandoned);
+	}
+
+	public void ToggleSettingsMenu()
+	{
+		// called by the "Settings" button in pause menu
+		ToggleSettingsUI();
+	}
+
+	public void QuitGame()
+	{
+
 	}
 	#endregion
 }
