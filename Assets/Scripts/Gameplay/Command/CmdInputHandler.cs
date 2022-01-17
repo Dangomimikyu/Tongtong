@@ -96,21 +96,12 @@ public class CmdInputHandler : MonoBehaviour
 			switch (input)
 			{
 				case cmdInput.None:
-					if (!m_inputThisBeat) // [to remove]
-					{
-						Debug.LogError("should not reach here");
-						//check if waiting just ended
-						//if (m_justEndWaiting)
-						//{
-						//	Debug.LogError("here here");
-						//	m_justEndWaiting = false;
-						//	return;
-						//}
-
-						// only reset the command array if the player missed this beat
-						ResetInputs();
-						EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
-					}
+					//if (!m_inputThisBeat) // [to remove]
+					//{
+					// only reset the command array if the player missed this beat
+					ResetInputs();
+					EventManager.instance.DispatchEvent(GameEvents.Input_CommandFail);
+					//}
 					m_inputThisBeat = false;
 					break;
 				case cmdInput.BeatEnd:

@@ -179,6 +179,10 @@ public class BeatTracker : MonoBehaviour
 							}
 						}
 					}
+					else
+					{
+						EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
+					}
 				}
 				m_outlineThisBeat = false;
 				m_inputThisBeat = false;
