@@ -98,6 +98,7 @@ public class CmdInputHandler : MonoBehaviour
 				case cmdInput.None:
 					if (!m_inputThisBeat) // [to remove]
 					{
+						Debug.LogError("should not reach here");
 						//check if waiting just ended
 						//if (m_justEndWaiting)
 						//{

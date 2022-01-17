@@ -29,6 +29,8 @@ public class PauseMenuHandler : MonoBehaviour
 	#region Event handling functions
 	public void TogglePause()
 	{
+		DisableAllUI();
+
 		m_currentPauseState = !m_currentPauseState;
 
 		ToggleMainPauseMenu(m_currentPauseState);
@@ -70,12 +72,15 @@ public class PauseMenuHandler : MonoBehaviour
 
 		if (m_settingsCanvas.gameObject.activeInHierarchy)
 		{
-			DisableAllUI();
+			//DisableAllUI();
+			m_settingsCanvas.gameObject.SetActive(false);
+			m_mainPauseCanvas.gameObject.SetActive(true);
 		}
 		else
 		{
 			DisableAllUI();
 			m_settingsCanvas.gameObject.SetActive(true);
+			m_mainPauseCanvas.gameObject.SetActive(false);
 		}
 	}
 	#endregion
@@ -104,7 +109,7 @@ public class PauseMenuHandler : MonoBehaviour
 
 	public void QuitGame()
 	{
-
+		Application.Quit();
 	}
 	#endregion
 }

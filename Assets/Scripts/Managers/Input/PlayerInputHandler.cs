@@ -1,3 +1,4 @@
+// note: this class doesn't need to listen for Misc_SceneChange because it's locally put on a gameobject on the scene rather than being in PersistentManagers
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,14 +34,16 @@ public class PlayerInputHandler : MonoBehaviour
 
 	private void Start()
 	{
-		//EventManager.instance.StartListening(GameEvents.Misc_SceneChange, ChangeInputMap);
 		m_playerInputAction.Expedition.Drum.performed += ParseCommandInput;
 		m_playerInputAction.Expedition.PauseMenu.performed += ParseMenuInput;
+		m_playerInputAction.Menus.PauseMenu.performed += ParseMenuInput;
+
+		ChangeInputMap();
 	}
+
 	private void OnEnable()
 	{
 		m_playerInputAction.Enable();
-		//m_playerInputAction.Expedition.Enable();
 	}
 
 	private void OnDisable()
@@ -50,9 +53,10 @@ public class PlayerInputHandler : MonoBehaviour
 	#endregion
 
 	#region Input map functions
-	private void ChangeInputMap(EventArgumentData ead)
+	private void ChangeInputMap()
     {
 		string currentSceneName = SceneManager.GetActiveScene().name;
+		Debug.Log("current scene: " + currentSceneName);
 
 		if (currentSceneName == "ExpeditionScene")
         {
@@ -69,6 +73,7 @@ public class PlayerInputHandler : MonoBehaviour
 
 	private void ParseCommandInput(InputAction.CallbackContext ctx)
 	{
+		Debug.Log("call call");
 		cmdInput input = (cmdInput)ctx.ReadValue<float>();
 
 		switch (input)
@@ -87,6 +92,7 @@ public class PlayerInputHandler : MonoBehaviour
 
 	private void ParseMenuInput(InputAction.CallbackContext ctx)
 	{
+		Debug.Log("pause menu");
 		MenuType scaleVal = (MenuType)ctx.ReadValue<float>();
 
 		switch (scaleVal)

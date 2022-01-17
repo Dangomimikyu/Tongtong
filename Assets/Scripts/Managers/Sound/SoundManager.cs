@@ -10,6 +10,28 @@ public class SoundManager : MonoBehaviour
 	[SerializeField]
 	private AudioClip m_menuButton;
 
+	[Header("Music sounds")]
+	[SerializeField]
+	private AudioClip m_mainMenuBGM;
+	[SerializeField]
+	private AudioClip m_homeBaseBGM;
+	[SerializeField]
+	private AudioClip m_expeditionBGM;
+	[SerializeField]
+	private AudioClip m_winBGM;
+	[SerializeField]
+	private AudioClip m_loseBGM;
+
+	[Header("UI sounds")]
+	[SerializeField]
+	private AudioClip m_menuSelection;
+
+	[Header("Home base sounds")]
+	[SerializeField]
+	private AudioClip m_equipItem;
+	[SerializeField]
+	private AudioClip m_upgradeUnit;
+
 	[Header("Expedition sounds")]
 	[SerializeField]
 	private AudioClip m_metronome;
@@ -26,8 +48,13 @@ public class SoundManager : MonoBehaviour
 	[SerializeField]
 	private AudioClip m_magicDrum;
 
+	[Header("Audio sources")]
 	[SerializeField]
-	private AudioSource m_source;
+	private AudioSource m_musicSource;
+	[SerializeField]
+	private AudioSource m_sfxSource;
+	[SerializeField]
+	private AudioSource m_UISource;
 
 	~SoundManager()
 	{
@@ -44,8 +71,6 @@ public class SoundManager : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Gameplay_BreakCombo, ComboSound);
 		EventManager.instance.StartListening(GameEvents.Input_Drum, DrumSound);
 		EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, MetronomeSound);
-
-		//m_source = GetComponent<AudioSource>();
 	}
 
 	private void OnDisable()
@@ -57,26 +82,25 @@ public class SoundManager : MonoBehaviour
 	}
 	#endregion
 
-	#region Metronome and Drum functions
+	#region Sound playing functions
 	private void ComboSound(EventArgumentData ead)
 	{
 		var fever = ead.eventName == GameEvents.Gameplay_ComboFever ? true : false;
 		if (fever)
 		{
 			Debug.Log("Playing combo fever sound");
+			m_sfxSource.PlayOneShot(m_feverGet);
 		}
 		else
 		{
 			Debug.Log("Playing break combo sound");
+			m_sfxSource.PlayOneShot(m_feverLost);
 		}
 	}
 
 	private void MetronomeSound(EventArgumentData ead)
 	{
-		//if (m_source == null)
-		//	Debug.Log("bruh wtfh");
-		m_source.PlayOneShot(m_metronome);
-		//GetComponent<AudioSource>().PlayOneShot(m_metronome);
+		m_sfxSource.PlayOneShot(m_metronome);
 	}
 
 	private void DrumSound(EventArgumentData ead)
@@ -85,16 +109,16 @@ public class SoundManager : MonoBehaviour
 		switch (input)
 		{
 			case CommandAtrributes.Inputs.Walk:
-				m_source.PlayOneShot(m_walkDrum);
+				m_sfxSource.PlayOneShot(m_walkDrum);
 				break;
 			case CommandAtrributes.Inputs.Attack:
-				m_source.PlayOneShot(m_attackDrum);
+				m_sfxSource.PlayOneShot(m_attackDrum);
 				break;
 			case CommandAtrributes.Inputs.Defend:
-				m_source.PlayOneShot(m_defendDrum);
+				m_sfxSource.PlayOneShot(m_defendDrum);
 				break;
 			case CommandAtrributes.Inputs.Magic:
-				m_source.PlayOneShot(m_magicDrum);
+				m_sfxSource.PlayOneShot(m_magicDrum);
 				break;
 		}
 	}

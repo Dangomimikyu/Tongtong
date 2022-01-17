@@ -62,6 +62,15 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""5aeb03b3-5a5e-470c-8506-07c3819af5e6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -139,6 +148,17 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MouseClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7d8cd4d-ad0d-40bc-bdb5-73f4713f3109"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale"",
+                    ""groups"": """",
+                    ""action"": ""PauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -750,6 +770,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         m_Menus_changescenenext = m_Menus.FindAction("change scene next", throwIfNotFound: true);
         m_Menus_NavigateButton = m_Menus.FindAction("NavigateButton", throwIfNotFound: true);
         m_Menus_MouseClick = m_Menus.FindAction("MouseClick", throwIfNotFound: true);
+        m_Menus_PauseMenu = m_Menus.FindAction("PauseMenu", throwIfNotFound: true);
         // Expedition
         m_Expedition = asset.FindActionMap("Expedition", throwIfNotFound: true);
         m_Expedition_Drum = m_Expedition.FindAction("Drum", throwIfNotFound: true);
@@ -829,6 +850,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Menus_changescenenext;
     private readonly InputAction m_Menus_NavigateButton;
     private readonly InputAction m_Menus_MouseClick;
+    private readonly InputAction m_Menus_PauseMenu;
     public struct MenusActions
     {
         private @PlayerInputs m_Wrapper;
@@ -837,6 +859,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         public InputAction @changescenenext => m_Wrapper.m_Menus_changescenenext;
         public InputAction @NavigateButton => m_Wrapper.m_Menus_NavigateButton;
         public InputAction @MouseClick => m_Wrapper.m_Menus_MouseClick;
+        public InputAction @PauseMenu => m_Wrapper.m_Menus_PauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Menus; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -858,6 +881,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @MouseClick.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnMouseClick;
                 @MouseClick.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnMouseClick;
                 @MouseClick.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnMouseClick;
+                @PauseMenu.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnPauseMenu;
+                @PauseMenu.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnPauseMenu;
             }
             m_Wrapper.m_MenusActionsCallbackInterface = instance;
             if (instance != null)
@@ -874,6 +900,9 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
                 @MouseClick.started += instance.OnMouseClick;
                 @MouseClick.performed += instance.OnMouseClick;
                 @MouseClick.canceled += instance.OnMouseClick;
+                @PauseMenu.started += instance.OnPauseMenu;
+                @PauseMenu.performed += instance.OnPauseMenu;
+                @PauseMenu.canceled += instance.OnPauseMenu;
             }
         }
     }
@@ -1030,6 +1059,7 @@ public partial class @PlayerInputs : IInputActionCollection2, IDisposable
         void OnChangescenenext(InputAction.CallbackContext context);
         void OnNavigateButton(InputAction.CallbackContext context);
         void OnMouseClick(InputAction.CallbackContext context);
+        void OnPauseMenu(InputAction.CallbackContext context);
     }
     public interface IExpeditionActions
     {

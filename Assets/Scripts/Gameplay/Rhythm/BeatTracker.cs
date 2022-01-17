@@ -52,6 +52,7 @@ public class BeatTracker : MonoBehaviour
 	private bool m_inputThisBeat = false;
 	private bool m_waiting = false;
 	private bool m_gamePause = false;
+	private bool m_beatDelay;
 	private short m_waitCount = 0;
 	private IEnumerator c_track;
 
@@ -81,6 +82,9 @@ public class BeatTracker : MonoBehaviour
 
 	private void Start()
 	{
+		//m_beatDelay = PlayerPrefs.GetInt("BeatDelay") == 1;
+		m_beatDelay = false;
+
 		InitTimingZones();
 
 		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, EndTracking);
@@ -160,16 +164,19 @@ public class BeatTracker : MonoBehaviour
 				}
 				else
 				{
-					if (!m_waiting)
+					if (m_beatDelay)
 					{
-						EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
-					}
-					else
-					{
-						if (++m_waitCount >= 4)
+						if (!m_waiting)
 						{
-							m_waiting = false;
-							m_waitCount = 0;
+							EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
+						}
+						else
+						{
+							if (++m_waitCount >= 4)
+							{
+								m_waiting = false;
+								m_waitCount = 0;
+							}
 						}
 					}
 				}
