@@ -123,7 +123,6 @@ public class EnemySpawner : MonoBehaviour
 
 		for (int i = 0; i < numEnemies; ++i)
 		{
-
 			float randomX = Random.Range(spawnPosMin.x, spawnPosMax.x);
 			//float randomY = Random.Range(spawnPosMin.y, spawnPosMax.y);
 

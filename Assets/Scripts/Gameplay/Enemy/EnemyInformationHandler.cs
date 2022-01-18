@@ -62,7 +62,13 @@ public class EnemyInformationHandler : MonoBehaviour
 	{
 		Debug.Log("enemy is active");
 		EnemyBehaviour eb = (EnemyBehaviour)ead.eventParams[0];
-		m_activeEnemyList.Add(eb);
+		//m_activeEnemyList.Add(eb);
+
+		if (!m_activeEnemyList.Contains(eb))
+		{
+			m_activeEnemyList.Add(eb);
+			UpdateList();
+		}
 	}
 
 	private void EnemyDamaged(EventArgumentData ead)
@@ -84,7 +90,10 @@ public class EnemyInformationHandler : MonoBehaviour
 		foreach (EnemyBehaviour eb in m_activeEnemyList)
 		{
 			Debug.Log("making decision");
-			eb.MakeDecision();
+			if (eb != null)
+			{
+				eb.MakeDecision();
+			}
 		}
 	}
 
@@ -92,6 +101,17 @@ public class EnemyInformationHandler : MonoBehaviour
 	{
 		// used when scene change
 		m_activeEnemyList.Clear();
+	}
+	#endregion
+
+	#region Enemy removal
+	public void UpdateList()
+	{
+		foreach (EnemyBehaviour eb in m_activeEnemyList)
+		{
+			if (eb == null)
+				m_activeEnemyList.Remove(eb);
+		}
 	}
 	#endregion
 
