@@ -29,6 +29,7 @@ public class CmdInputHandler : MonoBehaviour
 	[SerializeField]
 	private bool m_inputThisBeat = false; // true if the player has cast an input during this beat
 	private short m_currentBeat = 0;
+	private bool m_beatDelay;
 	#endregion
 
 	~CmdInputHandler()
@@ -41,6 +42,9 @@ public class CmdInputHandler : MonoBehaviour
 	#region Monobehaviour functions
 	private void Start()
 	{
+		//m_beatDelay = PlayerPrefs.GetInt("BeatDelay") == 1;
+		m_beatDelay = false;
+
 		EventManager.instance.StartListening(GameEvents.Input_Drum, InputBeat);
 		EventManager.instance.StartListening(GameEvents.Input_CommandSuccess, WaitPostCommand);
 		EventManager.instance.StartListening(GameEvents.Input_CommandFail, ResetWait);
@@ -165,10 +169,10 @@ public class CmdInputHandler : MonoBehaviour
 	#region Wait timer event handlers
 	private void WaitPostCommand(EventArgumentData ead)
 	{
-		m_waiting = true;
-		m_currentBeat = 0;
+		m_waiting = m_beatDelay;
+        m_currentBeat = 0;
 
-		m_beatUIHandler.WaitPostCommand();
+        m_beatUIHandler.WaitPostCommand();
 	}
 
 	private void ResetWait(EventArgumentData ead)

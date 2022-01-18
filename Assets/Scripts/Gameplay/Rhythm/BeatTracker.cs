@@ -164,25 +164,38 @@ public class BeatTracker : MonoBehaviour
 				}
 				else
 				{
-					if (m_beatDelay)
-					{
-						if (!m_waiting)
-						{
-							EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
-						}
-						else
-						{
-							if (++m_waitCount >= 4)
-							{
-								m_waiting = false;
-								m_waitCount = 0;
-							}
-						}
-					}
-					else
+					if (!m_waiting || !m_beatDelay)
 					{
 						EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
 					}
+					else
+					{
+						if (++m_waitCount >= 4)
+						{
+                            m_waiting = false;
+                            m_waitCount = 0;
+                        }
+					}
+
+					//if (m_beatDelay)
+					//{
+					//	if (!m_waiting)
+					//	{
+					//		EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
+					//	}
+					//	else
+					//	{
+					//		if (++m_waitCount >= 4)
+					//		{
+					//			m_waiting = false;
+					//			m_waitCount = 0;
+					//		}
+					//	}
+					//}
+					//else
+					//{
+					//	EventManager.instance.DispatchEvent(GameEvents.Input_Drum, cmdInput.None);
+					//}
 				}
 				m_outlineThisBeat = false;
 				m_inputThisBeat = false;
