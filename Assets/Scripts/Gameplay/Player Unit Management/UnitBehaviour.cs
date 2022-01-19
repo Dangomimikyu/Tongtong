@@ -31,6 +31,12 @@ public class UnitBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject m_shieldPrefab;
 
+    [Header("Object references")]
+    [SerializeField]
+    private GameObject m_leftWeaponObject;
+    [SerializeField]
+    private GameObject m_rightwWeaponObject;
+
     private UnitObjectSpawner m_unitObjSpawner;
 
 	#region Monobehaviour functions
@@ -76,20 +82,23 @@ public class UnitBehaviour : MonoBehaviour
     #endregion
 
     #region Combat functions
-    public void Attack(cmdPotency potency, cmdCommand cmd)
+    public void AttackStraight(cmdPotency potency)
 	{
-        //Transform firingPoint = unitData.leftWeapon.firingPoint;
-        //Debug.Log("firing point: " + firingPoint.transform.position);
+        ShootBullets(potency);
+    }
 
-        //m_unitObjSpawner.SpawnBullet(gameObject, firingPoint, unitData.leftWeapon);
-        //m_unitObjSpawner.SpawnBullet(gameObject, firingPoint, unitData.rightWeapon);
-        ShootBullets();
-	}
+    public void AttackUpward(cmdPotency potency)
+    {
+        // need additional step of rotating the guns upward for 2s
+        //unitData
 
-    public void ShootBullets()
+        ShootBullets(potency);
+    }
+
+    public void ShootBullets(cmdPotency potency)
 	{
-        m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.leftWeapon);
-        m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.rightWeapon);
+        m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.leftWeapon, potency);
+        m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.rightWeapon, potency);
     }
 
     public void Defend(cmdPotency potency)

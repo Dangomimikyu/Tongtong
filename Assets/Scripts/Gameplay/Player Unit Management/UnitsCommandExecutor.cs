@@ -68,8 +68,10 @@ public class UnitsCommandExecutor : MonoBehaviour
 					u.Retreat(potency);
 					break;
 				case cmdCommand.AttackStraight:
+					u.AttackStraight(potency);
+					break;
 				case cmdCommand.AttackUpward:
-					u.Attack(potency, cmd);
+					u.AttackUpward(potency);
 					break;
 				case cmdCommand.Defend:
 					u.Defend(potency);

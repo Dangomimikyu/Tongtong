@@ -40,7 +40,7 @@ public class UnitObjectSpawner : MonoBehaviour
 	#endregion
 
 	#region Spawning functions
-	public void SpawnPlayerBullet(GameObject tongBot, Weapon wpn)
+	public void SpawnPlayerBullet(GameObject tongBot, Weapon wpn, CommandAtrributes.Potency pot)
 	{
 		if (wpn == null)
 			return; // weapon is null
@@ -55,7 +55,9 @@ public class UnitObjectSpawner : MonoBehaviour
 			Debug.Log("firing single shot");
 			GameObject bullet = Instantiate(m_bulletPrefab, tongBot.transform);
 			bullet.transform.position += wpn.firingPoint.localPosition;
-			bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(wpn.bulletVel, 0.0f));
+			bullet.transform.rotation = wpn.firingPoint.rotation;
+			//bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(wpn.bulletVel, 0.0f));
+			bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.forward);
 
 			// set whether the bullet is meant to hit enemies or players
 			bullet.GetComponent<BulletInformation>().SetInfo(wpn);
