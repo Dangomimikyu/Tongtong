@@ -3439,7 +3439,7 @@ MonoBehaviour:
   greentext: {fileID: 94268323}
   yellowtext: {fileID: 1556214564}
   redtext: {fileID: 752747432}
-  m_beatsPerMinute: 1000
+  m_beatsPerMinute: 100
   m_maxTime: 300
   m_greenZone: 0.4
   m_yellowZone: 0.2

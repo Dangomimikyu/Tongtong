@@ -55,7 +55,8 @@ public class UnitObjectSpawner : MonoBehaviour
 			Debug.Log("firing single shot");
 			GameObject bullet = Instantiate(m_bulletPrefab, tongBot.transform);
 			bullet.transform.position += wpn.firingPoint.localPosition;
-			bullet.transform.rotation = wpn.firingPoint.rotation;
+			bullet.transform.localRotation = wpn.firingPoint.localRotation;
+			Debug.Log("firing point rot: " + wpn.firingPoint.localRotation);
 			//bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(wpn.bulletVel, 0.0f));
 			bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.forward);
 

@@ -106,10 +106,12 @@ public class UnitSpawner : MonoBehaviour
 
 	private void SpawnWeapon(GameObject parent, ref Weapon left, ref Weapon right)
 	{
+		UnitBehaviour parentUB = parent.GetComponent<UnitBehaviour>();
 		if (left != null)
 		{
 			GameObject leftWeaponPrefab = m_weaponAttributes.GetWeaponPrefab(left);
 			GameObject leftWeapon = Instantiate(leftWeaponPrefab, parent.transform.position, Quaternion.identity, parent.transform);
+			parentUB.AddWeapons(true, leftWeapon);
 			left.firingPoint = leftWeaponPrefab.GetComponent<WeaponInformation>().weaponFiringPoint;
 			leftWeapon.transform.localScale = Vector3.one;
 			if (left.twoHanded)
@@ -131,6 +133,7 @@ public class UnitSpawner : MonoBehaviour
 		{
 			GameObject rightWeaponPrefab = m_weaponAttributes.GetWeaponPrefab(right);
 			GameObject rightWeapon = Instantiate(rightWeaponPrefab, parent.transform.position + m_rightWeaponPos, Quaternion.identity, parent.transform);
+			parentUB.AddWeapons(false, rightWeapon);
 			right.firingPoint = rightWeaponPrefab.GetComponent<WeaponInformation>().weaponFiringPoint;
 			rightWeapon.transform.localPosition = m_rightWeaponPos;
 			rightWeapon.transform.localScale = Vector3.one;

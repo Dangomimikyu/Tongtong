@@ -89,11 +89,14 @@ public class UnitBehaviour : MonoBehaviour
 
     public void AttackUpward(cmdPotency potency)
     {
-        // need additional step of rotating the guns upward for 2s
-        //unitData
+        //need additional step of rotating the guns upward for 2s
+        m_leftWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 30.0f), 0.3f);
+        ShootBullets(potency); Debug.Log("bruhcmon");
+        //m_leftWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 30.0f), 2.0f)
+        //    .OnComplete(() => { m_leftWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 0.0f), 0.3f); });
 
-        ShootBullets(potency);
-    }
+		//ShootBullets(potency);
+	}
 
     public void ShootBullets(cmdPotency potency)
 	{
@@ -174,6 +177,20 @@ public class UnitBehaviour : MonoBehaviour
 		{
             m_overheadUI.sprite = newSprite;
             m_overheadUI.gameObject?.SetActive(true);
+		}
+	}
+	#endregion
+
+	#region Weapon functions
+    public void AddWeapons(bool left, GameObject wpn)
+	{
+        if (left)
+		{
+            m_leftWeaponObject = wpn;
+		}
+		else
+		{
+            m_rightwWeaponObject = wpn;
 		}
 	}
 	#endregion
