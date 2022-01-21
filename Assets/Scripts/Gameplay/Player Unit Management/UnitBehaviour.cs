@@ -84,24 +84,23 @@ public class UnitBehaviour : MonoBehaviour
     #region Combat functions
     public void AttackStraight(cmdPotency potency)
 	{
-        ShootBullets(potency);
+        m_leftWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 0.0f), 0.3f);
+        m_rightwWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 0.0f), 0.3f);
+        ShootBullets(potency, 0.0f);
     }
 
     public void AttackUpward(cmdPotency potency)
     {
         //need additional step of rotating the guns upward for 2s
         m_leftWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 30.0f), 0.3f);
-        ShootBullets(potency); Debug.Log("bruhcmon");
-        //m_leftWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 30.0f), 2.0f)
-        //    .OnComplete(() => { m_leftWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 0.0f), 0.3f); });
-
-		//ShootBullets(potency);
+        m_rightwWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 30.0f), 0.3f);
+        ShootBullets(potency, 30.0f);
 	}
 
-    public void ShootBullets(cmdPotency potency)
+    public void ShootBullets(cmdPotency potency, float angle)
 	{
-        m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.leftWeapon, potency);
-        m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.rightWeapon, potency);
+        m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.leftWeapon, potency, angle);
+        m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.rightWeapon, potency, angle);
     }
 
     public void Defend(cmdPotency potency)
@@ -124,8 +123,6 @@ public class UnitBehaviour : MonoBehaviour
                 Debug.LogError("unexpected potency level");
 				break;
 		}
-
-		//newShield.GetComponent<ShieldBehaviour>().SetShieldHealth()
 	}
 	#endregion
 
