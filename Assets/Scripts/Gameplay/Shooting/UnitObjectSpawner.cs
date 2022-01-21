@@ -25,7 +25,11 @@ public class UnitObjectSpawner : MonoBehaviour
 			burstCount++;
 			GameObject bullet = Instantiate(m_bulletPrefab, tongBot.transform);
 			bullet.transform.position += wpn.firingPoint.localPosition;
-			bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(wpn.bulletVel, 0.0f));
+			bullet.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 30.0f);
+			Debug.Log("firing point rot: " + wpn.firingPoint.rotation);
+			//bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(wpn.bulletVel, 0.0f));
+			//Debug.Log("forward: " + new Vector2(bullet.transform.forward.x, bullet.transform.forward.y));
+			bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(wpn.bulletVel * Mathf.Cos(Mathf.Deg2Rad * 30.0f), wpn.bulletVel * Mathf.Sin(Mathf.Deg2Rad * 30.0f)));
 
 			// set whether the bullet is meant to hit enemies or players
 			bullet.GetComponent<BulletInformation>().SetInfo(wpn);
@@ -50,7 +54,7 @@ public class UnitObjectSpawner : MonoBehaviour
 			Debug.Log("bursting bullet");
 			StartCoroutine(BurstFire(tongBot, wpn));
 		}
-		else // this is a single first weapon
+		else // this is a single fire weapon
 		{
 			Debug.Log("firing single shot");
 			GameObject bullet = Instantiate(m_bulletPrefab, tongBot.transform);
@@ -58,7 +62,7 @@ public class UnitObjectSpawner : MonoBehaviour
 			bullet.transform.localRotation = wpn.firingPoint.localRotation;
 			Debug.Log("firing point rot: " + wpn.firingPoint.localRotation);
 			//bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(wpn.bulletVel, 0.0f));
-			bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.forward);
+			bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(wpn.bulletVel * Mathf.Cos(Mathf.Deg2Rad * 30.0f), wpn.bulletVel * Mathf.Sin(Mathf.Deg2Rad * 30.0f)));
 
 			// set whether the bullet is meant to hit enemies or players
 			bullet.GetComponent<BulletInformation>().SetInfo(wpn);
