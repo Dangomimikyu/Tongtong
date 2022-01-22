@@ -6,43 +6,50 @@ using System;
 
 public struct QuestRewards
 {
+	public uint money;
+	public int exp;
+
 	#region Operation overloads
 	public static QuestRewards operator +(QuestRewards self, QuestRewards other)
 	{
 		self.money += other.money;
+		self.exp += other.exp;
 		return self;
 	}
 
 	public static QuestRewards operator -(QuestRewards self, QuestRewards other)
 	{
 		self.money -= other.money;
+		self.exp -= other.exp;
 		return self;
 	}
 	#endregion
-
-	public uint money;
-	//CraftingMaterial[] materials;
 }
 
 public class Quest
 {
-	private string m_ownerAccountName = "";
 	public string questName { private set; get; }
 	public QuestRewards questRewards;
+	public string questDescription;
 	public QuestManager questManager;
-	public bool active;
+	public bool active = false;
+	public bool special = false; // reserved for quests that randomly have super good rewards
 
 	#region Constructor
 	public Quest()
 	{
 		questName = "defaultQuestName";
+		questDescription = "This quest has no description";
 		questRewards.money = 1;
+		questRewards.exp = 5;
 	}
 
-	public Quest(string name = "defaultQuestName", uint moneyReward = 1)
+	public Quest(string name = "defaultQuestName", string description = "defaultDescription", uint moneyReward = 1, int expReward = 5)
 	{
 		questName = name;
+		questDescription = description;
 		questRewards.money = moneyReward;
+		questRewards.exp = expReward;
 	}
 
 	~Quest()
@@ -55,11 +62,6 @@ public class Quest
 	{
 		questRewards += qr;
 	}
-
-	//public QuestRewards GetRewards()
-	//{
-	//	return null;
-	//}
 	#endregion
 
 	#region Completion rewards
