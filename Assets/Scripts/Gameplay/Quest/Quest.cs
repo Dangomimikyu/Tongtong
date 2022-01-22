@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DangoMimikyu.EventManagement;
+using System;
 
 public struct QuestRewards
 {
@@ -16,21 +17,6 @@ public struct QuestRewards
 	{
 		self.money -= other.money;
 		return self;
-	}
-
-	public static bool operator ==(QuestRewards self, QuestRewards other)
-	{
-		if (self.money == other.money)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	public static bool operator !=(QuestRewards self, QuestRewards other)
-	{
-		return !(self == other);
 	}
 	#endregion
 
