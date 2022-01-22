@@ -6,7 +6,7 @@ using System;
 
 public struct QuestRewards
 {
-	public uint money;
+	public int money;
 	public int exp;
 
 	#region Operation overloads
@@ -34,26 +34,36 @@ public class Quest
 	public QuestManager questManager;
 	public bool active = false;
 	public bool special = false; // reserved for quests that randomly have super good rewards
+	public int questDifficulty = 1;
 
 	#region Constructor
 	public Quest()
 	{
 		questName = "defaultQuestName";
 		questDescription = "This quest has no description";
+		questDifficulty = 1;
 		questRewards.money = 1;
 		questRewards.exp = 5;
 	}
 
-	public Quest(string name = "defaultQuestName", string description = "defaultDescription", uint moneyReward = 1, int expReward = 5)
+	public Quest(string name = "defaultQuestName", string description = "defaultDescription", int moneyReward = 1, int expReward = 5, int difficulty = 1)
 	{
 		questName = name;
 		questDescription = description;
+		questDifficulty = difficulty;
 		questRewards.money = moneyReward;
 		questRewards.exp = expReward;
 	}
 
 	~Quest()
 	{
+	}
+	#endregion
+
+	#region test functions
+	public void PrintQuest()
+	{
+		Debug.Log("name: " + questName + " desc: " + questDescription + " mon: " + questRewards.money + "exp: " + questRewards.exp + " diff: " + questDifficulty);
 	}
 	#endregion
 

@@ -9,6 +9,8 @@ public class QuestManager : MonoBehaviour
 	private Quest m_activeQuest = null;
 	[SerializeField]
 	private AccountInformation m_playerAccountInformation;
+	[SerializeField]
+	private QuestGenerator m_questGenerator;
 
 	~QuestManager()
 	{
@@ -23,7 +25,8 @@ public class QuestManager : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Gameplay_QuestAbandoned, AbandonedQuest);
 
 		// make a test quest first for demo purposes
-		CreateTestQuest();
+		//CreateTestQuest();
+		InitQuestList();
 	}
 
 	private void OnDisable()
@@ -36,10 +39,22 @@ public class QuestManager : MonoBehaviour
 	#region Quest creation functions
 	private void CreateTestQuest()
 	{
-		Quest newQuest = new Quest("Mvmt && atk demo", 10);
+		Quest newQuest = new Quest("Mvmt && atk demo", "tutorial demo quest", 10, 5);
 		newQuest.questManager = this;
 		m_activeQuest = newQuest;
 		m_questList.Add(newQuest);
+	}
+
+	private void InitQuestList()
+	{
+		m_questList = m_questGenerator.GenerateQuestList();
+	}
+	#endregion
+
+	#region UI functions
+	private void PopulateQuestUI()
+	{
+
 	}
 	#endregion
 

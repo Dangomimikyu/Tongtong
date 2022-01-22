@@ -10,7 +10,7 @@ public class QuestGenerator : MonoBehaviour
     {
         // number of quests available is determined by the player level
         List<Quest> questList = new List<Quest>();
-        playerLevel = GameObject.FindGameObjectWithTag("PlayerMangaer").GetComponent<AccountInformation>().GetPlayerLevel();
+        playerLevel = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>().GetPlayerLevel();
 
         int numberOfQuests = Mathf.Min(playerLevel, 10);
 
@@ -25,14 +25,20 @@ public class QuestGenerator : MonoBehaviour
 
     private Quest GenerateQuest()
     {
-        Quest returnQuest = new Quest();
+        int moneyEarned = Random.Range(10, 100);
+        int expEarned = Random.Range(10, 25);
+        int difficulty = Random.Range(1, 5);
+        bool spec = Random.Range(0, 100) == 0;
 
-        // roll for special quest - more rewards
-        if (Random.Range(0, 100) == 0)
-        {
-            returnQuest.special = true;
-        }
+        if (spec)
+		{
+            moneyEarned *= 3;
+            expEarned *= 3;
+            difficulty = 5;
+		}
 
+        Quest returnQuest = new Quest("testName", "testDescription", moneyEarned, expEarned, difficulty);
+        returnQuest.PrintQuest();
         return returnQuest;
     }
 }

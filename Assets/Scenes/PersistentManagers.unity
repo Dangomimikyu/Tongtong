@@ -890,7 +890,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d11b9cc06a2a04cb11effcb2cebeb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 0
+  m_money: 0
+  m_level: 1
+  m_exp: 0
+  m_neededExp: 0
 --- !u!114 &1856155041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1106,6 +1109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2099407784}
   - component: {fileID: 2099407786}
+  - component: {fileID: 2099407788}
   - component: {fileID: 2099407785}
   - component: {fileID: 2099407787}
   m_Layer: 0
@@ -1161,6 +1165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerAccountInformation: {fileID: 1856155040}
+  m_questGenerator: {fileID: 2099407788}
 --- !u!114 &2099407787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1171,6 +1176,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 631fb199bcc7fba47885f5536d284e53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2099407788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099407783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d19a94dcacd26b499cde9014290586f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2144271311

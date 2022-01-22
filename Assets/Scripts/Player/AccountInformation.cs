@@ -5,7 +5,7 @@ using UnityEngine;
 public class AccountInformation : MonoBehaviour
 {
 	[SerializeField]
-    private uint m_money;
+    private int m_money;
 	[SerializeField]
 	private int m_level = 1;
 	[SerializeField]
