@@ -5,9 +5,15 @@ using UnityEngine.UI;
 
 public class UnitUpgradeManager : MonoBehaviour
 {
+	[Header("Sprite references")]
+	[SerializeField]
+	private Sprite m_tongbot;
+
 	[Header("Object references")]
 	[SerializeField]
-	private Image unitDisplayImage;
+	private Image m_unitDisplayImage;
+	[SerializeField]
+	private Image m_healthBarFill;
 
 	private UnitDataManager m_unitDataManager;
 
@@ -27,7 +33,9 @@ public class UnitUpgradeManager : MonoBehaviour
 	#region Post selection functions
 	public void RepairUnit()
 	{
-
+		// minus money
+		// set unit health to full
+		// update fill
 	}
 
 	public void UpgradeUnit()
