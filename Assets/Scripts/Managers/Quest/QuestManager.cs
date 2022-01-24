@@ -1,21 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using DangoMimikyu.EventManagement;
 
 public class QuestManager : MonoBehaviour
 {
+	[SerializeField]
     private List<Quest> m_questList = new List<Quest>();
 	private Quest m_activeQuest = null;
 	[SerializeField]
 	private AccountInformation m_playerAccountInformation;
 	[SerializeField]
 	private QuestGenerator m_questGenerator;
+	//[SerializeField]
+	public QuestSelectionUIHandler m_questSelectionUIHandler = null;
 
 	~QuestManager()
 	{
 		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, AbandonedQuest);
+		EventManager.instance.StopListening(GameEvents.Misc_SceneChange, AddQuestListToUI);
 	}
 
 	#region Monobehaviour functions
@@ -23,6 +28,7 @@ public class QuestManager : MonoBehaviour
 	{
 		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 		EventManager.instance.StartListening(GameEvents.Gameplay_QuestAbandoned, AbandonedQuest);
+		EventManager.instance.StartListening(GameEvents.Misc_SceneChange, AddQuestListToUI);
 
 		// make a test quest first for demo purposes
 		//CreateTestQuest();
@@ -33,6 +39,7 @@ public class QuestManager : MonoBehaviour
 	{
 		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, AbandonedQuest);
+		EventManager.instance.StopListening(GameEvents.Misc_SceneChange, AddQuestListToUI);
 	}
 	#endregion
 
@@ -47,6 +54,7 @@ public class QuestManager : MonoBehaviour
 
 	private void InitQuestList()
 	{
+		m_questList.Clear(); // empty the list first
 		m_questList = m_questGenerator.GenerateQuestList();
 	}
 	#endregion
@@ -54,7 +62,16 @@ public class QuestManager : MonoBehaviour
 	#region UI functions
 	private void PopulateQuestUI()
 	{
+		//m_questSelectionUIHandler = GameObject.FindGameObjectWithTag("QuestSelectionHandler").GetComponent<QuestSelectionUIHandler>();
 
+		if (m_questSelectionUIHandler == null)
+		{
+			Debug.LogError("cmon man bruh");
+		}
+		foreach (Quest q in m_questList)
+		{
+			m_questSelectionUIHandler.AddQuestEntry(q);
+		}
 	}
 	#endregion
 
@@ -63,12 +80,30 @@ public class QuestManager : MonoBehaviour
 	{
 		return m_activeQuest;
 	}
+
+	// [to remove] shouldn't be depending on getting the whole quest list
+	public List<Quest> GetQuestList()
+	{
+		return m_questList;
+	}
+
+	public Quest GetQuestFromIndex(int index)
+	{
+		return m_questList[index];
+	}
     #endregion
 
     #region Quest action functions
 	public void StartQuest()
     {
+		if (m_questSelectionUIHandler.GetSelectionIndex() == -1)
+		{
+			Debug.LogError("trying to start quest without having selected a quest");
+			return;
+		}
+
 		// start the current quest
+		m_activeQuest = m_questList[m_questSelectionUIHandler.GetSelectionIndex()];
     }
 
 	public void AbandonQuest()
@@ -80,7 +115,6 @@ public class QuestManager : MonoBehaviour
     #region Quest payout functions
     private void CompleteQuest(EventArgumentData ead)
 	{
-		//m_playerAccountInformation.ReceiveRewards((Quest)ead.eventParams[0]);
 		Debug.Log("quest name: " + m_activeQuest.questName);
 		m_playerAccountInformation.ReceiveRewards(m_activeQuest);
 	}
@@ -95,6 +129,17 @@ public class QuestManager : MonoBehaviour
 	{
 		Debug.Log("Quest failed: " + m_activeQuest.questName);
 		m_playerAccountInformation.ReceiveRewards(m_activeQuest);
+	}
+	#endregion
+
+	#region Quest UI functions
+	private void AddQuestListToUI(EventArgumentData ead)
+	{
+		string currentSceneName = SceneManager.GetActiveScene().name;
+		if (currentSceneName == "HomeBaseScene")
+		{
+			PopulateQuestUI();
+		}
 	}
 	#endregion
 

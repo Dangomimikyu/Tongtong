@@ -9,23 +9,26 @@ public class HomeBaseUIManager : MonoBehaviour
     [Header("Object references")]
     [SerializeField]
     private Canvas m_popupCanvas;
+    [SerializeField]
+    private Canvas m_questSelectionCanvas;
 
 	#region Monobehaviour functions
 	private void Start()
     {
         ToggleEquipmentPopup(false);
+        m_questSelectionCanvas.gameObject.SetActive(false);
     }
-
-	private void Update()
-	{
-
-	}
     #endregion
 
     #region Visibility functions
     public void ToggleEquipmentPopup(bool enable)
 	{
         m_popupCanvas.gameObject.SetActive(enable);
+	}
+
+    public void ToggleQuestSelectionUI()
+	{
+        m_questSelectionCanvas.gameObject.SetActive(!m_questSelectionCanvas.gameObject.activeInHierarchy);
 	}
     #endregion
 

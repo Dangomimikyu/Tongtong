@@ -26,6 +26,7 @@ public struct QuestRewards
 	#endregion
 }
 
+[System.Serializable]
 public class Quest
 {
 	public string questName { private set; get; }
