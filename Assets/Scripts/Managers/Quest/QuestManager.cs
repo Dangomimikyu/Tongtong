@@ -108,7 +108,7 @@ public class QuestManager : MonoBehaviour
 
 	public void AbandonQuest()
     {
-
+		//m_activeQuest = null;
     }
     #endregion
 
