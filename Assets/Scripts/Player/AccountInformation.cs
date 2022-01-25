@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class AccountInformation : MonoBehaviour
 {
-	[SerializeField]
-    private int m_money;
+    public int money;
 	[SerializeField]
 	private int m_level = 1;
 	[SerializeField]
@@ -24,10 +23,9 @@ public class AccountInformation : MonoBehaviour
 	public void ReceiveRewards(Quest q)
 	{
 		Debug.Log("quest reward received: " + q.questRewards.money);
-		m_money += q.questRewards.money;
+		money += q.questRewards.money;
 
 		CheckLevelUp(q.questRewards.exp);
-
     }
 
 	private void CheckLevelUp(int newExp)

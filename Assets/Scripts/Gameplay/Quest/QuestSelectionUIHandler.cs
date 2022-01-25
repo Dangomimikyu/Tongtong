@@ -35,6 +35,7 @@ public class QuestSelectionUIHandler : MonoBehaviour
 
 		m_questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
 		m_questManager.m_questSelectionUIHandler = this;
+		m_questManager.AddQuestListToUI();
 	}
 	#endregion
 

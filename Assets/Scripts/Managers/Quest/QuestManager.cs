@@ -135,12 +135,17 @@ public class QuestManager : MonoBehaviour
 	#region Quest UI functions
 	private void AddQuestListToUI(EventArgumentData ead)
 	{
-		string currentSceneName = SceneManager.GetActiveScene().name;
-		if (currentSceneName == "HomeBaseScene")
-		{
-			PopulateQuestUI();
-		}
+		//string currentSceneName = SceneManager.GetActiveScene().name;
+		//if (currentSceneName == "HomeBaseScene")
+		//{
+		//	PopulateQuestUI();
+		//}
 	}
+
+	public void AddQuestListToUI()
+    {
+		PopulateQuestUI();
+    }
 	#endregion
 
 	#region Rewards functions

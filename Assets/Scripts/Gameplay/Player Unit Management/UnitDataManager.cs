@@ -7,6 +7,7 @@ using DangoMimikyu.EventManagement;
 public class UnitData
 {
 	public uint id;
+	public int unitLevel = 1;
 	public float currentHealth = 30.0f;
 	public float maxHealth = 30.0f;
 	public WeaponAttributes.ShieldData shieldData = new WeaponAttributes.ShieldData();
