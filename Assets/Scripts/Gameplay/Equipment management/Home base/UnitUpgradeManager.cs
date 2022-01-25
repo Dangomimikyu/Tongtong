@@ -30,6 +30,9 @@ public class UnitUpgradeManager : MonoBehaviour
 	{
 		Debug.Log("Edit unit: " + index);
 
+		m_currentData = m_unitDataManager.activeUnitData[index];
+		m_unitDisplayImage.sprite = m_tongbot;
+		m_healthBarFill.UpdateHealth(m_currentData.currentHealth);
 	}
 
 	#region Post selection functions
