@@ -33,6 +33,7 @@ public class TestAddUnit : MonoBehaviour
 			tempud.leftWeapon = wLeft;
 			tempud.rightWeapon = wRight;
 			tempud.shieldData = m_shieldInformation.shieldData;
+			tempud.currentHealth = tempud.maxHealth / 2;
 			udlist.Add(tempud);
 		}
 		Debug.Log("dispatching event");
