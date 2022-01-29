@@ -32,7 +32,9 @@ public class UnitUpgradeManager : MonoBehaviour
 
 		m_currentData = m_unitDataManager.activeUnitData[index];
 		m_unitDisplayImage.sprite = m_tongbot;
+		m_healthBarFill.SetMaxHealth(m_currentData.maxHealth);
 		m_healthBarFill.UpdateHealth(m_currentData.currentHealth);
+		Debug.Log("curr health " + m_currentData.currentHealth);
 	}
 
 	#region Post selection functions
@@ -47,14 +49,17 @@ public class UnitUpgradeManager : MonoBehaviour
 		// update local instance of player information
 		m_playerAccount = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>();
 
-        if (m_playerAccount.money > 10)
+        if (m_playerAccount.money < 10)
         {
-			// minus money
-			m_playerAccount.money -= 10;
-			
-			// set unit health to full
-			m_currentData.currentHealth = m_currentData.maxHealth;
+			Debug.Log("not enough money to repair");
+			return;
         }
+
+		// minus money
+		m_playerAccount.money -= 10;
+			
+		// set unit health to full
+		m_currentData.currentHealth = m_currentData.maxHealth;
 
 		// update fill
 		m_healthBarFill.UpdateHealth(m_currentData.maxHealth);
@@ -62,6 +67,17 @@ public class UnitUpgradeManager : MonoBehaviour
 
 	public void UpgradeUnit()
 	{
+		// update local instance of player information
+		m_playerAccount = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>();
+
+		if (m_playerAccount.money < 30)
+        {
+			Debug.Log("not enough money to upgrade");
+			return;
+        }
+
+		m_playerAccount.money -= 30;
+
 		// each upgrade makes the unit 1.1x stronger
 		m_currentData.maxHealth *= 1.1f;
 
