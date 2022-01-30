@@ -2,24 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
+using TMPro;
 
 public class InventoryEquipButton : MonoBehaviour
 {
-    private Button m_button;
-    private PlayerInputs m_playerInputs;
+    [Header("Object references")]
+    [SerializeField]
+    private TMP_Text weaponText;
+    [SerializeField]
+    private WeaponTemplate weaponInfo;
 
 	#region Monobehaviour functions
 	private void Awake()
 	{
-        m_playerInputs = new PlayerInputs();
-        m_button = GetComponent<Button>();
-		m_button.onClick.AddListener(Select);
 	}
 
 	void Start()
     {
-
+        weaponText.text = "";
+        UpdateTextInfo();
     }
 
     void Update()
@@ -28,9 +29,22 @@ public class InventoryEquipButton : MonoBehaviour
     }
 	#endregion
 
-	private void Select()
-    {
-        // note: will be called by the UI button manager
-        // change UI to be the one over the characters
-    }
+    private void UpdateTextInfo()
+	{
+        string output = "Dmg: " + weaponInfo.bulletData.damage + "\n";
+
+        if (weaponInfo.bulletData.burstBulletCount > 0)
+		{
+            output += "burst: yes\n";
+            output += "shots: " + weaponInfo.bulletData.burstBulletCount;
+		}
+        else
+		{
+            output += "burst: no";
+		}
+
+        Debug.Log("output: " + output);
+
+        weaponText.text = output;
+	}
 }

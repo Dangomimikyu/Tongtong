@@ -12,6 +12,7 @@ public class UnitData
 	public float currentHealth = 30.0f;
 	public float maxHealth = 30.0f;
 	public WeaponAttributes.ShieldData shieldData = new WeaponAttributes.ShieldData();
+	[SerializeField]
 	public Weapon leftWeapon = null;
 	public Weapon rightWeapon = null;
 }

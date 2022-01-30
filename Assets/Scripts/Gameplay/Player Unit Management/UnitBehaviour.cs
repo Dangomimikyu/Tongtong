@@ -46,6 +46,8 @@ public class UnitBehaviour : MonoBehaviour
         m_overheadUI.gameObject.SetActive(false);
 
         m_shieldPrefab = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>().GetShieldPrefab(unitData.shieldData);
+
+        TakeDamage(0); // init the health bar value to what it's supposed to be
     }
     #endregion
 

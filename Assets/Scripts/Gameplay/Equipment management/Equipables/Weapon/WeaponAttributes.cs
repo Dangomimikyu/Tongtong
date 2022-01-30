@@ -10,7 +10,6 @@ public class WeaponAttributes : MonoBehaviour
 	public enum WeaponType
 	{
 		None,
-		Radio, // specifically for the team anchor
 		Pistol,
 		Rifle,
 		Sniper,
@@ -102,13 +101,12 @@ public class WeaponAttributes : MonoBehaviour
 			case WeaponType.None:
 				Debug.LogWarning("unable to get a weapon prefab because this weapontype is none");
 				return null;
-			case WeaponType.Radio:
 			case WeaponType.Pistol:
 			case WeaponType.Rifle:
 			case WeaponType.Sniper:
 			case WeaponType.Rocket:
 			case WeaponType.Lazer:
-			return gunPrefabList[(int)weapon.weaponType - 1];
+			return gunPrefabList[(int)weapon.weaponType];
 		}
 	}
 
@@ -120,13 +118,12 @@ public class WeaponAttributes : MonoBehaviour
 			case WeaponType.None:
 				Debug.LogWarning("unable to get a bullet prefab because this weapontype is none");
 				return null;
-			case WeaponType.Radio:
 			case WeaponType.Pistol:
 			case WeaponType.Rifle:
 			case WeaponType.Sniper:
 			case WeaponType.Rocket:
 			case WeaponType.Lazer:
-			return bulletPrefabList[(int)weapon.weaponType - 1];
+			return bulletPrefabList[(int)weapon.weaponType];
 		}
 	}
 

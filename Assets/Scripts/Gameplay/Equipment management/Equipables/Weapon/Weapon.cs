@@ -3,6 +3,7 @@ using UnityEngine;
 using WeaponType = WeaponAttributes.WeaponType;
 using BulletData = WeaponAttributes.BulletData;
 
+[System.Serializable]
 public class Weapon
 {
 	public Transform firingPoint;		// Transform to spawn bullets

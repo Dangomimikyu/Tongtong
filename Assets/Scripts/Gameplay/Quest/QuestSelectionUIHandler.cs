@@ -21,6 +21,7 @@ public class QuestSelectionUIHandler : MonoBehaviour
 
 	private int m_questNumberCount = 0;
 	private int m_currentSelectedIndex = -1;
+	private Quest m_currentSelectedQuest = null;
 
 	#region Monobehaviour functions
 	private void Awake()
@@ -51,6 +52,7 @@ public class QuestSelectionUIHandler : MonoBehaviour
 	public void ChangeQuestInfoUI(int index)
 	{
 		Quest selection = m_questManager.GetQuestFromIndex(index);
+		m_currentSelectedQuest = selection;
 		m_currentSelectedIndex = index;
 
 		m_questNameOutputBox.text = selection.questName;
@@ -62,7 +64,12 @@ public class QuestSelectionUIHandler : MonoBehaviour
 
 	public void StartQuest()
 	{
-		m_questManager.StartQuest();
+		if (m_currentSelectedQuest != null)
+		{
+			m_questManager.StartQuest();
+			SceneController sc = GameObject.FindGameObjectWithTag("SceneController").GetComponent<SceneController>();
+			sc.LoadSceneString("ExpeditionScene");
+		}
 	}
 	#endregion
 

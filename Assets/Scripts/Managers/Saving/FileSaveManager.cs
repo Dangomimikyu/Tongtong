@@ -55,6 +55,11 @@ public class FileSaveManager : MonoBehaviour
 		if (!Directory.Exists(m_savePath))
 			Directory.CreateDirectory(m_savePath);
 	}
+	private void OnApplicationQuit()
+	{
+		// save one more time when the game is closed
+		Save();
+	}
 	#endregion
 
 	#region External call functions
