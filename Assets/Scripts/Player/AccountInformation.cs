@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class AccountInformation : MonoBehaviour
 {
     public int money;
@@ -17,6 +18,16 @@ public class AccountInformation : MonoBehaviour
     {
 		return m_level;
     }
+
+	public float GetCurrentExp()
+	{
+		return m_exp;
+	}
+
+	public float GetNeededExp()
+	{
+		return m_neededExp;
+	}
 	#endregion
 
 	#region Quest functions

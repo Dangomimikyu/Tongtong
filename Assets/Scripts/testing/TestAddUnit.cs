@@ -24,14 +24,14 @@ public class TestAddUnit : MonoBehaviour
 			//ublist.Add(tempub);
 
 			UnitData tempud = new UnitData();
-			Weapon wLeft = new Weapon(WeaponAttributes.WeaponType.Pistol, true);
+			Weapon wLeft = new Weapon(WeaponAttributes.WeaponType.Rocket, true);
 			//wLeft.weaponType = WeaponAttributes.WeaponType.Pistol;
-			//wLeft.twoHanded = true;
-			Weapon wRight = new Weapon(WeaponAttributes.WeaponType.Rifle, true);
+			wLeft.twoHanded = true;
+			//Weapon wRight = new Weapon(WeaponAttributes.WeaponType.Rifle, true);
 			//wRight.weaponType = WeaponAttributes.WeaponType.Rifle;
 			//wRight.twoHanded = true;
 			tempud.leftWeapon = wLeft;
-			tempud.rightWeapon = wRight;
+			//tempud.rightWeapon = wRight;
 			tempud.shieldData = m_shieldInformation.shieldData;
 			tempud.currentHealth = tempud.maxHealth / 2;
 			udlist.Add(tempud);

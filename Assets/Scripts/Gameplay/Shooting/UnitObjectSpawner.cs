@@ -59,7 +59,6 @@ public class UnitObjectSpawner : MonoBehaviour
 			bullet.transform.position += wpn.firingPoint.localPosition;
 			bullet.transform.localRotation = wpn.firingPoint.localRotation;
 			Debug.Log("firing point rot: " + wpn.firingPoint.localRotation);
-			//bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(wpn.bulletVel, 0.0f));
 			bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(wpn.bulletVel * Mathf.Cos(Mathf.Deg2Rad * angle), wpn.bulletVel * Mathf.Sin(Mathf.Deg2Rad * angle)));
 
 			// set whether the bullet is meant to hit enemies or players

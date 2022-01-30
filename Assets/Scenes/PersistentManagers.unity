@@ -417,6 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeUnits: []
+  activeUnitData: []
   m_homeBaseSceneName: HomeBaseScene
   m_expeditionSceneName: ExpeditionScene
   scene: 
@@ -1051,7 +1052,7 @@ GameObject:
   - component: {fileID: 1966179271}
   m_Layer: 0
   m_Name: SaveManager
-  m_TagString: Untagged
+  m_TagString: SaveManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

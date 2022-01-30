@@ -33,9 +33,9 @@ public class UnitBehaviour : MonoBehaviour
 
     [Header("Object references")]
     [SerializeField]
-    private GameObject m_leftWeaponObject;
+    private GameObject m_leftWeaponObject = null;
     [SerializeField]
-    private GameObject m_rightwWeaponObject;
+    private GameObject m_rightWeaponObject = null;
 
     private UnitObjectSpawner m_unitObjSpawner;
 
@@ -85,7 +85,11 @@ public class UnitBehaviour : MonoBehaviour
     public void AttackStraight(cmdPotency potency)
 	{
         m_leftWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 0.0f), 0.3f);
-        m_rightwWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 0.0f), 0.3f);
+
+        if (!unitData.leftWeapon.twoHanded)
+		{
+            m_rightWeaponObject?.transform.DORotate(new Vector3(0.0f, 0.0f, 0.0f), 0.3f);
+		}
         ShootBullets(potency, 0.0f);
     }
 
@@ -93,14 +97,22 @@ public class UnitBehaviour : MonoBehaviour
     {
         //need additional step of rotating the guns upward for 2s
         m_leftWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 30.0f), 0.3f);
-        m_rightwWeaponObject.transform.DORotate(new Vector3(0.0f, 0.0f, 30.0f), 0.3f);
+
+        if (!unitData.leftWeapon.twoHanded)
+		{
+            m_rightWeaponObject?.transform.DORotate(new Vector3(0.0f, 0.0f, 30.0f), 0.3f);
+		}
         ShootBullets(potency, 30.0f);
 	}
 
     public void ShootBullets(cmdPotency potency, float angle)
 	{
         m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.leftWeapon, potency, angle);
-        m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.rightWeapon, potency, angle);
+
+        if (!unitData.leftWeapon.twoHanded)
+		{
+            m_unitObjSpawner.SpawnPlayerBullet(gameObject, unitData.rightWeapon, potency, angle);
+		}
     }
 
     public void Defend(cmdPotency potency)
@@ -187,7 +199,7 @@ public class UnitBehaviour : MonoBehaviour
 		}
 		else
 		{
-            m_rightwWeaponObject = wpn;
+            m_rightWeaponObject = wpn;
 		}
 	}
 	#endregion

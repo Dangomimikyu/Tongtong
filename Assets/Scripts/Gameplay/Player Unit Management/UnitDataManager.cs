@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using DangoMimikyu.EventManagement;
 
+[System.Serializable]
 public class UnitData
 {
 	public uint id;
