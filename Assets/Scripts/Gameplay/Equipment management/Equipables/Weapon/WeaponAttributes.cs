@@ -92,54 +92,54 @@ public class WeaponAttributes : MonoBehaviour
 	#endregion
 
 	#region Retrieval functions
-	#region Prefab
-	public GameObject GetWeaponPrefab(Weapon weapon)
-	{
-		switch (weapon.weaponType)
+		#region Prefab
+		public GameObject GetWeaponPrefab(Weapon weapon)
 		{
-			default:
-			case WeaponType.None:
-				Debug.LogWarning("unable to get a weapon prefab because this weapontype is none");
-				return null;
-			case WeaponType.Pistol:
-			case WeaponType.Rifle:
-			case WeaponType.Sniper:
-			case WeaponType.Rocket:
-			case WeaponType.Lazer:
-			return gunPrefabList[(int)weapon.weaponType];
+			switch (weapon.weaponType)
+			{
+				default:
+				case WeaponType.None:
+					Debug.LogWarning("unable to get a weapon prefab because this weapontype is none");
+					return null;
+				case WeaponType.Pistol:
+				case WeaponType.Rifle:
+				case WeaponType.Sniper:
+				case WeaponType.Rocket:
+				case WeaponType.Lazer:
+				return gunPrefabList[(int)weapon.weaponType];
+			}
 		}
-	}
 
-	public GameObject GetBulletPrefab(Weapon weapon)
-	{
-		switch (weapon.weaponType)
+		public GameObject GetBulletPrefab(Weapon weapon)
 		{
-			default:
-			case WeaponType.None:
-				Debug.LogWarning("unable to get a bullet prefab because this weapontype is none");
-				return null;
-			case WeaponType.Pistol:
-			case WeaponType.Rifle:
-			case WeaponType.Sniper:
-			case WeaponType.Rocket:
-			case WeaponType.Lazer:
-			return bulletPrefabList[(int)weapon.weaponType];
+			switch (weapon.weaponType)
+			{
+				default:
+				case WeaponType.None:
+					Debug.LogWarning("unable to get a bullet prefab because this weapontype is none");
+					return null;
+				case WeaponType.Pistol:
+				case WeaponType.Rifle:
+				case WeaponType.Sniper:
+				case WeaponType.Rocket:
+				case WeaponType.Lazer:
+				return bulletPrefabList[(int)weapon.weaponType];
+			}
 		}
-	}
 
-	public GameObject GetShieldPrefab(ShieldData shieldData)
-    {
-		if (shieldData.level > 0)
-        {
-			return shieldPrefabList[shieldData.level - 1];
-        }
-		else
-        {
-			Debug.LogError("invalid shield level");
-			return null;
-        }
-    }
-	#endregion
+		public GameObject GetShieldPrefab(ShieldData shieldData)
+		{
+			if (shieldData.level > 0)
+			{
+				return shieldPrefabList[shieldData.level - 1];
+			}
+			else
+			{
+				Debug.LogError("invalid shield level");
+				return null;
+			}
+		}
+		#endregion
 
 		#region Bullet values
 		public float GetBulletVelocity(Weapon wpn)
@@ -162,6 +162,23 @@ public class WeaponAttributes : MonoBehaviour
 		public bool GetIsTwohanded(WeaponType wpnType)
 		{
 			return m_twoHandedList.Contains(wpnType);
+		}
+	#endregion
+
+	#region Weapon Data getters
+		public WeaponTemplate GetWeaponData(int weaponType)
+		{
+			return m_weaponInformation[Mathf.Max(0, weaponType - 1)];
+		}
+		public WeaponTemplate GetWeaponData(WeaponType wpnType)
+		{
+			return m_weaponInformation[(int)wpnType]; // don't need the -1 because WeaponType will be a valid value
+		}
+
+	public ShieldTemplate GetShieldData(int currentLevel)
+		{
+			return m_shieldInformation[currentLevel]; // don't need to -1 because this is called by the upgrader which already has the number incremented
+
 		}
 		#endregion
 	#endregion

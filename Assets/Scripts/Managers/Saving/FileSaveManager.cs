@@ -21,9 +21,11 @@ public class FileSaveManager : MonoBehaviour
 		public List<UnitData> unitDataList;
 	}
 
+	[System.Serializable]
 	public struct UnitDataSave
 	{
 		public int level;
+		public int shieldLevel;
 		public float currentHealth;
 		public float maxHealth;
 	}

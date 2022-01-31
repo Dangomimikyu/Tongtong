@@ -15,6 +15,7 @@ public class UnitUpgradeManager : MonoBehaviour
 	[SerializeField]
 	private HealthBarController m_healthBarFill;
 
+	private WeaponAttributes m_weaponAttributes;
 	private UnitDataManager m_unitDataManager;
 	private UnitData m_currentData;
 	private AccountInformation m_playerAccount;
@@ -23,9 +24,11 @@ public class UnitUpgradeManager : MonoBehaviour
 	private void Start()
 	{
 		m_unitDataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
+		m_weaponAttributes = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>();
 	}
 	#endregion
 
+	// button selection for units
 	public void EditUnit(int index)
 	{
 		Debug.Log("Edit unit: " + index);
@@ -57,7 +60,7 @@ public class UnitUpgradeManager : MonoBehaviour
 
 		// minus money
 		m_playerAccount.money -= 10;
-			
+
 		// set unit health to full
 		m_currentData.currentHealth = m_currentData.maxHealth;
 
@@ -83,14 +86,15 @@ public class UnitUpgradeManager : MonoBehaviour
 
 		++m_currentData.unitLevel;
 
-		if (m_currentData.unitLevel == 3)
+		if (m_currentData.unitLevel == 3 || m_currentData.unitLevel == 5)
         {
-
+			m_weaponAttributes.GetShieldData(m_currentData.unitLevel / 2); // make use of int division (3 / 2 == 1)
         }
-		else if (m_currentData.unitLevel == 5)
-        {
+	}
 
-        }
+	public void ChangeWeaponUnit()
+	{
+
 	}
 	#endregion
 }
