@@ -57,13 +57,8 @@ public class UnitDataManager : MonoBehaviour
 		string currentSceneName = SceneManager.GetActiveScene().name;
 		Debug.Log("current scene: " + currentSceneName);
 
-		if (currentSceneName == m_expeditionSceneName)
-		{
-			// should spawn units by dispatching event
-			// at this point units should already be equipped with a weapon, if no weapon then they will be unable to attack and will just stand there
 
-		}
-		else if (currentSceneName == "MainMenuScene")
+		if (currentSceneName == "MainMenuScene")
 		{
 			// clear the current list
 			ClearActiveList();

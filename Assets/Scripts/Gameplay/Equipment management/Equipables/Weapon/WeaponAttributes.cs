@@ -97,7 +97,7 @@ public class WeaponAttributes : MonoBehaviour
 
     #region Retrieval functions
 		#region Prefab
-    public GameObject GetWeaponPrefab(Weapon weapon)
+		public GameObject GetWeaponPrefab(Weapon weapon)
 		{
 			switch (weapon.weaponType)
 			{
@@ -169,27 +169,37 @@ public class WeaponAttributes : MonoBehaviour
 		}
 
 		#region Saving
-		public List<FileSaveManager.WeaponShopSave> GetSaveWeaponData()
-    {
-		return null;
-    }
+		public FileSaveManager.WeaponShopSave GetSaveWeaponData()
+		{
+			FileSaveManager.WeaponShopSave returnSave = new FileSaveManager.WeaponShopSave();
+			returnSave.weaponUnlockedList = new List<bool>();
+			//for (int i = 0; i < m_weaponInformation.Count; ++i)
+			//{
+			//	returnSave.weaponUnlockedList.Add(m_weaponInformation[i].shopPurchased);
+			//}
+			foreach (WeaponTemplate wt in m_weaponInformation)
+			{
+				returnSave.weaponUnlockedList.Add(wt.shopPurchased);
+			}
+			return returnSave;
+		}
 		#endregion
     #endregion
 
     #region Weapon Data getters
-    public WeaponTemplate GetWeaponData(int weaponType)
+		public WeaponTemplate GetWeaponData(int weaponType)
 		{
 			return m_weaponInformation[Mathf.Max(0, weaponType - 1)];
 		}
+
 		public WeaponTemplate GetWeaponData(WeaponType wpnType)
 		{
 			return m_weaponInformation[(int)wpnType]; // don't need the -1 because WeaponType will be a valid value
 		}
 
-	public ShieldTemplate GetShieldData(int currentLevel)
+		public ShieldTemplate GetShieldData(int currentLevel)
 		{
 			return m_shieldInformation[currentLevel]; // don't need to -1 because this is called by the upgrader which already has the number incremented
-
 		}
 		#endregion
 	#endregion

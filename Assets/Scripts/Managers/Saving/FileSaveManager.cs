@@ -19,9 +19,9 @@ public class FileSaveManager : MonoBehaviour
 		public List<UnitDataSave> unitdataSaves;
 
 		// weapon purchase information
-		public List<WeaponShopSave> weaponShopSaves;
+		public WeaponShopSave weaponShopSaves;
 
-        public List<UnitData> unitDataList;
+        //public List<UnitData> unitDataList;
     }
 
 	[System.Serializable]
@@ -31,16 +31,14 @@ public class FileSaveManager : MonoBehaviour
 		public int shieldLevel;
 		public float currentHealth;
 		public float maxHealth;
+		public WeaponAttributes.WeaponType leftWeapon;
+		public WeaponAttributes.WeaponType rightWeapon;
 	}
 
 	[System.Serializable]
 	public struct WeaponShopSave
 	{
-		public bool pistolUnlocked;
-		public bool rifleUnlocked;
-		public bool sniperlUnlocked;
-		public bool rocketUnlocked;
-		public bool LaserUnlocked;
+		public List<bool> weaponUnlockedList;
 	}
 	#endregion
 
@@ -82,9 +80,10 @@ public class FileSaveManager : MonoBehaviour
 		saveObject.currentExp = m_accountInfo.GetCurrentExp();
 		saveObject.neededExp = m_accountInfo.GetNeededExp();
 
-		saveObject.unitDataList = m_dataManager.activeUnitData;
+		//saveObject.unitDataList = m_dataManager.activeUnitData;
 
 		// player unit data
+		List<UnitDataSave> tempSaveList = new List<UnitDataSave>();
 		foreach (UnitData ud in m_dataManager.activeUnitData)
         {
 			UnitDataSave tempUDsave = new UnitDataSave();
@@ -92,11 +91,14 @@ public class FileSaveManager : MonoBehaviour
 			tempUDsave.shieldLevel = ud.shieldData.level;
 			tempUDsave.currentHealth = ud.currentHealth;
 			tempUDsave.maxHealth = ud.maxHealth;
-
+			tempUDsave.leftWeapon = ud.leftWeapon.weaponType;
+			tempUDsave.rightWeapon = ud.leftWeapon.twoHanded ? WeaponAttributes.WeaponType.None : ud.rightWeapon.weaponType;
+			tempSaveList.Add(tempUDsave);
 		}
-		
-		// weapon purchase data
+		saveObject.unitdataSaves = tempSaveList;
 
+		// weapon purchase data
+		saveObject.weaponShopSaves = m_weaponAttributes.GetSaveWeaponData();
 
 		SaveToFile(JsonConvert.SerializeObject(saveObject));
 	}
