@@ -89,11 +89,15 @@ public class WeaponAttributes : MonoBehaviour
 
 		Debug.Log("finished starting");
 	}
-	#endregion
+    #endregion
 
-	#region Retrieval functions
+    #region Modification functions
+
+    #endregion
+
+    #region Retrieval functions
 		#region Prefab
-		public GameObject GetWeaponPrefab(Weapon weapon)
+    public GameObject GetWeaponPrefab(Weapon weapon)
 		{
 			switch (weapon.weaponType)
 			{
@@ -163,10 +167,17 @@ public class WeaponAttributes : MonoBehaviour
 		{
 			return m_twoHandedList.Contains(wpnType);
 		}
-	#endregion
 
-	#region Weapon Data getters
-		public WeaponTemplate GetWeaponData(int weaponType)
+		#region Saving
+		public List<FileSaveManager.WeaponShopSave> GetSaveWeaponData()
+    {
+		return null;
+    }
+		#endregion
+    #endregion
+
+    #region Weapon Data getters
+    public WeaponTemplate GetWeaponData(int weaponType)
 		{
 			return m_weaponInformation[Mathf.Max(0, weaponType - 1)];
 		}

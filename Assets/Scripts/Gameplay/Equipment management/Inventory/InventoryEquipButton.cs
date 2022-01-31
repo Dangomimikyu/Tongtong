@@ -12,6 +12,8 @@ public class InventoryEquipButton : MonoBehaviour
     [SerializeField]
     private WeaponTemplate weaponInfo;
 
+    private bool purchased = false;
+
 	#region Monobehaviour functions
 	private void Awake()
 	{

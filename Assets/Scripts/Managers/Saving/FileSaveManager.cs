@@ -16,10 +16,13 @@ public class FileSaveManager : MonoBehaviour
 		public float neededExp;
 
 		// unit information
+		public List<UnitDataSave> unitdataSaves;
 
+		// weapon purchase information
+		public List<WeaponShopSave> weaponShopSaves;
 
-		public List<UnitData> unitDataList;
-	}
+        public List<UnitData> unitDataList;
+    }
 
 	[System.Serializable]
 	public struct UnitDataSave
@@ -30,6 +33,7 @@ public class FileSaveManager : MonoBehaviour
 		public float maxHealth;
 	}
 
+	[System.Serializable]
 	public struct WeaponShopSave
 	{
 		public bool pistolUnlocked;
@@ -45,6 +49,8 @@ public class FileSaveManager : MonoBehaviour
 	private AccountInformation m_accountInfo;
 	[SerializeField]
 	private UnitDataManager m_dataManager;
+	[SerializeField]
+	private WeaponAttributes m_weaponAttributes;
 
 	private string m_savePath;
 	private int m_saveStateCount = 0;
@@ -52,6 +58,8 @@ public class FileSaveManager : MonoBehaviour
 	#region Monobehaviour functions
 	private void Start()
 	{
+		m_weaponAttributes = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>();
+
 		m_savePath = Application.dataPath + "/SaveFiles/";
 
 		if (!Directory.Exists(m_savePath))
@@ -68,11 +76,28 @@ public class FileSaveManager : MonoBehaviour
 	public void Save()
 	{
 		SaveObject saveObject = new SaveObject();
+		// player account data
 		saveObject.playerMoney = m_accountInfo.money;
 		saveObject.playerLevel = m_accountInfo.GetPlayerLevel();
 		saveObject.currentExp = m_accountInfo.GetCurrentExp();
 		saveObject.neededExp = m_accountInfo.GetNeededExp();
+
 		saveObject.unitDataList = m_dataManager.activeUnitData;
+
+		// player unit data
+		foreach (UnitData ud in m_dataManager.activeUnitData)
+        {
+			UnitDataSave tempUDsave = new UnitDataSave();
+			tempUDsave.level = ud.unitLevel;
+			tempUDsave.shieldLevel = ud.shieldData.level;
+			tempUDsave.currentHealth = ud.currentHealth;
+			tempUDsave.maxHealth = ud.maxHealth;
+
+		}
+		
+		// weapon purchase data
+
+
 		SaveToFile(JsonConvert.SerializeObject(saveObject));
 	}
 

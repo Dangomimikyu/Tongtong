@@ -10,6 +10,8 @@ public class WeaponTemplate : ScriptableObject
 	public GameObject weaponPrefab;
 	[Tooltip("Bullet Prefab")]
 	public GameObject bulletPrefab;
+	[Tooltip("Whether this weapon has been purchased from the shop")]
+	public bool shopPurchased;
 	[Tooltip("bullet information for this weapon")]
 	public WeaponAttributes.BulletData bulletData;
 }
