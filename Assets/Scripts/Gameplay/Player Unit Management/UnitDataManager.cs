@@ -83,6 +83,48 @@ public class UnitDataManager : MonoBehaviour
 		}
 	}
 
+	public void UpdateUnitList(FileSaveManager.SaveObject so)
+	{
+		WeaponAttributes wa = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>();
+
+		ClearActiveList();
+		activeUnitData.Clear();
+		List<UnitData> tempUDList = new List<UnitData>();
+
+		foreach (FileSaveManager.UnitDataSave uds in so.unitdataSaves)
+		{
+			UnitData tempUD = new UnitData();
+
+			// left weapon
+			Weapon wLeft = new Weapon(uds.leftWeapon, true);
+			wLeft.twoHanded = wa.GetIsTwohanded(uds.leftWeapon);
+			tempUD.leftWeapon = wLeft;
+
+			// right weapon
+			if (!wLeft.twoHanded)
+			{
+				Weapon wRight = new Weapon(uds.rightWeapon, true);
+				tempUD.rightWeapon = wRight;
+			}
+
+			// shield
+			tempUD.shieldData = wa.GetShieldData(uds.shieldLevel).shieldData;
+
+			// health
+			tempUD.maxHealth = uds.maxHealth;
+			tempUD.currentHealth = uds.currentHealth;
+
+			tempUDList.Add(tempUD);
+		}
+
+		Debug.Log("tempUDlist count: " + tempUDList.Count);
+
+		foreach (UnitData ud in tempUDList)
+		{
+			activeUnitData.Add(ud);
+		}
+	}
+
 	public void ClearActiveList()
 	{
 		for (int i = 0; i < activeUnits.Count; ++i)

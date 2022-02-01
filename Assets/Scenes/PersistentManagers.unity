@@ -714,7 +714,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_weaponInformation:
-  - {fileID: 11400000, guid: 2ecc267199a66974699ee0cf724bbe8a, type: 2}
   - {fileID: 11400000, guid: 9f031b1310d9d724db1bcd4d0bff37f6, type: 2}
   - {fileID: 11400000, guid: 2b5a2db4005791244a3f0557db5e9e55, type: 2}
   - {fileID: 11400000, guid: 02bc13dcc03501742bbfceaaa6bef550, type: 2}
@@ -1071,7 +1070,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_accountInfo: {fileID: 1856155040}
   m_dataManager: {fileID: 241019429}
-  m_weaponAttributes: {fileID: 0}
+  m_weaponAttributes: {fileID: 867243681}
 --- !u!114 &1966179272
 MonoBehaviour:
   m_ObjectHideFlags: 0

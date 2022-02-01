@@ -30,6 +30,16 @@ public class AccountInformation : MonoBehaviour
 	}
 	#endregion
 
+	#region Save file functions
+	public void UpdateInfo(FileSaveManager.SaveObject so)
+	{
+		money = so.playerMoney;
+		m_level = so.playerLevel;
+		m_exp = so.currentExp;
+		m_neededExp = so.neededExp;
+	}
+	#endregion
+
 	#region Quest functions
 	public void ReceiveRewards(Quest q)
 	{

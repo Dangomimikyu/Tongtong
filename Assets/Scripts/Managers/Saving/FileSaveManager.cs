@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
+using DangoMimikyu.EventManagement;
 
 public class FileSaveManager : MonoBehaviour
 {
@@ -20,8 +21,6 @@ public class FileSaveManager : MonoBehaviour
 
 		// weapon purchase information
 		public WeaponShopSave weaponShopSaves;
-
-        //public List<UnitData> unitDataList;
     }
 
 	[System.Serializable]
@@ -56,17 +55,34 @@ public class FileSaveManager : MonoBehaviour
 	#region Monobehaviour functions
 	private void Start()
 	{
-		m_weaponAttributes = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>();
+		EventManager.instance.StartListening(GameEvents.Misc_SaveReady, SaveReady);
 
 		m_savePath = Application.dataPath + "/SaveFiles/";
 
 		if (!Directory.Exists(m_savePath))
 			Directory.CreateDirectory(m_savePath);
 	}
+
 	private void OnApplicationQuit()
 	{
 		// save one more time when the game is closed
 		Save();
+	}
+	#endregion
+
+	#region Event handling functions
+	private void SaveReady(EventArgumentData ead)
+	{
+		SaveObject currentSave = Load();
+
+		// update account info
+		m_accountInfo.UpdateInfo(currentSave);
+
+		// update unit data
+		m_dataManager.UpdateUnitList(currentSave);
+
+		// update weapon purchase status
+		m_weaponAttributes.UpdatePurchaseStatus(currentSave);
 	}
 	#endregion
 
@@ -103,9 +119,10 @@ public class FileSaveManager : MonoBehaviour
 		SaveToFile(JsonConvert.SerializeObject(saveObject));
 	}
 
-	public void Load()
+	public SaveObject Load()
 	{
-
+		string json = LoadFromFile();
+		return JsonConvert.DeserializeObject<SaveObject>(json);
 	}
 	#endregion
 
@@ -130,6 +147,8 @@ public class FileSaveManager : MonoBehaviour
 
 			latestSave = fi.LastWriteTime > latestSave.LastWriteTime ? fi : latestSave;
 		}
+
+		Debug.Log("file read name: " + latestSave.Name);
 
 		return latestSave == null ? null : File.ReadAllText(latestSave.FullName);
 	}

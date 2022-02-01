@@ -7,6 +7,7 @@ namespace DangoMimikyu.EventManagement
 		None,
 		// misc
 		Misc_SceneChange,				// changed scene
+		Misc_SaveReady,					// save file is ready to be read
 
 		// menu
 		Menu_Pause,						// open pause menu

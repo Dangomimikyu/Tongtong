@@ -106,7 +106,7 @@ public class WeaponAttributes : MonoBehaviour
 				case WeaponType.Sniper:
 				case WeaponType.Rocket:
 				case WeaponType.Lazer:
-				return gunPrefabList[(int)weapon.weaponType];
+				return gunPrefabList[(int)weapon.weaponType - 1];
 			}
 		}
 
@@ -123,7 +123,7 @@ public class WeaponAttributes : MonoBehaviour
 				case WeaponType.Sniper:
 				case WeaponType.Rocket:
 				case WeaponType.Lazer:
-				return bulletPrefabList[(int)weapon.weaponType];
+				return bulletPrefabList[(int)weapon.weaponType - 1];
 			}
 		}
 
@@ -195,8 +195,10 @@ public class WeaponAttributes : MonoBehaviour
 		return returnSave;
 	}
 
-	public void UpdatePurchaseStatus(List<bool> boughtList)
+	public void UpdatePurchaseStatus(FileSaveManager.SaveObject so)
 	{
+		List<bool> boughtList = so.weaponShopSaves.weaponUnlockedList;
+
 		// this function is meant to be called when loading the save file
 		for (int i = 0; i < m_weaponInformation.Count; ++i)
 		{
