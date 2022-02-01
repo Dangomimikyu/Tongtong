@@ -19,26 +19,41 @@ public class UnitUpgradeManager : MonoBehaviour
 	private UnitDataManager m_unitDataManager;
 	private UnitData m_currentData;
 	private AccountInformation m_playerAccount;
+	private int currentUnitIndex;
 
 	#region Monobehaviour functions
 	private void Start()
 	{
 		m_unitDataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
 		m_weaponAttributes = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>();
+
+		ReturnUnit(); // init the upgrade UI
 	}
 	#endregion
 
+	#region Button functions
 	// button selection for units
 	public void EditUnit(int index)
 	{
 		Debug.Log("Edit unit: " + index);
+		currentUnitIndex = index;
 
 		m_currentData = m_unitDataManager.activeUnitData[index];
+		m_unitDisplayImage.gameObject.SetActive(true);
 		m_unitDisplayImage.sprite = m_tongbot;
 		m_healthBarFill.SetMaxHealth(m_currentData.maxHealth);
 		m_healthBarFill.UpdateHealth(m_currentData.currentHealth);
 		Debug.Log("curr health " + m_currentData.currentHealth);
 	}
+
+	public void ReturnUnit()
+	{
+		m_currentData = null;
+		m_unitDisplayImage.gameObject.SetActive(false);
+		m_healthBarFill.SetMaxHealth(1.0f);
+		m_healthBarFill.UpdateHealth(0.0f);
+	}
+	#endregion
 
 	#region Post selection functions
 	public void RepairUnit()
@@ -92,7 +107,7 @@ public class UnitUpgradeManager : MonoBehaviour
         }
 	}
 
-	public void ChangeWeaponUnit()
+	public void ChangeUnitWeapon()
 	{
 
 	}

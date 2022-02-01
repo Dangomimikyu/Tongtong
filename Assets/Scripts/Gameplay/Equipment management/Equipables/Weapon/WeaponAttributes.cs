@@ -91,10 +91,6 @@ public class WeaponAttributes : MonoBehaviour
 	}
     #endregion
 
-    #region Modification functions
-
-    #endregion
-
     #region Retrieval functions
 		#region Prefab
 		public GameObject GetWeaponPrefab(Weapon weapon)
@@ -167,26 +163,9 @@ public class WeaponAttributes : MonoBehaviour
 		{
 			return m_twoHandedList.Contains(wpnType);
 		}
-
-		#region Saving
-		public FileSaveManager.WeaponShopSave GetSaveWeaponData()
-		{
-			FileSaveManager.WeaponShopSave returnSave = new FileSaveManager.WeaponShopSave();
-			returnSave.weaponUnlockedList = new List<bool>();
-			//for (int i = 0; i < m_weaponInformation.Count; ++i)
-			//{
-			//	returnSave.weaponUnlockedList.Add(m_weaponInformation[i].shopPurchased);
-			//}
-			foreach (WeaponTemplate wt in m_weaponInformation)
-			{
-				returnSave.weaponUnlockedList.Add(wt.shopPurchased);
-			}
-			return returnSave;
-		}
 		#endregion
-    #endregion
 
-    #region Weapon Data getters
+		#region Weapon Data getters
 		public WeaponTemplate GetWeaponData(int weaponType)
 		{
 			return m_weaponInformation[Mathf.Max(0, weaponType - 1)];
@@ -202,5 +181,27 @@ public class WeaponAttributes : MonoBehaviour
 			return m_shieldInformation[currentLevel]; // don't need to -1 because this is called by the upgrader which already has the number incremented
 		}
 		#endregion
+	#endregion
+
+	#region Save and Load
+	public FileSaveManager.WeaponShopSave GetSaveWeaponData()
+	{
+		FileSaveManager.WeaponShopSave returnSave = new FileSaveManager.WeaponShopSave();
+		returnSave.weaponUnlockedList = new List<bool>();
+		foreach (WeaponTemplate wt in m_weaponInformation)
+		{
+			returnSave.weaponUnlockedList.Add(wt.shopPurchased);
+		}
+		return returnSave;
+	}
+
+	public void UpdatePurchaseStatus(List<bool> boughtList)
+	{
+		// this function is meant to be called when loading the save file
+		for (int i = 0; i < m_weaponInformation.Count; ++i)
+		{
+			m_weaponInformation[i].shopPurchased = boughtList[i];
+		}
+	}
 	#endregion
 }

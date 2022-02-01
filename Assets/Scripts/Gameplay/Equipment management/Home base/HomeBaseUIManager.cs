@@ -6,11 +6,21 @@ using DG.Tweening;
 
 public class HomeBaseUIManager : MonoBehaviour
 {
+    [System.Serializable]
+    public struct InventoryEquipmentButton
+    {
+        public Image weaponBackground;
+        public Image lockOverlay;
+    }
+
+
     [Header("Object references")]
     [SerializeField]
     private Canvas m_popupCanvas;
     [SerializeField]
     private Canvas m_questSelectionCanvas;
+    [SerializeField]
+    private List<InventoryEquipmentButton> m_inventoryButtons;
 
 	#region Monobehaviour functions
 	private void Start()
@@ -30,44 +40,12 @@ public class HomeBaseUIManager : MonoBehaviour
 	{
         m_questSelectionCanvas.gameObject.SetActive(!m_questSelectionCanvas.gameObject.activeInHierarchy);
 	}
-    #endregion
+	#endregion
 
-    /* drag and drop functions
-	private void Update()
-    {
-        if (m_dragged)
-        {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            transform.Translate(mousePos);
-        }
-    }
+	#region Inventory UI buttons
+    public void UpdateInventoryUI()
+	{
 
-    private void OnMouseDown()
-    {
-        m_dragged = true;
-        m_boxCollider.isTrigger = true;
-    }
-
-    private void OnMouseUp()
-    {
-        m_dragged = false;
-        m_boxCollider.isTrigger = false;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "UnitEditingUIBox")
-        {
-            m_inBox = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.tag == "UnitEditingUIBox")
-        {
-            m_inBox = false;
-        }
-    }
-    */
+	}
+	#endregion
 }
