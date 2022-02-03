@@ -1,51 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
 
 public class HomeBaseUIManager : MonoBehaviour
 {
-    [System.Serializable]
-    public struct InventoryEquipmentButton
-    {
-        public Image weaponBackground;
-        public Image lockOverlay;
-    }
-
-
-    [Header("Object references")]
+    [Header("UI references")]
     [SerializeField]
-    private Canvas m_popupCanvas;
+    private TMP_Text m_moneyText;
     [SerializeField]
     private Canvas m_questSelectionCanvas;
     [SerializeField]
-    private List<InventoryEquipmentButton> m_inventoryButtons;
+    private List<InventoryEquipButton> m_inventoryButtons;
+
+    [Header("Manager references")]
+    [SerializeField]
+    private UnitUpgradeManager m_upgradeManager;
+    [SerializeField]
+    private EquipmentChangeManager m_equipmentManager;
+
 
 	#region Monobehaviour functions
 	private void Start()
     {
         ToggleEquipmentPopup(false);
+        UpdateMoney();
         m_questSelectionCanvas.gameObject.SetActive(false);
     }
     #endregion
 
-    #region Visibility functions
+    #region UI functions
     public void ToggleEquipmentPopup(bool enable)
 	{
-        m_popupCanvas.gameObject.SetActive(enable);
+        m_equipmentManager.ToggleDisplayCanvas(enable);
 	}
 
     public void ToggleQuestSelectionUI()
 	{
         m_questSelectionCanvas.gameObject.SetActive(!m_questSelectionCanvas.gameObject.activeInHierarchy);
 	}
-	#endregion
 
-	#region Inventory UI buttons
-    public void UpdateInventoryUI()
-	{
-
-	}
+    public void UpdateMoney()
+    {
+        m_moneyText.text = "Money:" + GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>().money.ToString();
+    }
 	#endregion
 }

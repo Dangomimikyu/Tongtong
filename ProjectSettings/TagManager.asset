@@ -21,6 +21,7 @@ TagManager:
   - PlayerUnitShield
   - QuestSelectionHandler
   - SaveManager
+  - EquipmentChangeManager
   layers:
   - Default
   - TransparentFX

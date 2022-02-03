@@ -52,16 +52,17 @@ public class AccountInformation : MonoBehaviour
 	private void CheckLevelUp(int newExp)
     {
 		m_exp += newExp;
-		if(m_exp >= m_neededExp)
+		while(m_exp >= m_neededExp)
         {
 			m_exp -= m_neededExp;
 			m_level++;
+			UpdateNeededExp();
         }
     }
 
 	private void UpdateNeededExp()
     {
-		m_neededExp *= 2; // temp [to remove] or more accurately to change but im too tired rn man
+		m_neededExp *= 1.5f * (m_neededExp); // temp [to remove] or more accurately to change but im too tired rn man
     }
     #endregion
 }

@@ -14,9 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 1322018248614684964, guid: c7b425de6a5a3e642b0ce3fc91d33df3, type: 3}
   bulletPrefab: {fileID: 4616792544379181470, guid: 11a4fd785e3950947bf93e3f6980a34c, type: 3}
+  shopPurchased: 0
+  shopPrice: 135
   bulletData:
     velocity: 600
     damage: 10
     burstCooldown: 0.35
     burstBulletCount: 2
     ShootCooldown: 0
+  weaponSprite: {fileID: 21300000, guid: ddf2b2ea10eea2a4abf1da94acc15430, type: 3}
+  weaponType: 5

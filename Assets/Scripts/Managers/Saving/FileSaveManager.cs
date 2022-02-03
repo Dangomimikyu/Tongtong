@@ -75,6 +75,8 @@ public class FileSaveManager : MonoBehaviour
 	{
 		SaveObject currentSave = Load();
 
+		Debug.Log(currentSave);
+
 		// update account info
 		m_accountInfo.UpdateInfo(currentSave);
 

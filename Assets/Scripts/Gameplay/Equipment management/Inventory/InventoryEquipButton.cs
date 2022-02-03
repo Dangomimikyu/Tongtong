@@ -8,20 +8,21 @@ public class InventoryEquipButton : MonoBehaviour
 {
     [Header("Object references")]
     [SerializeField]
-    private TMP_Text weaponText;
+    private TMP_Text m_weaponText;
     [SerializeField]
-    private WeaponTemplate weaponInfo;
-
-    private bool purchased = false;
+    private WeaponTemplate m_weaponInfo;
+    [SerializeField]
+    private Image m_lockOverlay;
+    [SerializeField]
+    private HomeBaseUIManager m_mainUIManager;
+    [SerializeField]
+    private EquipmentChangeManager m_equipManager;
 
 	#region Monobehaviour functions
-	private void Awake()
-	{
-	}
-
 	void Start()
     {
-        weaponText.text = "";
+        m_weaponText.text = "";
+        UpdateLockOverlay();
         UpdateTextInfo();
     }
 
@@ -31,22 +32,64 @@ public class InventoryEquipButton : MonoBehaviour
     }
 	#endregion
 
-    private void UpdateTextInfo()
+	#region UI functions
+	private void UpdateTextInfo()
 	{
-        string output = "Dmg: " + weaponInfo.bulletData.damage + "\n";
+        string output = "Dmg: " + m_weaponInfo.bulletData.damage + "\n";
 
-        if (weaponInfo.bulletData.burstBulletCount > 0)
+        if (m_weaponInfo.bulletData.burstBulletCount > 0)
 		{
             output += "burst: yes\n";
-            output += "shots: " + weaponInfo.bulletData.burstBulletCount;
+            output += "shots: " + m_weaponInfo.bulletData.burstBulletCount;
 		}
         else
 		{
             output += "burst: no";
 		}
 
+        if (!m_weaponInfo.shopPurchased)
+		{
+            output += "\nprice: " + m_weaponInfo.shopPrice;
+		}
+
         Debug.Log("output: " + output);
 
-        weaponText.text = output;
+        m_weaponText.text = output;
 	}
+
+    private void UpdateLockOverlay()
+	{
+        if (m_weaponInfo.shopPurchased)
+		{
+            m_lockOverlay.gameObject.SetActive(false);
+		}
+	}
+	#endregion
+
+	#region Button click functions
+    public void SelectInventoryItem()
+	{
+        if (!m_weaponInfo.shopPurchased)
+		{
+            // check if player has enough money and if so then edit WeaponTemplate info and remove the lock overlay
+            AccountInformation ai = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>();
+            if (ai.money >= m_weaponInfo.shopPrice)
+			{
+                Debug.Log("purchased item");
+                ai.money -= m_weaponInfo.shopPrice;
+                m_weaponInfo.shopPurchased = true;
+                UpdateLockOverlay();
+                m_mainUIManager.UpdateMoney();
+			}
+        }
+        else // player already owns this item
+		{
+            // update the currently selected WeaponTemplate in EquipmentChangeManager
+            m_equipManager.ChangeCurrentSelectedWeapon(m_weaponInfo);
+
+            // bring up equipment change screen
+            m_mainUIManager.ToggleEquipmentPopup(true);
+        }
+    }
+	#endregion
 }

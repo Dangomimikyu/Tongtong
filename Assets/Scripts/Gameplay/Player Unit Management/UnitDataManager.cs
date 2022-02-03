@@ -125,6 +125,38 @@ public class UnitDataManager : MonoBehaviour
 		}
 	}
 
+	public void UpdateUnitWeapon(UnitData ud, WeaponAttributes.WeaponType wt, bool left)
+	{
+		// if the current weapon is a two-haded weapon, set both to pistol
+		if (ud.leftWeapon.twoHanded)
+		{
+			ud.leftWeapon = new Weapon(WeaponAttributes.WeaponType.Pistol, true);
+			ud.rightWeapon = new Weapon(WeaponAttributes.WeaponType.Pistol, true);
+		}
+
+		Weapon newWeapon = new Weapon(wt, true);
+		if (left)
+		{
+			ud.leftWeapon = newWeapon;
+
+			if (newWeapon.twoHanded)
+			{
+				ud.rightWeapon = null;
+			}
+		}
+		else
+		{
+			ud.rightWeapon = newWeapon;
+		}
+
+		// refresh the scene units
+		GetComponent<UnitSpawner>().RefreshHomeUnits();
+
+		// change weapon sprites
+		EquipmentChangeManager ecm = GameObject.FindGameObjectWithTag("EquipmentChangeManager").GetComponent<EquipmentChangeManager>();
+		ecm.UpdateWeaponImages();
+	}
+
 	public void ClearActiveList()
 	{
 		for (int i = 0; i < activeUnits.Count; ++i)
@@ -149,37 +181,6 @@ public class UnitDataManager : MonoBehaviour
 	public UnitBehaviour GetFrontUnit()
 	{
 		return activeUnits[activeUnits.Count - 1];
-	}
-	#endregion
-
-	#region Equipment functions
-	private void ModifyWeapons(EventArgumentData ead)
-	{
-
-	}
-
-	private void ModifyWeapons(UnitData ud, Weapon w, bool left)
-	{
-		// todo: move the currently held weapon (if any) into the inventory
-		if (left)
-		{
-			ud.leftWeapon = w;
-		}
-		else
-		{
-			ud.rightWeapon = w;
-		}
-	}
-
-	private void ModifyArmour(EventArgumentData ead)
-	{
-
-	}
-	#endregion
-
-	#region Quest functions
-	private void QuestEnd(EventArgumentData ead)
-	{
 	}
 	#endregion
 }

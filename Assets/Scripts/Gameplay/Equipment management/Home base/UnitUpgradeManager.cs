@@ -14,6 +14,10 @@ public class UnitUpgradeManager : MonoBehaviour
 	private Image m_unitDisplayImage;
 	[SerializeField]
 	private HealthBarController m_healthBarFill;
+	[SerializeField]
+	private EquipmentChangeManager m_equipmentManager;
+
+	public bool unitCurrentlySelected = false; // flag for whether a unit is currently being selected or not
 
 	private WeaponAttributes m_weaponAttributes;
 	private UnitDataManager m_unitDataManager;
@@ -37,8 +41,10 @@ public class UnitUpgradeManager : MonoBehaviour
 	{
 		Debug.Log("Edit unit: " + index);
 		currentUnitIndex = index;
-
 		m_currentData = m_unitDataManager.activeUnitData[index];
+		unitCurrentlySelected = true;
+		m_equipmentManager.EditUnit(m_currentData);
+
 		m_unitDisplayImage.gameObject.SetActive(true);
 		m_unitDisplayImage.sprite = m_tongbot;
 		m_healthBarFill.SetMaxHealth(m_currentData.maxHealth);
@@ -49,6 +55,8 @@ public class UnitUpgradeManager : MonoBehaviour
 	public void ReturnUnit()
 	{
 		m_currentData = null;
+		m_equipmentManager.EditUnit(m_currentData); // will send null
+		unitCurrentlySelected = false;
 		m_unitDisplayImage.gameObject.SetActive(false);
 		m_healthBarFill.SetMaxHealth(1.0f);
 		m_healthBarFill.UpdateHealth(0.0f);

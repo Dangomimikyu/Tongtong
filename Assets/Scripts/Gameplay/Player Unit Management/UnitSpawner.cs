@@ -104,6 +104,29 @@ public class UnitSpawner : MonoBehaviour
 		}
 	}
 
+	public void RefreshHomeUnits()
+	{
+		// clear the current units
+		DestroyUnits();
+
+		// meant to be called after changing weapons in order to refresh the units in the scene and their firing point
+		for (int i = 0; i < m_unitDataManager.activeUnitData.Count; ++i)
+		{
+			GameObject unit = Instantiate(m_unitPrefab, transform);
+			unit.transform.position = m_baseSpawnLocations[i];
+			unit.transform.rotation = Quaternion.identity;
+			unit.transform.localScale = m_baseScaleSize;
+			UnitData tempUD = m_unitDataManager.activeUnitData[i];
+			unit.GetComponent<UnitBehaviour>().unitData = tempUD; // had to use a temp to prevent the UnitBehaviour from updating the UnitData (unit data is supposed to be the information class)
+			UnitBehaviour newBehaviour = unit.GetComponent<UnitBehaviour>();
+			newBehaviour.ToggleHealthUI(false);
+			SpawnWeapon(unit, ref newBehaviour.unitData.leftWeapon, ref newBehaviour.unitData.rightWeapon);
+
+			m_unitDataManager.activeUnits.Add(newBehaviour);
+			EventManager.instance.DispatchEvent(GameEvents.Unit_Spawn, newBehaviour);
+		}
+	}
+
 	private void SpawnWeapon(GameObject parent, ref Weapon left, ref Weapon right)
 	{
 		UnitBehaviour parentUB = parent.GetComponent<UnitBehaviour>();

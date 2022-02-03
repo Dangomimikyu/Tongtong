@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponAttributes : MonoBehaviour
 {
@@ -158,10 +159,15 @@ public class WeaponAttributes : MonoBehaviour
 		}
 		#endregion
 
-		#region Two handed functions
+		#region Misc getter functions
 		public bool GetIsTwohanded(WeaponType wpnType)
 		{
 			return m_twoHandedList.Contains(wpnType);
+		}
+
+		public Sprite GetWeaponSprite(WeaponType wpnType)
+		{
+			return GetWeaponData(wpnType).weaponSprite;
 		}
 		#endregion
 
@@ -173,12 +179,18 @@ public class WeaponAttributes : MonoBehaviour
 
 		public WeaponTemplate GetWeaponData(WeaponType wpnType)
 		{
-			return m_weaponInformation[(int)wpnType]; // don't need the -1 because WeaponType will be a valid value
+			if (wpnType == WeaponType.None)
+			{
+				Debug.LogError("weapon type is null, this function shouldn't have been called");
+				return null;
+			}
+
+			return m_weaponInformation[(int)wpnType - 1];
 		}
 
 		public ShieldTemplate GetShieldData(int currentLevel)
 		{
-			return m_shieldInformation[currentLevel]; // don't need to -1 because this is called by the upgrader which already has the number incremented
+			return m_shieldInformation[currentLevel - 1]; // don't need to -1 because this is called by the upgrader which already has the number incremented
 		}
 		#endregion
 	#endregion
