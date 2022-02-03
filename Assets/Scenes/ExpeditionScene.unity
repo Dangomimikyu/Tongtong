@@ -3439,7 +3439,7 @@ MonoBehaviour:
   greentext: {fileID: 94268323}
   yellowtext: {fileID: 1556214564}
   redtext: {fileID: 752747432}
-  m_beatsPerMinute: 100
+  m_beatsPerMinute: 200
   m_maxTime: 300
   m_greenZone: 0.4
   m_yellowZone: 0.2
@@ -8137,7 +8137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1326145012
 RectTransform:
   m_ObjectHideFlags: 0

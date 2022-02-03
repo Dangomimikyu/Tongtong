@@ -20,8 +20,8 @@ public class QuestEndUIHandler : MonoBehaviour
 
     ~QuestEndUIHandler()
 	{
-        EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, ToggleRewardPanel);
-        EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, ToggleRewardPanel);
+        EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, ToggleRewardPanelSuccess);
+        EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, ToggleRewardPanelFailed);
     }
 
     #region Monobehaviour functions
@@ -29,19 +29,19 @@ public class QuestEndUIHandler : MonoBehaviour
     {
         m_questEndCanvasGroup.gameObject.SetActive(false);
         m_questEndCanvasGroup.alpha = 0; // turn off the quest overlay
-        EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, ToggleRewardPanel);
-        EventManager.instance.StartListening(GameEvents.Gameplay_QuestAbandoned, ToggleRewardPanel);
+        EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, ToggleRewardPanelSuccess);
+        EventManager.instance.StartListening(GameEvents.Gameplay_QuestAbandoned, ToggleRewardPanelFailed);
     }
 
     private void OnDisable()
 	{
-        EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, ToggleRewardPanel);
-        EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, ToggleRewardPanel);
+        EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, ToggleRewardPanelSuccess);
+        EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, ToggleRewardPanelFailed);
     }
     #endregion
 
     #region Reward panel functions
-    private void ToggleRewardPanel(EventArgumentData ead)
+    private void ToggleRewardPanelSuccess(EventArgumentData ead)
 	{
         m_questEndCanvasGroup.gameObject.SetActive(true);
 
@@ -52,6 +52,19 @@ public class QuestEndUIHandler : MonoBehaviour
 		m_questRewards.text = rewards;
 
 		m_questEndCanvasGroup.DOFade(1.0f, 1.0f).SetEase(Ease.Linear);
+    }
+
+    private void ToggleRewardPanelFailed(EventArgumentData ead)
+	{
+        m_questEndCanvasGroup.gameObject.SetActive(true);
+
+        m_questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        m_questName.text = m_questManager.GetCurrentQuest()?.questName;
+
+        string questFailMessage = "Quest failed";
+        m_questRewards.text = questFailMessage;
+
+        m_questEndCanvasGroup.DOFade(1.0f, 1.0f).SetEase(Ease.Linear);
     }
     #endregion
 }
