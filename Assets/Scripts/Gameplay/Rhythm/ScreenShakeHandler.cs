@@ -36,7 +36,7 @@ public class ScreenShakeHandler : MonoBehaviour
 		Debug.Log("command fail shake");
 		//m_impulseSource.m_ImpulseDefinition.m_AmplitudeGain = 11.0f;
 		//m_impulseSource.m_ImpulseDefinition.m_FrequencyGain = 11.0f;
-		m_impulseSource.GenerateImpulse();
+		//m_impulseSource.GenerateImpulse();
 	}
 	#endregion
 }

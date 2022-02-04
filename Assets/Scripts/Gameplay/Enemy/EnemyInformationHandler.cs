@@ -107,10 +107,15 @@ public class EnemyInformationHandler : MonoBehaviour
 	#region Enemy removal
 	public void UpdateList()
 	{
-		foreach (EnemyBehaviour eb in m_activeEnemyList)
+		int totalCount = m_activeEnemyList.Count;
+		for (int i = 0; i < totalCount; ++i)
 		{
-			if (eb == null)
-				m_activeEnemyList.Remove(eb);
+			if (m_activeEnemyList[i] == null)
+			{
+				m_activeEnemyList.Remove(m_activeEnemyList[i]);
+				totalCount--;
+				i--;
+			}
 		}
 	}
 	#endregion

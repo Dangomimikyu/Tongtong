@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UnitUpgradeManager : MonoBehaviour
 {
@@ -13,7 +14,11 @@ public class UnitUpgradeManager : MonoBehaviour
 	[SerializeField]
 	private Image m_unitDisplayImage;
 	[SerializeField]
+	private TMP_Text m_unitLevel;
+	[SerializeField]
 	private HealthBarController m_healthBarFill;
+	[SerializeField]
+	private HomeBaseUIManager m_mainUIManager;
 	[SerializeField]
 	private EquipmentChangeManager m_equipmentManager;
 
@@ -25,7 +30,7 @@ public class UnitUpgradeManager : MonoBehaviour
 	private AccountInformation m_playerAccount;
 	private int currentUnitIndex;
 
-	#region Monobehaviour functions
+#region Monobehaviour functions
 	private void Start()
 	{
 		m_unitDataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
@@ -33,9 +38,9 @@ public class UnitUpgradeManager : MonoBehaviour
 
 		ReturnUnit(); // init the upgrade UI
 	}
-	#endregion
+#endregion
 
-	#region Button functions
+#region Button functions
 	// button selection for units
 	public void EditUnit(int index)
 	{
@@ -47,6 +52,8 @@ public class UnitUpgradeManager : MonoBehaviour
 
 		m_unitDisplayImage.gameObject.SetActive(true);
 		m_unitDisplayImage.sprite = m_tongbot;
+		m_unitLevel.gameObject.SetActive(true);
+		m_unitLevel.text = "Unit level: " + m_currentData.unitLevel.ToString();
 		m_healthBarFill.SetMaxHealth(m_currentData.maxHealth);
 		m_healthBarFill.UpdateHealth(m_currentData.currentHealth);
 		Debug.Log("curr health " + m_currentData.currentHealth);
@@ -58,12 +65,13 @@ public class UnitUpgradeManager : MonoBehaviour
 		m_equipmentManager.EditUnit(m_currentData); // will send null
 		unitCurrentlySelected = false;
 		m_unitDisplayImage.gameObject.SetActive(false);
+		m_unitLevel.gameObject.SetActive(false);
 		m_healthBarFill.SetMaxHealth(1.0f);
 		m_healthBarFill.UpdateHealth(0.0f);
 	}
-	#endregion
+#endregion
 
-	#region Post selection functions
+#region Post selection functions
 	public void RepairUnit()
 	{
 		if (m_currentData.currentHealth == m_currentData.maxHealth)
@@ -83,6 +91,7 @@ public class UnitUpgradeManager : MonoBehaviour
 
 		// minus money
 		m_playerAccount.money -= 10;
+		m_mainUIManager.UpdateMoney();
 
 		// set unit health to full
 		m_currentData.currentHealth = m_currentData.maxHealth;
@@ -103,6 +112,7 @@ public class UnitUpgradeManager : MonoBehaviour
         }
 
 		m_playerAccount.money -= 30;
+		m_mainUIManager.UpdateMoney();
 
 		// each upgrade makes the unit 1.1x stronger
 		m_currentData.maxHealth *= 1.1f;
@@ -119,5 +129,5 @@ public class UnitUpgradeManager : MonoBehaviour
 	{
 
 	}
-	#endregion
+#endregion
 }

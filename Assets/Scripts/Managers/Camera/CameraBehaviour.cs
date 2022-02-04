@@ -26,7 +26,7 @@ public class CameraBehaviour : MonoBehaviour
 	#region Following functions
 	private void ChangeFollowTarget(EventArgumentData ead)
 	{
-        CinemachineVirtualCamera vc = Camera.main.GetComponent<CinemachineVirtualCamera>();
+        CinemachineVirtualCamera vc = GetComponent<CinemachineVirtualCamera>();
         UnitDataManager dataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
         vc.Follow = dataManager.activeUnits[0].gameObject.transform;
     }
