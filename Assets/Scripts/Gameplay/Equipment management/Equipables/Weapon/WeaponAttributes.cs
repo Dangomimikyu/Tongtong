@@ -155,7 +155,7 @@ public class WeaponAttributes : MonoBehaviour
 
 		public BulletData GetBulletData(WeaponType weaponType)
 		{
-			return m_bulletStatsList[(int)weaponType];
+			return m_bulletStatsList[(int)weaponType - 1];
 		}
 		#endregion
 

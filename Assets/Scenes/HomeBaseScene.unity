@@ -2296,6 +2296,7 @@ MonoBehaviour:
   m_unitDisplayImage: {fileID: 1752015451}
   m_unitLevel: {fileID: 726476207}
   m_healthBarFill: {fileID: 687440335}
+  m_mainUIManager: {fileID: 1937559178}
   m_equipmentManager: {fileID: 641024653}
   unitCurrentlySelected: 0
 --- !u!1 &269867710

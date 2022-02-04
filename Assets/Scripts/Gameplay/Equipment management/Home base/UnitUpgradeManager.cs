@@ -30,104 +30,118 @@ public class UnitUpgradeManager : MonoBehaviour
 	private AccountInformation m_playerAccount;
 	private int currentUnitIndex;
 
-#region Monobehaviour functions
-	private void Start()
-	{
-		m_unitDataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
-		m_weaponAttributes = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>();
+	#region Monobehaviour functions
+		private void Start()
+		{
+			m_unitDataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
+			m_weaponAttributes = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>();
 
-		ReturnUnit(); // init the upgrade UI
-	}
-#endregion
+			ReturnUnit(); // init the upgrade UI
+		}
+	#endregion
 
-#region Button functions
-	// button selection for units
-	public void EditUnit(int index)
-	{
-		Debug.Log("Edit unit: " + index);
-		currentUnitIndex = index;
-		m_currentData = m_unitDataManager.activeUnitData[index];
-		unitCurrentlySelected = true;
-		m_equipmentManager.EditUnit(m_currentData);
+	#region Button functions
+		// button selection for units
+		public void EditUnit(int index)
+		{
+			Debug.Log("Edit unit: " + index);
+			currentUnitIndex = index;
+			m_currentData = m_unitDataManager.activeUnitData[index];
+			unitCurrentlySelected = true;
+			m_equipmentManager.EditUnit(m_currentData);
 
-		m_unitDisplayImage.gameObject.SetActive(true);
-		m_unitDisplayImage.sprite = m_tongbot;
-		m_unitLevel.gameObject.SetActive(true);
-		m_unitLevel.text = "Unit level: " + m_currentData.unitLevel.ToString();
-		m_healthBarFill.SetMaxHealth(m_currentData.maxHealth);
-		m_healthBarFill.UpdateHealth(m_currentData.currentHealth);
-		Debug.Log("curr health " + m_currentData.currentHealth);
-	}
+			m_unitDisplayImage.gameObject.SetActive(true);
+			m_unitDisplayImage.sprite = m_tongbot;
+			m_unitLevel.gameObject.SetActive(true);
+			UpdateLevelText();
+			m_healthBarFill.SetMaxHealth(m_currentData.maxHealth);
+			m_healthBarFill.UpdateHealth(m_currentData.currentHealth);
+			Debug.Log("curr health " + m_currentData.currentHealth);
+		}
 
-	public void ReturnUnit()
-	{
-		m_currentData = null;
-		m_equipmentManager.EditUnit(m_currentData); // will send null
-		unitCurrentlySelected = false;
-		m_unitDisplayImage.gameObject.SetActive(false);
-		m_unitLevel.gameObject.SetActive(false);
-		m_healthBarFill.SetMaxHealth(1.0f);
-		m_healthBarFill.UpdateHealth(0.0f);
-	}
-#endregion
+		public void ReturnUnit()
+		{
+			m_currentData = null;
+			m_equipmentManager.EditUnit(m_currentData); // will send null
+			unitCurrentlySelected = false;
+			m_unitDisplayImage.gameObject.SetActive(false);
+			m_unitLevel.gameObject.SetActive(false);
+			m_healthBarFill.SetMaxHealth(1.0f);
+			m_healthBarFill.UpdateHealth(0.0f);
+		}
+	#endregion
 
-#region Post selection functions
-	public void RepairUnit()
-	{
-		if (m_currentData.currentHealth == m_currentData.maxHealth)
-        {
-			Debug.Log("trying to repair while at full health");
-			return;
-        }
+	#region Post selection functions
+		private void UpdateLevelText()
+		{
+			m_unitLevel.text = "Unit level: " + m_currentData.unitLevel.ToString();
+		}
 
-		// update local instance of player information
-		m_playerAccount = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>();
+		public void RepairUnit()
+		{
+			if (m_currentData.currentHealth == m_currentData.maxHealth)
+			{
+				Debug.Log("trying to repair while at full health");
+				return;
+			}
 
-        if (m_playerAccount.money < 10)
-        {
-			Debug.Log("not enough money to repair");
-			return;
-        }
+			// update local instance of player information
+			m_playerAccount = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>();
 
-		// minus money
-		m_playerAccount.money -= 10;
-		m_mainUIManager.UpdateMoney();
+			if (m_playerAccount.money < 10)
+			{
+				Debug.Log("not enough money to repair");
+				return;
+			}
 
-		// set unit health to full
-		m_currentData.currentHealth = m_currentData.maxHealth;
+			// minus money
+			m_playerAccount.money -= 10;
+			m_mainUIManager.UpdateMoney();
 
-		// update fill
-		m_healthBarFill.UpdateHealth(m_currentData.maxHealth);
-    }
+			// set unit health to full
+			m_currentData.currentHealth = m_currentData.maxHealth;
 
-	public void UpgradeUnit()
-	{
-		// update local instance of player information
-		m_playerAccount = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>();
+			// update fill
+			m_healthBarFill.UpdateHealth(m_currentData.maxHealth);
+		}
 
-		if (m_playerAccount.money < 30)
-        {
-			Debug.Log("not enough money to upgrade");
-			return;
-        }
+		public void UpgradeUnit()
+		{
+			// update local instance of player information
+			m_playerAccount = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>();
 
-		m_playerAccount.money -= 30;
-		m_mainUIManager.UpdateMoney();
+			if (m_playerAccount.money < 30)
+			{
+				Debug.Log("not enough money to upgrade");
+				return;
+			}
 
-		// each upgrade makes the unit 1.1x stronger
-		m_currentData.maxHealth *= 1.1f;
+			m_playerAccount.money -= 30;
+			m_mainUIManager.UpdateMoney();
 
-		++m_currentData.unitLevel;
+			// each upgrade makes the unit 1.1x stronger
+			if (m_currentData.currentHealth == m_currentData.maxHealth)
+			{
+				m_currentData.maxHealth *= 1.1f;
+				m_currentData.currentHealth = m_currentData.maxHealth;
+			}
+			else
+			{
+				m_currentData.maxHealth *= 1.1f;
+			}
 
-		if (m_currentData.unitLevel == 3 || m_currentData.unitLevel == 5)
-        {
-			m_weaponAttributes.GetShieldData(m_currentData.unitLevel / 2); // make use of int division (3 / 2 == 1)
-        }
-	}
+			++m_currentData.unitLevel;
+			UpdateLevelText();
 
-	public void ChangeUnitWeapon()
-	{
+			if (m_currentData.unitLevel == 3 || m_currentData.unitLevel == 5)
+			{
+				m_weaponAttributes.GetShieldData(m_currentData.unitLevel / 2); // make use of int division (3 / 2 == 1)
+			}
+		}
 
-	}
-#endregion
+		public void ChangeUnitWeapon()
+		{
+
+		}
+	#endregion
 }

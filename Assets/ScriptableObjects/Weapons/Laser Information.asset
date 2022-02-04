@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Laser Information
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 1322018248614684964, guid: c7b425de6a5a3e642b0ce3fc91d33df3, type: 3}
-  bulletPrefab: {fileID: 4616792544379181470, guid: 11a4fd785e3950947bf93e3f6980a34c, type: 3}
-  shopPurchased: 0
+  bulletPrefab: {fileID: 4616792544379181470, guid: fb8a05a9658c05843b3f32c704df667b, type: 3}
+  shopPurchased: 1
   shopPrice: 135
   bulletData:
     velocity: 600

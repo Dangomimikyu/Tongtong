@@ -18,12 +18,14 @@ public class UnitObjectSpawner : MonoBehaviour
 	#region Coroutines
 	private IEnumerator BurstFire(GameObject tongBot, Weapon wpn, float angle)
 	{
+		GameObject bulletPrefab = m_weaponAttributes.GetWeaponData(wpn.weaponType).bulletPrefab;
+
 		int burstCount = 0;
 		while (burstCount < wpn.burstBulletcount)
 		{
 			Debug.Log("firing burst shot: " + burstCount + " weapon type: " + wpn.weaponType);
 			burstCount++;
-			GameObject bullet = Instantiate(m_bulletPrefab, tongBot.transform);
+			GameObject bullet = Instantiate(bulletPrefab, tongBot.transform);
 			bullet.transform.position += wpn.firingPoint.localPosition;
 			bullet.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, angle);
 			Debug.Log("firing point rot: " + wpn.firingPoint.rotation);
@@ -55,7 +57,7 @@ public class UnitObjectSpawner : MonoBehaviour
 		else // this is a single fire weapon
 		{
 			Debug.Log("firing single shot");
-			GameObject bullet = Instantiate(m_bulletPrefab, tongBot.transform);
+			GameObject bullet = Instantiate(m_weaponAttributes.GetWeaponData(wpn.weaponType).bulletPrefab, tongBot.transform);
 			bullet.transform.position += wpn.firingPoint.localPosition;
 			bullet.transform.localRotation = wpn.firingPoint.localRotation;
 			Debug.Log("firing point rot: " + wpn.firingPoint.localRotation);

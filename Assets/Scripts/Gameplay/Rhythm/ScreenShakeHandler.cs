@@ -13,7 +13,7 @@ public class ScreenShakeHandler : MonoBehaviour
 
 	~ScreenShakeHandler()
 	{
-		EventManager.instance.StopListening(GameEvents.Input_CommandFail, CommandFailShake);
+		EventManager.instance.StopListening(GameEvents.Unit_Died, UnitDiedShake);
 	}
 
 	#region Monobehaviour functions
@@ -21,22 +21,19 @@ public class ScreenShakeHandler : MonoBehaviour
 	{
 		//m_impulseSource = GetComponent<CinemachineImpulseSource>();
 
-		EventManager.instance.StartListening(GameEvents.Input_CommandFail, CommandFailShake);
+		EventManager.instance.StartListening(GameEvents.Unit_Died, UnitDiedShake);
 	}
 
 	private void OnDisable()
 	{
-		EventManager.instance.StopListening(GameEvents.Input_CommandFail, CommandFailShake);
+		EventManager.instance.StopListening(GameEvents.Unit_Died, UnitDiedShake);
 	}
 	#endregion
 
 	#region player input shaking
-	private void CommandFailShake(EventArgumentData ead)
+	private void UnitDiedShake(EventArgumentData ead)
 	{
-		Debug.Log("command fail shake");
-		//m_impulseSource.m_ImpulseDefinition.m_AmplitudeGain = 11.0f;
-		//m_impulseSource.m_ImpulseDefinition.m_FrequencyGain = 11.0f;
-		//m_impulseSource.GenerateImpulse();
+		m_impulseSource.GenerateImpulse();
 	}
 	#endregion
 }

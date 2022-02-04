@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Rocket Launcher Information
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 2860634163447809527, guid: f7584c251ed8f8d4fa4c53ae8aa32d1c, type: 3}
-  bulletPrefab: {fileID: 4616792544379181470, guid: 11a4fd785e3950947bf93e3f6980a34c, type: 3}
-  shopPurchased: 0
+  bulletPrefab: {fileID: 4616792544379181470, guid: db5a3b67b009ce849b73e443c365d004, type: 3}
+  shopPurchased: 1
   shopPrice: 100
   bulletData:
     velocity: 300
