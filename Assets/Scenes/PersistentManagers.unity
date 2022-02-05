@@ -1130,7 +1130,7 @@ GameObject:
   - component: {fileID: 2007121624}
   m_Layer: 0
   m_Name: Audio manager
-  m_TagString: Untagged
+  m_TagString: SoundManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1181,7 +1181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e6120471e7c2b49bf9285d20582899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_menuButton: {fileID: 8300000, guid: c197cd976be0bc44298b71e8d2dd9c3e, type: 3}
+  m_menuButton: {fileID: 8300000, guid: a1d79b0dab142f041bf0f1242e04f5e5, type: 3}
   m_mainMenuBGM: {fileID: 0}
   m_homeBaseBGM: {fileID: 0}
   m_expeditionBGM: {fileID: 0}

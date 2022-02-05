@@ -1949,7 +1949,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290092797}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5000, y: -25, z: 3000}
+  m_LocalPosition: {x: 2000, y: 0, z: 1000}
   m_LocalScale: {x: 500, y: 500, z: 100}
   m_Children: []
   m_Father: {fileID: 119809135}
@@ -3327,10 +3327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2cd46362bd9c6e49bcaa6932c8c2de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: {fileID: 0}
-  greentext: {fileID: 0}
-  yellowtext: {fileID: 0}
-  redtext: {fileID: 0}
   m_beatsPerMinute: 100
   m_maxTime: 300
   m_greenZone: 0.4
@@ -5328,7 +5324,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 924910700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5000, y: 25, z: 3000}
+  m_LocalPosition: {x: -2000, y: 0, z: 1000}
   m_LocalScale: {x: 500, y: 500, z: 100}
   m_Children: []
   m_Father: {fileID: 119809135}
@@ -5904,6 +5900,7 @@ GameObject:
   - component: {fileID: 990451586}
   - component: {fileID: 990451585}
   - component: {fileID: 990451584}
+  - component: {fileID: 990451587}
   m_Layer: 5
   m_Name: Abandon Quest
   m_TagString: Untagged
@@ -6007,8 +6004,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 80be0ab748f87694eb174048f2e7ef2c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -6025,6 +6022,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990451582}
   m_CullTransparentMesh: 1
+--- !u!114 &990451587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990451582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dec9a5e48fc594e956f8c97cfd46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1004350848
 GameObject:
   m_ObjectHideFlags: 0
@@ -7402,6 +7411,7 @@ GameObject:
   - component: {fileID: 1189960585}
   - component: {fileID: 1189960584}
   - component: {fileID: 1189960583}
+  - component: {fileID: 1189960586}
   m_Layer: 5
   m_Name: Commands
   m_TagString: Untagged
@@ -7505,8 +7515,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: a8031c927267d1f468c12c6970aa47d2, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -7523,6 +7533,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1189960581}
   m_CullTransparentMesh: 1
+--- !u!114 &1189960586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189960581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dec9a5e48fc594e956f8c97cfd46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1245070338
 GameObject:
   m_ObjectHideFlags: 0
@@ -7876,6 +7898,7 @@ GameObject:
   - component: {fileID: 1303925215}
   - component: {fileID: 1303925214}
   - component: {fileID: 1303925213}
+  - component: {fileID: 1303925216}
   m_Layer: 5
   m_Name: Back Button
   m_TagString: Untagged
@@ -7946,19 +7969,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1303925214}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PauseMenuHandler, Assembly-CSharp
-        m_MethodName: ToggleSettingsMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1303925214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7979,8 +7990,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: b67c870547975fc4bb927757e8f4de0d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -7997,6 +8008,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1303925211}
   m_CullTransparentMesh: 1
+--- !u!114 &1303925216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303925211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dec9a5e48fc594e956f8c97cfd46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1345714983
 GameObject:
   m_ObjectHideFlags: 0
@@ -10035,6 +10058,7 @@ GameObject:
   - component: {fileID: 1676134192}
   - component: {fileID: 1676134191}
   - component: {fileID: 1676134190}
+  - component: {fileID: 1676134193}
   m_Layer: 5
   m_Name: Back Button
   m_TagString: Untagged
@@ -10105,19 +10129,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1676134191}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PauseMenuHandler, Assembly-CSharp
-        m_MethodName: ToggleCmdMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1676134191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10138,8 +10150,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: b67c870547975fc4bb927757e8f4de0d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -10156,6 +10168,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1676134188}
   m_CullTransparentMesh: 1
+--- !u!114 &1676134193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676134188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dec9a5e48fc594e956f8c97cfd46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1694692534
 GameObject:
   m_ObjectHideFlags: 0
@@ -13144,8 +13168,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 6f944005735b54840913906dea8fb956, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -13250,6 +13274,7 @@ GameObject:
   - component: {fileID: 5616648828008818801}
   - component: {fileID: 5616648828008818800}
   - component: {fileID: 5616648828008818803}
+  - component: {fileID: 5616648828008818814}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -13257,6 +13282,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5616648828008818814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5616648828008818813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dec9a5e48fc594e956f8c97cfd46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5616648828319442656
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13803,8 +13840,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: b67c870547975fc4bb927757e8f4de0d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -13843,6 +13880,7 @@ GameObject:
   - component: {fileID: 3205204720283014236}
   - component: {fileID: 5617173914820253364}
   - component: {fileID: 3766873090815319282}
+  - component: {fileID: 9103567054476121174}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -13850,3 +13888,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &9103567054476121174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9103567054476121173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dec9a5e48fc594e956f8c97cfd46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

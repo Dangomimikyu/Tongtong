@@ -22,6 +22,7 @@ TagManager:
   - QuestSelectionHandler
   - SaveManager
   - EquipmentChangeManager
+  - SoundManager
   layers:
   - Default
   - TransparentFX

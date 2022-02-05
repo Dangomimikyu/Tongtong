@@ -7,10 +7,15 @@ using UnityEngine.EventSystems;
 
 public class MainMenuUIButtonBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+	[Header("Object references")]
 	[SerializeField]
 	private Image m_leftArrow = null;
 	[SerializeField]
 	private Image m_rightArrow = null;
+
+	[Header("Animation settings")]
+	[SerializeField]
+	private Vector3 m_offset;
 
 	#region Monobehaviour functions
 	public void OnPointerEnter(PointerEventData eventData)
@@ -23,6 +28,19 @@ public class MainMenuUIButtonBehaviour : MonoBehaviour, IPointerEnterHandler, IP
 	#endregion
 
 	#region Coroutines
+	public IEnumerator ArrowOut()
+	{
+		while (true)
+		{
 
+		}
+
+		yield break;
+	}
+
+	public IEnumerator ArrowIn()
+	{
+		yield break;
+	}
 	#endregion
 }

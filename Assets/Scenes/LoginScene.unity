@@ -271,6 +271,7 @@ GameObject:
   - component: {fileID: 616884234}
   - component: {fileID: 616884237}
   - component: {fileID: 616884238}
+  - component: {fileID: 616884239}
   m_Layer: 5
   m_Name: Exit Game Button
   m_TagString: Untagged
@@ -320,7 +321,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 0.8606572, b: 0.7688679, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -418,6 +419,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_leftArrow: {fileID: 0}
   m_rightArrow: {fileID: 0}
+  m_offset: {x: 0, y: 0, z: 0}
+--- !u!114 &616884239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616884232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dec9a5e48fc594e956f8c97cfd46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &670501983
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,8 +868,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Tongtong
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9e84fe456637693458adfc6330ace876, type: 2}
-  m_sharedMaterial: {fileID: 4144039606014085654, guid: 9e84fe456637693458adfc6330ace876, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 20ebc6269582e8a49b0a743176a9b7d2, type: 2}
+  m_sharedMaterial: {fileID: -3740328467023586204, guid: 20ebc6269582e8a49b0a743176a9b7d2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -889,7 +903,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 10
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -943,6 +957,7 @@ GameObject:
   - component: {fileID: 1452372315}
   - component: {fileID: 1452372318}
   - component: {fileID: 1452372319}
+  - component: {fileID: 1452372320}
   m_Layer: 5
   m_Name: Start Button
   m_TagString: Untagged
@@ -992,7 +1007,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8160377, g: 0.94615734, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -1090,6 +1105,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_leftArrow: {fileID: 0}
   m_rightArrow: {fileID: 0}
+  m_offset: {x: 0, y: 0, z: 0}
+--- !u!114 &1452372320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452372313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dec9a5e48fc594e956f8c97cfd46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1723652460
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,10 +1250,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- Command the beat -'
+  m_text: ~ Command the beat ~
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9e84fe456637693458adfc6330ace876, type: 2}
-  m_sharedMaterial: {fileID: 4144039606014085654, guid: 9e84fe456637693458adfc6330ace876, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 20ebc6269582e8a49b0a743176a9b7d2, type: 2}
+  m_sharedMaterial: {fileID: -3740328467023586204, guid: 20ebc6269582e8a49b0a743176a9b7d2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

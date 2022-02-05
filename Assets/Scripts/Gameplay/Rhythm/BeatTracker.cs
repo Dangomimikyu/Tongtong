@@ -10,14 +10,6 @@ using cmdPotency = CommandAtrributes.Potency;
 
 public class BeatTracker : MonoBehaviour
 {
-	#region	Testing variables
-	[Header("testing")]
-	public TMP_Text bpm;
-	public TMP_Text greentext;
-	public TMP_Text yellowtext;
-	public TMP_Text redtext;
-	#endregion
-
 	#region Tempo variables
 	[Header("Settings")]
 	[Range(60, 240)]
@@ -121,11 +113,6 @@ public class BeatTracker : MonoBehaviour
 			m_greenDuration = m_beatDuration * m_greenZone;
 			m_yellowDuration = m_beatDuration * m_yellowZone;
 			m_redDuration = m_beatDuration * m_redZone;
-
-			bpm.text = m_beatsPerMinute.ToString();
-			greentext.text = m_greenDuration.ToString();
-			yellowtext.text = m_yellowDuration.ToString();
-			redtext.text = m_redDuration.ToString();
 			return;
 		}
 		else

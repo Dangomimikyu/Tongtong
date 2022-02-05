@@ -138,10 +138,5 @@ public class UnitUpgradeManager : MonoBehaviour
 				m_weaponAttributes.GetShieldData(m_currentData.unitLevel / 2); // make use of int division (3 / 2 == 1)
 			}
 		}
-
-		public void ChangeUnitWeapon()
-		{
-
-		}
 	#endregion
 }

@@ -71,6 +71,8 @@ public class SoundManager : MonoBehaviour
 		EventManager.instance.StartListening(GameEvents.Gameplay_BreakCombo, ComboSound);
 		EventManager.instance.StartListening(GameEvents.Input_Drum, DrumSound);
 		EventManager.instance.StartListening(GameEvents.Gameplay_MetronomeBeat, MetronomeSound);
+
+		Debug.Log("started sound manager");
 	}
 
 	private void OnDisable()
@@ -121,6 +123,11 @@ public class SoundManager : MonoBehaviour
 				m_sfxSource.PlayOneShot(m_magicDrum);
 				break;
 		}
+	}
+
+	public void UIButtonSound()
+	{
+		m_UISource.PlayOneShot(m_menuButton);
 	}
     #endregion
 }

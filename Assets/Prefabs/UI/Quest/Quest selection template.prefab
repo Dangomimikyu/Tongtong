@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2565352950186885332}
   - component: {fileID: 2565352950186885339}
   - component: {fileID: 2565352950186885334}
+  - component: {fileID: 5154343202918205933}
   m_Layer: 0
   m_Name: Quest selection template
   m_TagString: Untagged
@@ -206,3 +207,15 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5154343202918205933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2565352950186885328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dec9a5e48fc594e956f8c97cfd46b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
