@@ -119,6 +119,8 @@ public class UnitBehaviour : MonoBehaviour
 
     public void Defend(cmdPotency potency)
     {
+        Debug.Log("defend called");
+
         GameObject newShield = Instantiate(m_shieldPrefab, transform);
         newShield.GetComponent<ShieldBehaviour>().m_health = unitData.shieldData.health;
 

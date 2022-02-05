@@ -18,6 +18,7 @@ public class EquipmentChangeManager : MonoBehaviour
 	private WeaponTemplate m_currentSelectedWeapon = null;
 	private WeaponAttributes m_weaponAttributes = null;
 	private UnitDataManager m_unitDataManager = null;
+	private SoundManager m_soundManager = null;
 
 	#region Monobehaviour functions
 	private void Start()
@@ -25,6 +26,7 @@ public class EquipmentChangeManager : MonoBehaviour
 		m_equipmentChangeCanvas.gameObject.SetActive(false);
 		m_weaponAttributes = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>();
 		m_unitDataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
+		m_soundManager = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<SoundManager>();
 	}
 	#endregion
 
@@ -100,6 +102,13 @@ public class EquipmentChangeManager : MonoBehaviour
 				m_unitDataManager.UpdateUnitWeapon(m_currentSelectedUnit, m_currentSelectedWeapon.weaponType, false);
 			}
 		}
+	}
+	#endregion
+
+	#region Sound functions
+	public void PlayEquipSound()
+	{
+		m_soundManager.PlayEquipSound();
 	}
 	#endregion
 }

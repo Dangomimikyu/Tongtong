@@ -24,10 +24,6 @@ public class QuestSelectionUIHandler : MonoBehaviour
 	private Quest m_currentSelectedQuest = null;
 
 	#region Monobehaviour functions
-	private void Awake()
-	{
-	}
-
 	private void Start()
 	{
 		m_questNameOutputBox.text = "";

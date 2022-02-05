@@ -20,7 +20,6 @@ public class QuestManager : MonoBehaviour
 	{
 		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, AbandonedQuest);
-		EventManager.instance.StopListening(GameEvents.Misc_SceneChange, AddQuestListToUI);
 	}
 
 	#region Monobehaviour functions
@@ -28,7 +27,6 @@ public class QuestManager : MonoBehaviour
 	{
 		EventManager.instance.StartListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 		EventManager.instance.StartListening(GameEvents.Gameplay_QuestAbandoned, AbandonedQuest);
-		EventManager.instance.StartListening(GameEvents.Misc_SceneChange, AddQuestListToUI);
 
 		// make a test quest first for demo purposes
 		//CreateTestQuest();
@@ -39,19 +37,10 @@ public class QuestManager : MonoBehaviour
 	{
 		EventManager.instance.StopListening(GameEvents.Gameplay_QuestEnd, CompleteQuest);
 		EventManager.instance.StopListening(GameEvents.Gameplay_QuestAbandoned, AbandonedQuest);
-		EventManager.instance.StopListening(GameEvents.Misc_SceneChange, AddQuestListToUI);
 	}
 	#endregion
 
 	#region Quest creation functions
-	private void CreateTestQuest()
-	{
-		Quest newQuest = new Quest("Mvmt && atk demo", "tutorial demo quest", 10, 5);
-		newQuest.questManager = this;
-		m_activeQuest = newQuest;
-		m_questList.Add(newQuest);
-	}
-
 	private void InitQuestList()
 	{
 		m_questList.Clear(); // empty the list first
@@ -128,32 +117,13 @@ public class QuestManager : MonoBehaviour
 	private void AbandonedQuest(EventArgumentData ead)
 	{
 		Debug.Log("Quest failed: " + m_activeQuest.questName);
-		m_playerAccountInformation.ReceiveRewards(m_activeQuest);
 	}
 	#endregion
 
 	#region Quest UI functions
-	private void AddQuestListToUI(EventArgumentData ead)
-	{
-		//string currentSceneName = SceneManager.GetActiveScene().name;
-		//if (currentSceneName == "HomeBaseScene")
-		//{
-		//	PopulateQuestUI();
-		//}
-	}
-
 	public void AddQuestListToUI()
     {
 		PopulateQuestUI();
     }
-	#endregion
-
-	#region Rewards functions
-	private void TestAddRewards()
-	{
-		QuestRewards qr = new QuestRewards();
-		qr.money = 30;
-		m_activeQuest.AddReward(qr);
-	}
 	#endregion
 }

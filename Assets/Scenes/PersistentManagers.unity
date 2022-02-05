@@ -1182,21 +1182,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_menuButton: {fileID: 8300000, guid: a1d79b0dab142f041bf0f1242e04f5e5, type: 3}
-  m_mainMenuBGM: {fileID: 0}
+  m_mainMenuBGM: {fileID: 8300000, guid: dd79f647f74a392499598e5cfbc1f525, type: 3}
   m_homeBaseBGM: {fileID: 0}
   m_expeditionBGM: {fileID: 0}
   m_winBGM: {fileID: 0}
   m_loseBGM: {fileID: 0}
-  m_menuSelection: {fileID: 0}
-  m_equipItem: {fileID: 0}
-  m_upgradeUnit: {fileID: 0}
+  m_equipItem: {fileID: 8300000, guid: 4b23d1b71729baa4b8a062a2333b8073, type: 3}
+  m_repairUnit: {fileID: 8300000, guid: b8d831c880551564f9b0f90ad891b635, type: 3}
+  m_upgradeUnit: {fileID: 8300000, guid: d7e8163a4f0edb24a96a2b276b713805, type: 3}
   m_metronome: {fileID: 8300000, guid: c197cd976be0bc44298b71e8d2dd9c3e, type: 3}
-  m_feverGet: {fileID: 0}
-  m_feverLost: {fileID: 0}
-  m_walkDrum: {fileID: 0}
-  m_attackDrum: {fileID: 0}
-  m_defendDrum: {fileID: 0}
-  m_magicDrum: {fileID: 0}
+  m_feverGet: {fileID: 8300000, guid: 69328093e1dbe6748bdddacf9e8aaabb, type: 3}
+  m_feverLost: {fileID: 8300000, guid: ffc96354a3c73484caf62e63038de2ea, type: 3}
+  m_walkDrum: {fileID: 8300000, guid: a14b24d1097d63942ae65374427cacb4, type: 3}
+  m_attackDrum: {fileID: 8300000, guid: a01c4d2acf9f9114bb4d975eef9069ed, type: 3}
+  m_defendDrum: {fileID: 8300000, guid: 9b0806e8005b49a42a5d5a6bf700acee, type: 3}
+  m_magicDrum: {fileID: 8300000, guid: d51ecefa4d930e04388f0f371e7dbc09, type: 3}
   m_musicSource: {fileID: 866320909}
   m_sfxSource: {fileID: 114443252}
   m_UISource: {fileID: 2144271312}

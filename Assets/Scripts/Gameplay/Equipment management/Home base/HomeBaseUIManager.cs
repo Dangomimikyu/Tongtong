@@ -20,6 +20,7 @@ public class HomeBaseUIManager : MonoBehaviour
     [SerializeField]
     private EquipmentChangeManager m_equipmentManager;
 
+    private SoundManager m_soundManager;
 
 	#region Monobehaviour functions
 	private void Start()
@@ -45,5 +46,5 @@ public class HomeBaseUIManager : MonoBehaviour
     {
         m_moneyText.text = "Money:" + GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>().money.ToString();
     }
-	#endregion
+    #endregion
 }

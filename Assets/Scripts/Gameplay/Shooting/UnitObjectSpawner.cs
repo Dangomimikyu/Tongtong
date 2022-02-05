@@ -59,7 +59,7 @@ public class UnitObjectSpawner : MonoBehaviour
 			Debug.Log("firing single shot");
 			GameObject bullet = Instantiate(m_weaponAttributes.GetWeaponData(wpn.weaponType).bulletPrefab, tongBot.transform);
 			bullet.transform.position += wpn.firingPoint.localPosition;
-			bullet.transform.localRotation = wpn.firingPoint.localRotation;
+			bullet.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, angle);
 			Debug.Log("firing point rot: " + wpn.firingPoint.localRotation);
 			bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(wpn.bulletVel * Mathf.Cos(Mathf.Deg2Rad * angle), wpn.bulletVel * Mathf.Sin(Mathf.Deg2Rad * angle)));
 

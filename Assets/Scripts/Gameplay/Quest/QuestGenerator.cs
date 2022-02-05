@@ -29,7 +29,7 @@ public class QuestGenerator : MonoBehaviour
 		List<Quest> questList = new List<Quest>();
 		playerLevel = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>().GetPlayerLevel();
 
-		int numberOfQuests = Mathf.Min(playerLevel + 2, 5);
+		int numberOfQuests = Mathf.Min(playerLevel + 2, 7);
 
 		for (int i = 0; i < numberOfQuests; ++i)
 		{

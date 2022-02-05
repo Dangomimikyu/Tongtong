@@ -29,12 +29,14 @@ public class UnitUpgradeManager : MonoBehaviour
 	private UnitData m_currentData;
 	private AccountInformation m_playerAccount;
 	private int currentUnitIndex;
+	private SoundManager m_soundManager;
 
 	#region Monobehaviour functions
 		private void Start()
 		{
 			m_unitDataManager = GameObject.FindGameObjectWithTag("UnitManager").GetComponent<UnitDataManager>();
 			m_weaponAttributes = GameObject.FindGameObjectWithTag("WeaponAttributes").GetComponent<WeaponAttributes>();
+			m_soundManager = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<SoundManager>();
 
 			ReturnUnit(); // init the upgrade UI
 		}
@@ -79,6 +81,12 @@ public class UnitUpgradeManager : MonoBehaviour
 
 		public void RepairUnit()
 		{
+			if (m_playerAccount.money < 10 || m_currentData == null)
+			{
+				Debug.Log("not enough money to repair or not selecting a unit currently");
+				return;
+			}
+
 			if (m_currentData.currentHealth == m_currentData.maxHealth)
 			{
 				Debug.Log("trying to repair while at full health");
@@ -87,12 +95,6 @@ public class UnitUpgradeManager : MonoBehaviour
 
 			// update local instance of player information
 			m_playerAccount = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>();
-
-			if (m_playerAccount.money < 10)
-			{
-				Debug.Log("not enough money to repair");
-				return;
-			}
 
 			// minus money
 			m_playerAccount.money -= 10;
@@ -103,6 +105,9 @@ public class UnitUpgradeManager : MonoBehaviour
 
 			// update fill
 			m_healthBarFill.UpdateHealth(m_currentData.maxHealth);
+
+			// play sound
+			m_soundManager.PlayRepairSound();
 		}
 
 		public void UpgradeUnit()
@@ -110,12 +115,13 @@ public class UnitUpgradeManager : MonoBehaviour
 			// update local instance of player information
 			m_playerAccount = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>();
 
-			if (m_playerAccount.money < 30)
+			if (m_playerAccount.money < 30 || m_currentData == null)
 			{
-				Debug.Log("not enough money to upgrade");
+				Debug.Log("not enough money to upgrade or not selecting a unit currently");
 				return;
 			}
 
+			// minus money
 			m_playerAccount.money -= 30;
 			m_mainUIManager.UpdateMoney();
 
@@ -133,10 +139,14 @@ public class UnitUpgradeManager : MonoBehaviour
 			++m_currentData.unitLevel;
 			UpdateLevelText();
 
-			if (m_currentData.unitLevel == 3 || m_currentData.unitLevel == 5)
+			// upgrade shield if able to
+			if (m_currentData.unitLevel == 5 || m_currentData.unitLevel == 7)
 			{
-				m_weaponAttributes.GetShieldData(m_currentData.unitLevel / 2); // make use of int division (3 / 2 == 1)
+				m_currentData.shieldData = m_weaponAttributes.GetShieldData(m_currentData.unitLevel / 2).shieldData; // make use of int division (3 / 2 == 1)
 			}
+
+			// play sound
+			m_soundManager.PlayUpgradeSound();
 		}
 	#endregion
 }
