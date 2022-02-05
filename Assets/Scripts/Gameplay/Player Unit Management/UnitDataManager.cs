@@ -110,7 +110,8 @@ public class UnitDataManager : MonoBehaviour
 			// shield
 			tempUD.shieldData = wa.GetShieldData(uds.shieldLevel).shieldData;
 
-			// health
+			// level and health 
+			tempUD.unitLevel = uds.level;
 			tempUD.maxHealth = uds.maxHealth;
 			tempUD.currentHealth = uds.currentHealth;
 
