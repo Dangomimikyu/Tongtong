@@ -37,16 +37,16 @@ public class PlayerSettings : MonoBehaviour
 	#region Monobehaviour functions
 	private void Start()
 	{
-		InitResolutions();
+		//InitResolutionList();
 		InitFullscreen();
 		InitSliders();
 		InitQuality();
-		InitResolution();
+		//InitResolution();
 	}
 	#endregion
 
 	#region Init functions
-	private void InitResolutions()
+	private void InitResolutionList()
 	{
 		m_localResolutions = Screen.resolutions;
 		m_resolutionDropdown.ClearOptions();
@@ -79,13 +79,14 @@ public class PlayerSettings : MonoBehaviour
 
 	private void InitFullscreen()
 	{
-		Screen.fullScreen = PlayerPrefs.GetInt("Fullscreen") == 1;
+		//Screen.fullScreen = PlayerPrefs.GetInt("Fullscreen", 0) == 1;
+		Screen.fullScreen = true; // removing resolutions and fullscreen in order to finish polishing faster
 	}
 
 	private void InitResolution()
 	{
-		int width = PlayerPrefs.GetInt("ResolutionWidth");
-		int height = PlayerPrefs.GetInt("ResolutionHeight");
+		int width = PlayerPrefs.GetInt("ResolutionWidth", 1280);
+		int height = PlayerPrefs.GetInt("ResolutionHeight", 720);
 		Screen.SetResolution(width, height, Screen.fullScreen);
 	}
 
@@ -133,6 +134,7 @@ public class PlayerSettings : MonoBehaviour
 		Resolution newResolution = m_localResolutions[resIndex];
 		PlayerPrefs.SetInt("ResolutionWidth", newResolution.width);
 		PlayerPrefs.SetInt("ResolutionHeight", newResolution.height);
+		Debug.Log("width: " + PlayerPrefs.GetInt("ResolutionWidth", 1280) + " height: " + PlayerPrefs.GetInt("ResolutionHeight", 720));
 		Screen.SetResolution(newResolution.width, newResolution.height, Screen.fullScreen);
 	}
 

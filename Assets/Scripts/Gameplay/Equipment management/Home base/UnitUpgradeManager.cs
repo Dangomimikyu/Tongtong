@@ -81,6 +81,9 @@ public class UnitUpgradeManager : MonoBehaviour
 
 		public void RepairUnit()
 		{
+			// update local instance of player information
+			m_playerAccount = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>();
+
 			if (m_playerAccount.money < 10 || m_currentData == null)
 			{
 				Debug.Log("not enough money to repair or not selecting a unit currently");
@@ -92,9 +95,6 @@ public class UnitUpgradeManager : MonoBehaviour
 				Debug.Log("trying to repair while at full health");
 				return;
 			}
-
-			// update local instance of player information
-			m_playerAccount = GameObject.FindGameObjectWithTag("PlayerManager").GetComponent<AccountInformation>();
 
 			// minus money
 			m_playerAccount.money -= 10;
