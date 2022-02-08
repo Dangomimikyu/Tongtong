@@ -41,8 +41,8 @@ public class PlayerSettings : MonoBehaviour
 		InitFullscreen();
 		InitSliders();
 		InitQuality();
-		//InitResolution();
-	}
+        InitResolution();
+    }
 	#endregion
 
 	#region Init functions
@@ -87,7 +87,8 @@ public class PlayerSettings : MonoBehaviour
 	{
 		int width = PlayerPrefs.GetInt("ResolutionWidth", 1280);
 		int height = PlayerPrefs.GetInt("ResolutionHeight", 720);
-		Screen.SetResolution(width, height, Screen.fullScreen);
+		//Screen.SetResolution(width, height, Screen.fullScreen);
+		Screen.SetResolution(1920, 1080, Screen.fullScreen);
 	}
 
 	private void InitQuality()

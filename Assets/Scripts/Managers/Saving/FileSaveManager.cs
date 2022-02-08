@@ -55,6 +55,9 @@ public class FileSaveManager : MonoBehaviour
 	#region Monobehaviour functions
 	private void Start()
 	{
+		// init resolution
+		Screen.SetResolution(1920, 1080, Screen.fullScreen);
+
 		EventManager.instance.StartListening(GameEvents.Misc_SaveReady, SaveReady);
 
 		m_savePath = Application.dataPath + "/SaveFiles/";
